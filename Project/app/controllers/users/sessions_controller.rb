@@ -13,9 +13,16 @@ class Users::Sessions::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  def destroy
-    sign_out(current_user) # This method is provided by Devise
+  #def destroy
+    # Custom code here, if needed.
+
+    # Call the Devise sign_out method to handle the logout logic.
+  #  super
+  #end
+  def create
+    auth = request.env['omniauth.auth']
   end
+  
 
   # protected
 

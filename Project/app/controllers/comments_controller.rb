@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-    http_basic_authenticate_with name: "user", password: "user", only: :destroy
+  before_action :authenticate_user!, except: [:index, :show]
 
     def create
         @game = Game.find(params[:game_id])
