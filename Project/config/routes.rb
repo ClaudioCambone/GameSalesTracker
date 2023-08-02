@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
   root "games#index"
+  get '/support', to: 'support#index'
 
   
   devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}

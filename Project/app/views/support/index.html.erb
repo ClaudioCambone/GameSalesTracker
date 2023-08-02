@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Support page</title>
+  <style>
+    /* Define the two-column layout using CSS */
+    .container {
+      display: flex;
+    }
+
+    .left-column {
+      flex: 1;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+
+    .right-column {
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+      display: flex; /* Add flex display */
+      justify-content: center; /* Center items vertically */
+    }
+
+    /* Add some additional styles for the form and box */
+    .box {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Add your other CSS styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-column">
+      <div class="box">
+        <h1>Get in touch:</h1>
+        <br><br>
+        <h3>Address</h3>
+        <br>
+        <h3>Phone</h3>
+        <br>
+        <h3>E-mail</h3>
+      </div>
+    </div>
+    <div class="right-column">
+      <div>
+      <h2>Something wrong?</h2>
+      <h1>Contact us!</h1>
+
+      <form>
+        <!-- Add your support form fields here (e.g., name, email, message) -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br><br>
+
+        <label for="message">Your comment here:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        <br>
+
+        <input type="submit" value="Submit">
+      </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
