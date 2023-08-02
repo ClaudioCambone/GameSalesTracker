@@ -2,17 +2,17 @@ class User < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Devise modules
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,:omniauthable, :omniauth_providers => [:facebook]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,:omniauthable, omniauth_providers:  %i[facebook google_oauth2]
   
   # Omniauth modules
 
   def self.from_omniauth(auth)
-    where(auth.slice(:provider, :uid)).first_or_create do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.email = auth.info.email
+    # This line checks if the user email received by the Omniauth is already included in our databases.
+      user = User.where(email: auth.info.email).first
+    # This line sets the user unless there is a user found in the line above, therefore we use ||= notation to evaluate if the user is nill, then set it to the User.create
+      user ||= User.create!(provider: auth.provider, uid: auth.uid, email: auth.info.email, password: Devise.friendly_token[0, 20])
+      user
     end
-  end
   
   def self.new_with_session(params, session)
     if session["devise.user_attributes"]
