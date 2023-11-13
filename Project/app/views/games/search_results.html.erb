@@ -1,0 +1,20 @@
+
+
+<h1>Search Results</h1>
+
+<% if @games.blank? %>
+  <p>No games found for your search.</p>
+<% else %>
+  <ul>
+  <% @games.each do |game| %>
+    <div class="game">
+      <h2><%= game['title'] %></h2>
+      <img src="<%= game['imgUrl'] %>" alt="<%= game['title'] %>">
+      <p><%= game['description'] %></p>
+      <p>Prezzo: <%= game['price'] %></p>
+    </div>
+  <% end %>
+  </ul>
+<% end %>
+
+<%= link_to 'Back', games_path %>

@@ -1,0 +1,30 @@
+<br>
+<br>
+<h1>
+<%= @game.title %>
+</h1>
+
+  <li><%= link_to "Edit", edit_game_path(@game) %></li>
+ <li><%= link_to "Destroy", game_path(@game), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+
+</ul>
+<h2>Comments</h2>
+<%= render @game.comments %>
+<%# <% @game.comments.each do |comment| 
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  <%# </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  <%# </p>
+<% end %>
+
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
+

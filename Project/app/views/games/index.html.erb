@@ -1,0 +1,21 @@
+<%= form_with url: search_games_path, method: :get do |f| %>
+    <%= f.label :game_name, "Nome del gioco" %>
+    <%= f.text_field :game_name %>
+    <%= f.submit "Cerca" %>
+  <% end %>
+  
+  <h1>Home Page</h1>
+  
+  Our blog has <%= Game.public_count %> articles and counting!
+  
+  <% @games.each do |game|%>
+  <% unless game.archived? %>
+  <li>
+  <!-- %= QUANDO DEVO STAMPARE I VALORI DI RITORNO-->
+  <%= link_to game.title , game%>
+  </li>
+  <% end %>
+  <% end %>
+  
+  <%= link_to "New Game", new_game_path %>
+  
