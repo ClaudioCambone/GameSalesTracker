@@ -1,5 +1,10 @@
-  <h1>GameSalesTracker.com</h1>
+  <h1>GameSalesTracker</h1>
   
+<!-- app/views/layouts/application.html.erb or any other view -->
+
+<%= link_to 'Profile', profile_profile_page_path, class: 'btn btn-primary' %>
+
+
   Our blog has <%= Game.public_count %> articles and counting!
   
   <% @games.each do |game|%>
