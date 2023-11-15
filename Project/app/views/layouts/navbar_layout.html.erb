@@ -1,30 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <style>
-    .button-link {
-      padding: 7px;
-      background-color: #4285f4;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .button-login {
-      padding: 7px;
-      background-color: teal;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .top-nav {
-      background-color: lightblue;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-    }
-  </style>
+<%= stylesheet_link_tag 'profile', media: 'all' %>
 
    <head>
        <nav class="top-nav">
@@ -48,7 +24,7 @@
       </div>
       <div style="width: 25%; text-align: right;">
       <% if user_signed_in? %>
-        <%= link_to "My account", root_path, class: "button-link" %>
+        <%= link_to "My account", profile_profile_page_path, class: "button-link" %>
       <% else %>
         <%= link_to "Login", new_user_session_path, class: "button-link" %>
       <% end %>

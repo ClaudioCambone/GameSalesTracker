@@ -1,0 +1,27 @@
+.profile-container {
+    display: flex;
+  }
+  
+  .profile-left-column {
+    width: 35%;
+    padding: 20px;
+  }
+  
+  .profile-right-column {
+    width: 65%;
+    padding: 20px;
+  }
+  
+  .profile-picture {
+    border-radius: 50%; /* Make the profile picture round */
+    width: 100px; /* Adjust the size as needed */
+    height: 100px;
+  }
+  
+  .edit-profile-button {
+      padding: 7px;
+      background-color: teal;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+  }

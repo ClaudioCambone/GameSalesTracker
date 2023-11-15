@@ -1,0 +1,23 @@
+.button-link {
+    padding: 7px;
+    background-color: #4285f4;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .button-login {
+    padding: 7px;
+    background-color: teal;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .top-nav {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }

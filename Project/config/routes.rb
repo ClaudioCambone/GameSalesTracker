@@ -17,4 +17,7 @@ Rails.application.routes.draw do
   resources :games do
     resources :comments
   end
+
+  resources :profile, only: [:show, :edit, :update]
+
 end

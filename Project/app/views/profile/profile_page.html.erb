@@ -1,7 +1,28 @@
 
+<head>
+<%= javascript_include_tag 'activestorage' %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag 'profile', media: 'all' %>
+</head>
 
-<h1> profile page </h1>
+<div class="profile-container">
+  <!-- Left Column (30% of total width) -->
+  <div class="profile-left-column">
+    <h2>Your Account</h2>
+    <%= image_tag 'user.jpg', class: 'profile-picture', alt: 'Profile Picture' %>
+    <p><strong>Username:</strong> <%= current_user.email %></p>
+    <%= link_to 'Edit Profile', edit_profile_path(current_user), class: 'edit-profile-button' %>
+  </div>
 
-<%= link_to "Edit Password", edit_user_registration_path %>
+  <!-- Right Column (70% of total width) -->
+  <div class="profile-right-column">
+    <h2>Account Overview</h2>
+    <ul>
+      <li><strong>Username:</strong> <%= current_user.email %></li>
+      <li><strong>Email:</strong> <%= current_user.email %></li>
+      <li><strong>Description:</strong> <%= current_user.description %> </li>
+    </ul>
+  </div>
+</div>
 
  <%= link_to "GameSalesTracker", root_path, class: "button-link" %><br><br>

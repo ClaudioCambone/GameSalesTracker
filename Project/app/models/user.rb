@@ -40,4 +40,7 @@ class User < ApplicationRecord
   def has_no_password?
     self.encrypted_password.blank?
   end
+
+  has_one_attached :avatar
+
 end
