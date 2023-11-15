@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default :from => "cambone750@gmail.com"
+  default :from => "gamesalestrackernoreplay@gmail.com"
   layout 'mailer'
   
   end
