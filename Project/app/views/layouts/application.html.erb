@@ -1,12 +1,66 @@
 <!DOCTYPE html>
 <html>
+  <style>
+    .button-link {
+      padding: 7px;
+      background-color: #4285f4;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .button-login {
+      padding: 7px;
+      background-color: teal;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .top-nav {
+      background-color: lightblue;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+  </style>
+
    <head>
+       <nav class="top-nav">
+        <div style="width: 25%; text-align: left;">
+          <%= link_to "GameSalesTracker", root_path, class: "button-link" %><br><br>
+          <%= link_to "My Wishlist", support_path, class: "button-link" %>
+        </div>
+        <div style="width: 50%; text-align: center;">
+          <% if user_signed_in? %>
+            Welcome back, <%= current_user.email%>! [<%= link_to 'Logout', destroy_user_session_path, :method => :delete%>]
+          <% else %>
+        <!-- Content for non-logged-in users -->
+            New here? <%= link_to "Sign Up", new_user_registration_path, class: "button-login" %>
+          <% end %>
+          <br><br>
+      <%= form_with url: search_games_path, method: :get do |f| %>
+        <%= f.label :game_name, "Nome del gioco" %>
+        <%= f.text_field :game_name %>
+        <%= f.submit "Cerca" %>
+      <% end %>
+      </div>
+      <div style="width: 25%; text-align: right;">
+      <% if user_signed_in? %>
+        <%= link_to "My account", root_path, class: "button-link" %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: "button-link" %>
+      <% end %>
+      <br><br>
+        <%= link_to "Support", support_path, class: "button-link" %>
+      </div>
+    </nav>
    <% flash.each do |type, msg| %> <div>
     Notification: <%= msg %>
   </div>
 <% end %>
-   <%= link_to "Back to Main Page", root_path %>
-    <title>Project</title>
+    <title>GameSalesTracker.com</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -20,15 +74,5 @@
   </body>
   <br><br>
 </html>
-<nav>
 
 <%= link_to "Need help?", support_path %>
-
-<% if user_signed_in? %>
-Logged in as <%= current_user.email%> [<%= link_to 'Logout', destroy_user_session_path, :method => :delete%>]
-<% else %>
-  <!-- Content for non-logged-in users -->
-  <%= link_to "Login", new_user_session_path %>
-  <%= link_to "Sign Up", new_user_registration_path, class: "button-sign-up" %>
-  <!-- Add any other content specific to non-logged-in users here -->
-<% end %>
