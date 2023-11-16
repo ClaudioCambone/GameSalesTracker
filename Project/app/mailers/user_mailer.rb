@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-    default :from => "gamesalestrackernoreplay@gmail.com"
+    default :from => "gamesalestrackernoreply@gmail.com"
      
     
       def welcome_email(user)
