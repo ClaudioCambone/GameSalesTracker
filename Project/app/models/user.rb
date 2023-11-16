@@ -1,9 +1,16 @@
 class User < ApplicationRecord
+
   has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Devise modules
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,:omniauthable, omniauth_providers:  %i[facebook google_oauth2]
   
+
+
+  def registered_with_email?
+    provider.blank? # Assuming 'provider' is the attribute indicating the authentication provider
+  end
+
   # Omniauth modules
 
   def self.from_omniauth(auth)
@@ -40,6 +47,7 @@ class User < ApplicationRecord
   def has_no_password?
     self.encrypted_password.blank?
   end
+
 
   has_one_attached :avatar
 

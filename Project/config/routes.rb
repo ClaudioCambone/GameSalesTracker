@@ -4,8 +4,11 @@ Rails.application.routes.draw do
   get '/support', to: 'support#index'
   get 'profile/profile_page'
 
-  devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks',
-  passwords: 'users/passwords'}
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    passwords: 'users/passwords'
+  }
+  
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
   end  

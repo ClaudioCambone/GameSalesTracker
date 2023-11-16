@@ -9,8 +9,6 @@ class Users::PasswordsController < Devise::PasswordsController
   # POST /resource/password
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)
-    #Debbugging
-    Rails.logger.info("Reset password token: #{resource.reset_password_token}")
 
     if successfully_sent?(resource)
       respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
@@ -27,7 +25,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # PUT /resource/password
   def update
     self.resource = resource_class.reset_password_by_token(resource_params)
-  
+    
     if resource.errors.empty?
       resource.unlock_access! if unlockable?(resource)
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
@@ -35,11 +33,9 @@ class Users::PasswordsController < Devise::PasswordsController
       sign_in(resource_name, resource)
       respond_with resource, location: after_resetting_password_path_for(resource)
     else
-      puts "Validation errors: #{resource.errors.full_messages}"
       respond_with(resource)
     end
   end
-  
 
   protected
 
@@ -54,12 +50,4 @@ class Users::PasswordsController < Devise::PasswordsController
 
   private
 
-  def successfully_sent?(resource)
-    if resource.errors.empty?
-      UserMailer.password_reset_email(resource).deliver_now
-      true
-    else
-      false
-    end
-  end
 end

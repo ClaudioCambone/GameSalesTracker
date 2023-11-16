@@ -1,7 +1,13 @@
 class UserController < ApplicationController
   # POST /users or /users.json
+end
   def create
-    @user = User.new(user_params)
+      @user = User.new(user_params)
+      @user.save
+      unless  @user.save
+        @error_message = errors.full_messages.compact
+      end
+    end
 
     respond_to do |format|
       if @user.save
@@ -20,5 +26,6 @@ class UserController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
+  
   
 end
