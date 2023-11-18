@@ -11,7 +11,8 @@
     <h2>Your Account</h2>
     <%= image_tag 'user.jpg', class: 'profile-picture', alt: 'Profile Picture' %>
     <p><strong>Username:</strong> <%= current_user.username %></p>
-    <%= link_to 'Edit Profile', edit_profile_path(current_user), class: 'edit-profile-button' %>
+    
+    <%= link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'edit-profile-button' %>
   </div>
 
   <!-- Right Column (70% of total width) -->
@@ -26,3 +27,5 @@
 </div>
 
  <%= link_to "GameSalesTracker", root_path, class: "button-link" %><br><br>
+
+

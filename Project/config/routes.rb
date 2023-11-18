@@ -1,13 +1,22 @@
 Rails.application.routes.draw do
-  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
+
+  
   root "games#index"
+
+  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
+
+
   get '/support', to: 'support#index'
-  get 'profile/profile_page'
+
+  get '/profile', to: 'profile#show'
+
 
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
-    passwords: 'users/passwords'
+    passwords: 'users/passwords',
+    registrations: 'users/registrations'
   }
+
   
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
@@ -20,7 +29,5 @@ Rails.application.routes.draw do
   resources :games do
     resources :comments
   end
-
-  resources :profile, only: [:show, :edit, :update]
 
 end
