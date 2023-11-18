@@ -1,11 +1,34 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :authenticate_user!, only: [:edit, :update]
+  
   private
 
+  # For creation of a username
   def sign_up_params
-    params.require(:email, :password, :password_confirmation, :username)
+    params.require(:user).permit(:email, :password, :password_confirmation, :username)
   end
+
+  def edit
+    # Checks if a User has an associated account or if has only logged in with omniauth
+    @omniauth_only = current_user.omniauth_only?
+
+    super
+  end
+end
+
+def update
+  super
+end
+
+private
+
+def after_update_path_for(_resource)
+  profile_path
+end
+    
+  
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -64,4 +87,3 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-end

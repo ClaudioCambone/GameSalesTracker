@@ -1,11 +1,65 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
+
+<% if @omniauth_only %>
+
+<style>
+#modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+  </style>
+
+<div id="overlay"></div>
+
+  <div id="modal">
+    <p>You have to create an account with your E-mail to modify your profile</p>
+    <button onclick="closeModal()">Close Modal</button>
+  </div>
+
+  <script>
+    // Function to open the modal
+    function openModal() {
+      document.getElementById('modal').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Open the modal automatically after a delay (e.g., 3 seconds)
+    setTimeout(openModal, 1000);
+  </script>
+<% end %>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
     <%= f.label :username %><br />
-    <%= f.username_fiel :username, autofocus: true, autocomplete: "username" %>
+    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
   </div>
 
 
@@ -18,6 +72,7 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+
   <div class="field">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
@@ -26,6 +81,7 @@
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
+
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
@@ -37,6 +93,11 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <div class="field">
+    <%= f.label :Description %> <i>(Do you want to change your bio?)</i><br />
+    <%= f.text_field :description, autocomplete: "description" %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
@@ -46,4 +107,4 @@
 
 <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
-<%= link_to "Back", :back %>
+<%= link_to "GameSalesTracker", root_path %>

@@ -24,7 +24,7 @@
       </div>
       <div style="width: 25%; text-align: right;">
       <% if user_signed_in? %>
-        <%= link_to "My account", profile_profile_page_path, class: "button-link" %>
+        <%= link_to "My account", profile_path, class: "button-link" %>
       <% else %>
         <%= link_to "Login", new_user_session_path, class: "button-link" %>
       <% end %>
