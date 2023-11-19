@@ -2,12 +2,6 @@
   
 <!-- app/views/layouts/application.html.erb or any other view -->
 
-<%= form_tag search_games_path, method: :get do %>
-  <%= text_field_tag :search_query, params[:search_query], placeholder: "Search for games" %>
-  <%= submit_tag "Search" %>
-<% end %>
-
-
   Our blog has <%= Game.public_count %> articles and counting!
   
   <% @games.each do |game|%>

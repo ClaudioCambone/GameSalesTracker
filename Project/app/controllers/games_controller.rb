@@ -17,18 +17,18 @@ class GamesController < ApplicationController
     else
       @games = []
     end
-  end
+  end  
 
   def details
     game_plain = params[:plain]
-
+  
     begin
       @game_details = get_game_details([game_plain])
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
     end
-  end
+  end  
 
   private
 

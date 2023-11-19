@@ -1,19 +1,19 @@
-<!-- app/views/games/details.html.erb -->
 <h1>Dettagli del gioco</h1>
+
+<%= debug @game_details %> <!-- Aggiunto per il debug -->
 
 <% if @game_details.present? %>
   <% @game_details.each do |plain, game| %>
     <dl>
       <% game.each do |key, value| %>
         <dt><%= key %></dt>
-        <dd><%= value %></dd> <!-- Rimuovi .to_s -->
+        <dd><%= value.is_a?(Hash) ? value.to_json : value %></dd>
       <% end %>
     </dl>
-    <%= puts "PLAIN: #{plain}" %>
-    <%= puts "GAME: #{game.inspect}" %>
   <% end %>
 <% else %>
   <p>Dettagli non disponibili</p>
 <% end %>
+
 
 

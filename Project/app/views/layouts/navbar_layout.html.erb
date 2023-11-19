@@ -16,11 +16,11 @@
             New here? <%= link_to "Sign Up", new_user_registration_path, class: "button-login" %>
           <% end %>
           <br><br>
-      <%= form_with url: search_games_path, method: :get do |f| %>
-        <%= f.label :game_name, "Nome del gioco" %>
-        <%= f.text_field :game_name %>
-        <%= f.submit "Cerca" %>
-      <% end %>
+          <%= form_with url: search_games_path, method: :get do |f| %>
+            <%= f.label :search_query, "Search for games" %>
+            <%= f.text_field :search_query %>
+            <%= f.submit "Search" %>
+          <% end %>          
       </div>
       <div style="width: 25%; text-align: right;">
       <% if user_signed_in? %>
