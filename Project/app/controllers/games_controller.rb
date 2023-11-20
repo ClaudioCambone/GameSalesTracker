@@ -25,10 +25,12 @@ class GamesController < ApplicationController
     begin
       @game_details = get_game_details([game_plain])
       @game_prices = get_game_prices(game_plain)
+      @lowest_price = get_lowest_price(game_plain)
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
       @game_prices = nil
+      @lowest_price = nil
     end
   end
 
@@ -109,4 +111,28 @@ class GamesController < ApplicationController
       return []
     end
   end
+
+  def get_lowest_price(game_plain)
+    lowest_url = "https://api.isthereanydeal.com/v01/game/lowest/?key=#{@api_key}&plains=#{game_plain}"
+  
+    begin
+      response = RestClient.get(lowest_url)
+      parsed_response = JSON.parse(response)
+    
+      lowest_price_data = parsed_response['data'][game_plain]
+    
+      if lowest_price_data.present?
+        return lowest_price_data
+      else
+        return {}
+      end
+    rescue RestClient::ExceptionWithResponse => e
+      puts "Errore nella richiesta del prezzo più basso: #{e.response}"
+      return {}
+    rescue => e
+      puts "Errore nella richiesta del prezzo più basso: #{e.message}"
+      return {}
+    end
+  end  
+
 end
