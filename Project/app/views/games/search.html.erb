@@ -11,14 +11,13 @@
       </tr>
     </thead>
     <tbody>
-      <% @games.each do |game| %>
-        <tr>
-          <td><%= game["title"] %></td>
-          <td><%= game["id"] %></td>
-          <td><a href="<%= details_game_path(plain: game["id"]) %>">Dettagli</a></td>
-
-        </tr>
-      <% end %>
+    <% @games.each do |game| %>
+      <tr>
+        <td><%= game["title"] %></td>
+        <td><%= game["plain"] %></td>
+        <td><a href="<%= details_game_path(plain: game["plain"]) %>">Dettagli</a></td>
+      </tr>
+    <% end %>    
     </tbody>
   </table>
 <% else %>

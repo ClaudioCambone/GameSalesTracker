@@ -1,19 +1,41 @@
-<h1>Dettagli del gioco</h1>
+<!-- app/views/games/details.html.erb -->
 
-<%= debug @game_details %> <!-- Aggiunto per il debug -->
-
+<h2>Informazioni generali</h2>
 <% if @game_details.present? %>
-  <% @game_details.each do |plain, game| %>
-    <dl>
-      <% game.each do |key, value| %>
-        <dt><%= key %></dt>
-        <dd><%= value.is_a?(Hash) ? value.to_json : value %></dd>
-      <% end %>
-    </dl>
+  <h3>Titolo: <%= @game_details.keys.first %></h3>
+  <% if @game_details.values.first['image'].present? %>
+    <h3>Immagine: <%= image_tag(@game_details.values.first['image']) %></h3>
+  <% else %>
+    <p>Immagine non disponibile al momento.</p>
   <% end %>
 <% else %>
-  <p>Dettagli non disponibili</p>
+  <p>Dettagli non disponibili al momento.</p>
 <% end %>
 
-
-
+<h2>Prezzi</h2>
+<% if @game_prices.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Negozio</th>
+        <th>Prezzo Nuovo</th>
+        <th>Prezzo Vecchio</th>
+        <th>Sconto Percentuale</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @game_prices['list'].each do |price| %>
+        <tr>
+          <td><%= price['shop']['name'] %></td>
+          <td><%= number_with_precision(price['price_new'], precision: 2) %></td>
+          <td><%= number_with_precision(price['price_old'], precision: 2) %></td>
+          <td><%= price['price_cut'] %> %</td>
+          <td><a href="<%= price['url'] %>" target="_blank">Acquista</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Prezzi non disponibili al momento.</p>
+<% end %>
