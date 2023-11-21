@@ -2,12 +2,9 @@
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
 
-
-  ### NOT WORKING, NEEDS TO BE RESOLVED 
-  
   def after_confirmation_path_for(resource_name, resource)
     # Trigger a password reset after confirmation
-    edit_user_password_path(reset_password_token: resource.reset_password_token)
+    edit_user_password_path(resource)
   end
 
   # GET /resource/confirmation/new
