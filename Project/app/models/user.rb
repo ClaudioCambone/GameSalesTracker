@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Devise modules
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,:omniauthable, omniauth_providers:  %i[facebook google_oauth2]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2]
   
 
 

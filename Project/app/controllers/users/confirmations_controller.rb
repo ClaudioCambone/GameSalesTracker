@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
-class Users::Sessions::ConfirmationsController < Devise::ConfirmationsController
+class Users::ConfirmationsController < Devise::ConfirmationsController
+
+  def after_confirmation_path_for(resource_name, resource)
+    # Trigger a password reset after confirmation
+    edit_user_password_path(resource)
+  end
+
   # GET /resource/confirmation/new
   # def new
   #   super
