@@ -1,6 +1,5 @@
 <% if @game_details.present? %>
-  <h2>Informazioni generali:</h2>
-  <h3>Titolo: <%= @game_details.values.first['title'] %></h3>
+  <h1><%= @game_details.values.first['title'] %></h1>
   <% if @game_details.values.first['image'].present? %>
     <h3><%= image_tag(@game_details.values.first['image']) %></h3>
   <% else %>
@@ -10,8 +9,74 @@
   <p>Dettagli non disponibili al momento.</p>
 <% end %>
 
-<h2>Prezzi:</h2>
+<h2>Recensioni:</h2>
+<% if @game_details.present? %>
+  <% game_plain = params[:plain] %>
+  <% reviews = @game_details[game_plain]['reviews'] %>
+  <div>
+    <% if reviews.present? && reviews['steam'].present? %>
+      <p>Valutazioni positive: <%= reviews['steam']['perc_positive'] || 'N/A' %> %</p>
+      <p>Totale recensioni: <%= reviews['steam']['total'] || 'N/A' %></p>
+      <p>Valutazione: <%= reviews['steam']['text'] || 'N/A' %></p>
+    <% else %>
+      <p>Recensioni non disponibili al momento.</p>
+    <% end %>
+  </div>
+<% else %>
+  <p>Dettagli non disponibili al momento.</p>
+<% end %>
+
 <% if @game_prices.present? %>
+  <% if @lowest_price.present? %>
+    <h2>Prezzo piu' basso di sempre:</h2>
+    <tr>
+      <td colspan="5">
+        <%= number_to_currency(@lowest_price['price'], unit: '€', precision: 2) %> su
+          <% case @lowest_price['shop']['name'] %>
+        <% when 'Steam' %>
+          <%= link_to 'Steam', 'https://store.steampowered.com/', target: '_blank' %>
+        <% when 'Humble Store' %>
+          <%= link_to 'Humble Store', 'https://www.humblebundle.com/store', target: '_blank' %>
+        <% when 'GameBillet' %>
+          <%= link_to 'GameBillet', 'https://www.gamebillet.com/', target: '_blank' %>
+        <% when 'GamesPlanet US' %>
+          <%= link_to 'GamesPlanet US', 'https://us.gamesplanet.com/', target: '_blank' %>
+        <% when 'Fanatical' %>
+          <%= link_to 'Fanatical', 'https://www.fanatical.com/', target: '_blank' %>
+        <% when 'JoyBuggy' %>
+          <%= link_to 'JoyBuggy', 'https://www.joybuggy.com/', target: '_blank' %>
+        <% when '2game' %>
+          <%= link_to '2game', 'https://2game.com/', target: '_blank' %>
+        <% when 'GamesPlanet UK' %>
+          <%= link_to 'GamesPlanet UK', 'https://uk.gamesplanet.com/', target: '_blank' %>
+        <% when 'GamesPlanet FR' %>
+          <%= link_to 'GamesPlanet FR', 'https://fr.gamesplanet.com/', target: '_blank' %>
+        <% when 'GamesPlanet DE' %>
+          <%= link_to 'GamesPlanet DE', 'https://de.gamesplanet.com/', target: '_blank' %>
+        <% when 'Ubisoft Store' %>
+          <%= link_to 'Ubisoft Store', 'https://store.ubisoft.com/', target: '_blank' %>
+        <% when 'GamersGate' %>
+          <%= link_to 'GamersGate', 'https://www.gamersgate.com/', target: '_blank' %>
+        <% when 'AllYouPlay' %>
+          <%= link_to 'AllYouPlay', 'https://www.allyouplay.com/', target: '_blank' %>
+        <% when 'GreenManGaming' %>
+          <%= link_to 'GreenManGaming', 'https://www.greenmangaming.com/', target: '_blank' %>
+        <% when 'Noctre' %>
+          <%= link_to 'Noctre', 'https://www.noctre.com/', target: '_blank' %>
+        <% when 'IndieGala Store' %>
+          <%= link_to 'IndieGala Store', 'https://www.indiegala.com/', target: '_blank' %>
+        <% when 'Amazon' %>
+          <%= link_to 'Amazon', 'https://www.amazon.com/', target: '_blank' %>
+        <% when 'Epic Games Store' %>
+          <%= link_to 'Epic Games Store', 'https://store.epicgames.com/it/', target: '_blank' %>
+        <% else %>
+          <%= @lowest_price['shop']['name'] %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+
+  <h2>Prezzi:</h2>
   <table>
     <thead>
       <tr>
@@ -32,58 +97,8 @@
           <td><a href="<%= price['url'] %>" target="_blank">Acquista</a></td>
         </tr>
       <% end %>
-    </tbody>
-  </table>
-
-  <% if @lowest_price.present? %>
-    <h2>Prezzo piu' basso di sempre:</h2>
-    <tr>
-      <td colspan="5">
-        <%= number_to_currency(@lowest_price['price'], unit: '€', precision: 2) %> su
-        <% case @lowest_price['shop']['name'] %>
-          <% when 'Steam' %>
-            <%= link_to 'Steam', 'https://store.steampowered.com/', target: '_blank' %>
-          <% when 'Humble Store' %>
-            <%= link_to 'Humble Store', 'https://www.humblebundle.com/store', target: '_blank' %>
-          <% when 'GameBillet' %>
-            <%= link_to 'GameBillet', 'https://www.gamebillet.com/', target: '_blank' %>
-          <% when 'GamesPlanet US' %>
-            <%= link_to 'GamesPlanet US', 'https://us.gamesplanet.com/', target: '_blank' %>
-          <% when 'Fanatical' %>
-            <%= link_to 'Fanatical', 'https://www.fanatical.com/', target: '_blank' %>
-          <% when 'JoyBuggy' %>
-            <%= link_to 'JoyBuggy', 'https://www.joybuggy.com/', target: '_blank' %>
-          <% when '2game' %>
-            <%= link_to '2game', 'https://2game.com/', target: '_blank' %>
-          <% when 'GamesPlanet UK' %>
-            <%= link_to 'GamesPlanet UK', 'https://uk.gamesplanet.com/', target: '_blank' %>
-          <% when 'GamesPlanet FR' %>
-            <%= link_to 'GamesPlanet FR', 'https://fr.gamesplanet.com/', target: '_blank' %>
-          <% when 'GamesPlanet DE' %>
-            <%= link_to 'GamesPlanet DE', 'https://de.gamesplanet.com/', target: '_blank' %>
-          <% when 'Ubisoft Store' %>
-            <%= link_to 'Ubisoft Store', 'https://store.ubisoft.com/', target: '_blank' %>
-          <% when 'GamersGate' %>
-            <%= link_to 'GamersGate', 'https://www.gamersgate.com/', target: '_blank' %>
-          <% when 'AllYouPlay' %>
-            <%= link_to 'AllYouPlay', 'https://www.allyouplay.com/', target: '_blank' %>
-          <% when 'GreenManGaming' %>
-            <%= link_to 'GreenManGaming', 'https://www.greenmangaming.com/', target: '_blank' %>
-          <% when 'Noctre' %>
-            <%= link_to 'Noctre', 'https://www.noctre.com/', target: '_blank' %>
-          <% when 'IndieGala Store' %>
-            <%= link_to 'IndieGala Store', 'https://www.indiegala.com/', target: '_blank' %>
-          <% when 'Amazon' %>
-            <%= link_to 'Amazon', 'https://www.amazon.com/', target: '_blank' %>
-          <% when 'Epic Games Store' %>
-            <%= link_to 'Epic Games Store', 'https://store.epicgames.com/it/', target: '_blank' %>
-          <% else %>
-            <%= @lowest_price['shop']['name'] %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-
+      </tbody>
+    </table>
 <% else %>
   <p>Prezzi non disponibili al momento.</p>
 <% end %>
