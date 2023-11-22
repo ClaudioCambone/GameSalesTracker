@@ -30,6 +30,8 @@
     <ul>
       <li><strong>Username:</strong> <%= current_user.username %></li>
       <li><strong>Email:</strong> <%= current_user.email %></li>
+      <li><strong>Description:</strong> <% if current_user.description.present?%>  <%= current_user.description %> <% else %> You can add a Description through Edit Profile button! <%end%> </li>
+    
     </ul>
   </div>
 </div>
