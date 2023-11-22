@@ -1,0 +1,9 @@
+.card {
+    background-color: #a6c8e0; /* Pastel Blue */
+    height: 100%; /* Ensures all cards have the same height */
+  }
+  
+  .card-body {
+    padding: 20px; /* Adjust the padding as needed */
+  }
+  

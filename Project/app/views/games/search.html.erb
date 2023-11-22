@@ -1,27 +1,29 @@
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <%= stylesheet_link_tag 'cards', media: 'all' %>
+</head>
+
+
 <% if @games.present? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Titolo</th>
-        <th>Prezzo Attuale</th>
-        <th>Dettagli</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% displayed_titles = Set.new %>
-      <% @games.each do |game| %>
-        <% title = game['title'] %>
-        <% unless displayed_titles.include?(title) %>
-          <tr>
-            <td><%= title %></td>
-            <td><%= "%.2f" % game['price_new'] %></td>
-            <td><%= link_to 'Dettagli', details_game_path(plain: game['plain']) %></td>
-          </tr>
-          <% displayed_titles.add(title) %>
-        <% end %>
+<br><br>
+  <div class="row row-cols-1 row-cols-md-3">
+    <% displayed_titles = Set.new %>
+    <% @games.each do |game| %>
+      <% title = game['title'] %>
+      <% unless displayed_titles.include?(title) %>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= title %></h5>
+              <p class="card-text">Prezzo Attuale: <%= "%.2f" % game['price_new'] %></p>
+              <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+        <% displayed_titles.add(title) %>
       <% end %>
-    </tbody>
-  </table>
+    <% end %>
+  </div>
 
 <% else %>
   <p>Risultati della ricerca:</p>
