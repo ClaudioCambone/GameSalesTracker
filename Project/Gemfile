@@ -34,6 +34,7 @@ gem 'rest-client'
   gem 'omniauth-google-oauth2'
   gem 'omniauth-rails_csrf_protection'
   gem 'letter_opener'
+  gem 'activestorage'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

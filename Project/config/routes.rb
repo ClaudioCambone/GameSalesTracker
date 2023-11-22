@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-
-  
   root "games#index"
+    get '/user', to: 'user#index'
   get 'games/search', to: 'games#search', as: :search_games
   get 'games/details/:plain', to: 'games#details', as: :details_game
 
@@ -10,7 +9,6 @@ Rails.application.routes.draw do
 
   get '/support', to: 'support#index'
 
-  get '/profile', to: 'profile#show'
 
 
   devise_for :users, controllers: {

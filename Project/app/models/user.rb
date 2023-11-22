@@ -1,9 +1,17 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
   has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Devise modules
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2]
+  
+  validates :password, presence: true, if: -> { password.present? }
+  
+  has_one_attached :avatar
   
 
 
@@ -33,8 +41,8 @@ class User < ApplicationRecord
   end
   
   def password_required?
-    super && self.provider.blank?
-  end
+    false
+   end
   
   def update_with_password(params, *options)
     if encrypted_password.blank?
@@ -49,6 +57,7 @@ class User < ApplicationRecord
   end
 
 
-  has_one_attached :avatar
+  
 
 end
+

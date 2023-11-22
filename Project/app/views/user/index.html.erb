@@ -5,10 +5,14 @@
 <%= stylesheet_link_tag 'profile', media: 'all' %>
 </head>
 
+
 <div class="profile-container">
   <!-- Left Column (30% of total width) -->
   <div class="profile-left-column">
     <h2>Your Account</h2>
+
+
+
     <%= image_tag 'user.jpg', class: 'profile-picture', alt: 'Profile Picture' %>
     <p><strong>Username:</strong> <%= current_user.username %></p>
     
@@ -21,7 +25,6 @@
     <ul>
       <li><strong>Username:</strong> <%= current_user.username %></li>
       <li><strong>Email:</strong> <%= current_user.email %></li>
-      <li><strong>Description:</strong> <%= current_user.description %> </li>
     </ul>
   </div>
 </div>
