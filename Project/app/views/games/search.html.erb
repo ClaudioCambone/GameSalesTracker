@@ -1,25 +1,29 @@
-<h1>Risultati della ricerca per "<%= @search_query %>"</h1>
-<!-- La tua tabella dei risultati -->
-
-<% if @games && @games.any? %>
+<% if @games.present? %>
   <table>
     <thead>
       <tr>
         <th>Titolo</th>
-        <th>ID</th>
+        <th>Prezzo Attuale</th>
         <th>Dettagli</th>
       </tr>
     </thead>
     <tbody>
-    <% @games.each do |game| %>
-      <tr>
-        <td><%= game["title"] %></td>
-        <td><%= game["plain"] %></td>
-        <td><a href="<%= details_game_path(plain: game["plain"]) %>">Dettagli</a></td>
-      </tr>
-    <% end %>    
+      <% displayed_titles = Set.new %>
+      <% @games.each do |game| %>
+        <% title = game['title'] %>
+        <% unless displayed_titles.include?(title) %>
+          <tr>
+            <td><%= title %></td>
+            <td><%= "%.2f" % game['price_new'] %></td>
+            <td><%= link_to 'Dettagli', details_game_path(plain: game['plain']) %></td>
+          </tr>
+          <% displayed_titles.add(title) %>
+        <% end %>
+      <% end %>
     </tbody>
   </table>
+
 <% else %>
-  <p>Nessun gioco trovato</p>
+  <p>Risultati della ricerca:</p>
+  <p>Nessun risultato trovato.</p>
 <% end %>
