@@ -4,13 +4,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :authenticate_user!, only: [:edit, :update]
 
   def update_sanitized_params
-    devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:username, :email, :password, :password_confirmation)}
-    devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:username, :email, :password, :password_confirmation, :current_password)}
+    devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:username, :email, :password, :password_confirmation, :avatar)}
+    devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:username, :email, :password, :password_confirmation, :current_password, :avatar)}
   end
   
 
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :username)
+    params.require(:user).permit(:email, :password, :password_confirmation, :username, :avatar)
   end
 
   def update

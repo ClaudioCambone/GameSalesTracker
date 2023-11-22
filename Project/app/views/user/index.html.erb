@@ -13,7 +13,12 @@
 
 
 
-    <%= image_tag 'user.jpg', class: 'profile-picture', alt: 'Profile Picture' %>
+      <% if current_user.avatar.present? %>
+      <%= image_tag current_user.avatar, class: "rounded-circle", size: "100x100" %>
+      <% else %>
+      <%= image_tag("user.jpg", alt: "User Image", size: "100x100") %>
+
+      <% end %>
     <p><strong>Username:</strong> <%= current_user.username %></p>
     
     <%= link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'edit-profile-button' %>

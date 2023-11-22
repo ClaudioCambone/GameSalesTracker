@@ -10,8 +10,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2]
   
   validates :password, presence: true, if: -> { password.present? }
+
+
   
+  ##...Avatar Attachment...##
   has_one_attached :avatar
+
+  ## Validations
+     validates :avatar, file_size: { less_than_or_equal_to: 5.megabytes },
+                file_content_type: { allow: ['image/jpeg', 'image/png', 'image/gif'] }
   
 
 

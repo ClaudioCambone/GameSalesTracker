@@ -4,6 +4,19 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
+<!--Avatar Upload Field-->
+<div class="form-group">
+<label class="col-sm-4 col-form-label">Avatar:
+<% if current_user.avatar.present? %><br />
+Current:      
+<%= image_tag current_user.avatar, class: "rounded-circle", size: "100x100" %>
+<% end %>
+</label>
+<div class="col-sm-8"><%= f.file_field :avatar, class: "form-control" %></div>
+</div>
+<!--Avatar Upload Field-->
+
+
  <div class="field">
     <%= f.label :username, "Username" %><br />
     <%= f.text_field :username, autocomplete: "on" %>
@@ -17,6 +30,8 @@
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
+
+<!--Password Fields-->
 
   <div class="field">
     <%= f.label :password, "New password" %><br />
@@ -32,6 +47,8 @@
     <%= f.label :current_password %> <i>(to confirm changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
+
+<!--Password Fields-->
 
   <div class="actions">
     <%= f.submit "Update" %>
