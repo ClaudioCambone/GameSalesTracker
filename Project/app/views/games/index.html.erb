@@ -1,17 +1,40 @@
-  <h1>GameSalesTracker</h1>
-  
-<!-- app/views/layouts/application.html.erb or any other view -->
+<h1>Nuove Offerte</h1>
 
-  Our blog has <%= Game.public_count %> articles and counting!
-  
-  <% @games.each do |game|%>
-  <% unless game.archived? %>
-  <li>
-  <!-- %= QUANDO DEVO STAMPARE I VALORI DI RITORNO-->
-  <%= link_to game.title , game%>
-  </li>
+<table>
+  <thead>
+    <tr>
+      <th>Titolo</th>
+      <th>Prezzo Attuale</th>
+      <th>Prezzo Originale</th>
+      <th>Sconto</th>
+      <th>Data Inizio Sconto</th>
+      <th>Data Fine Sconto</th>
+      <th>Dettagli</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @deals.each do |deal| %>
+    <tr>
+      <td><%= link_to deal['title'], details_game_path(plain: deal['plain']) %></td>
+      <td><%= "€ %.2f" % deal['price_new'] %></td>
+      <td><%= "€ %.2f" % deal['price_old'] %></td>
+      <td><%= deal['price_cut'] %> %</td>
+      <td><%= deal['added'].present? ? Time.at(deal['added']).strftime("%Y-%m-%d %H:%M:%S") : 'Data non disponibile' %></td>
+      <td>
+        <% if deal['expiry'].present? %>
+          <%= Time.at(deal['expiry']).strftime("%Y-%m-%d %H:%M:%S") %>
+        <% else %>
+          Expiry non disponibile
+        <% end %>
+      </td>
+      <td>
+        <% if deal['shop'].present? %>
+          <%= link_to "Disponibile su #{deal['shop']['name']}", deal['urls']['buy'], target: '_blank' %>
+        <% else %>
+          Dettagli non disponibili
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-  <% end %>
-  
-  <%= link_to "New Game", new_game_path %>
-  
+</tbody>
+</table>

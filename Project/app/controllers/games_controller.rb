@@ -6,6 +6,7 @@ class GamesController < ApplicationController
 
   def index
     @games = [] # O qualsiasi altra logica per ottenere i giochi desiderati
+    @deals = get_deals
   end
 
   def search
@@ -36,6 +37,24 @@ class GamesController < ApplicationController
 
   def set_api_key
     @api_key = 'b14274e8092bc14e227b32e4b66c2903bf4419c9'
+  end
+
+  def get_deals
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100&region=eu2&country=CZ&shops=steam%2Cgog"
+
+    begin
+      response = RestClient.get(url)
+      parsed_response = JSON.parse(response)
+      deals_data = parsed_response['data']['list']
+
+      return deals_data if deals_data.present?
+    rescue RestClient::ExceptionWithResponse => e
+      puts "Errore nella richiesta dei Deals: #{e.response}"
+    rescue => e
+      puts "Errore nella richiesta dei Deals: #{e.message}"
+    end
+
+    return []
   end
 
   def search_games
