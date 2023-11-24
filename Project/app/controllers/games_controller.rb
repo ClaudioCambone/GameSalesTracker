@@ -25,6 +25,7 @@ class GamesController < ApplicationController
       @game_details = get_game_details([game_plain])
       @game_prices = get_game_prices(game_plain)
       @lowest_price = get_lowest_price(game_plain)
+      store_lowest_prices
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
@@ -40,7 +41,7 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100&region=eu2&country=CZ&shops=steam%2Cgog"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=20&region=eu2&country=CZ&shops=steam%2Cgog"
 
     begin
       response = RestClient.get(url)
@@ -151,4 +152,15 @@ class GamesController < ApplicationController
       return {}
     end
   end
+
+  def store_lowest_prices
+    game_plain = params[:plain]
+    key = @api_key
+  
+    response = RestClient.get "https://api.isthereanydeal.com/v01/game/storelow/?key=#{key}&plains=#{game_plain}"
+    data = JSON.parse(response.body)
+  
+    @lowest_prices = data.dig('data', game_plain) || []
+  end
+
 end

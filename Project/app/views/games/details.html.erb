@@ -82,6 +82,7 @@
       <tr>
         <th>Negozio</th>
         <th>Prezzo Attuale</th>
+        <th>Prezzo più basso</th>
         <th>Prezzo Originale</th>
         <th>Percentuale di sconto</th>
         <th>Link</th>
@@ -92,6 +93,14 @@
         <tr>
           <td><%= price['shop']['name'] %></td>
           <td><%= "%.2f" % price['price_new'] %></td>
+          <td>
+          <% lowest_price = @lowest_prices.find { |lp| lp['shop'] == price['shop']['id'] } %>
+          <% if lowest_price.present? %>
+            <%= number_to_currency(lowest_price['price'], unit: '€', precision: 2) %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
           <td><%= "%.2f" % price['price_old'] %></td>
           <td><%= price['price_cut'] %> %</td>
           <td><a href="<%= price['url'] %>" target="_blank">Acquista</a></td>
