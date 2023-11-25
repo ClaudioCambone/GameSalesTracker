@@ -32,16 +32,15 @@ Make sure you have the following installed:
 
  2. istall dependencies: 
 ```
-      bundle install
-    
+bundle install
 ```
 3. Set up the database:
 ```
-       rails db:create
-        rails db:migrate
+rails db:create
+rails db:migrate
 ```
 4. Start the server
 ```
-     rails server
+rails server
 ```
 5. open your web browser and visit http://localhost:3000 to access GameSalesTracker.
