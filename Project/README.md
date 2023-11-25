@@ -47,7 +47,7 @@ rails server
 
 
 
-
+---
 
 **Project Developers:**
 - Claudio Cambone
