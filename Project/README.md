@@ -26,18 +26,18 @@ Make sure you have the following installed:
 - PostgreSQL (or your preferred database system)
 
 ### Installation
- ```bash 
+ 
 
 1. Navigate to the project directory
 
-2. istall dependencies:
+``` 2. istall dependencies:
       bundle install
-
-3. Set up the database:
+```
+```3. Set up the database:
         rails db:create
         rails db:migrate
-
-4. Start the server
+```
+```4. Start the server
         rails server
-
+```
 5. open your web browser and visit http://localhost:3000 to access GameSalesTracker.
