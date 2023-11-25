@@ -44,6 +44,14 @@ rails server
 ```
 5. open your web browser and visit http://localhost:3000 to access GameSalesTracker.
 
+## Technologies Used
+
+This project is developed using the following technologies:
+
+- **Ruby:** The primary programming language used for the backend development.
+- **JavaScript:** Used for frontend interactivity and dynamic features.
+- **HTML:** The markup language for structuring the project's web pages.
+- **CSS:** The styling language used to enhance the visual presentation of the web pages.
 
 
 
