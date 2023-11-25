@@ -1,4 +1,4 @@
-# GameSalesTracker ##A website to track your favorite games prices
+# GameSalesTracker 
 
 GameSalesTracker is a web application developed by Claudio Cambone, Alessandro Darie, and Karen Kolendowska. This application allows users to track prices of video games across different stores and platforms. Users can create and edit accounts, as well as manage a wishlist of games that can be easily accessed through their accounts.
 
