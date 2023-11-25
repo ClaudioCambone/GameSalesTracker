@@ -13,7 +13,6 @@ GameSalesTracker is a web application developed by Claudio Cambone, Alessandro D
 - **Third-Party Login:** Users have the option to log in using third-party authentication providers such as Google and Facebook for a seamless and secure login experience.
 
 
-
 ## Getting Started
 
 ### Prerequisites
@@ -44,3 +43,12 @@ rails db:migrate
 rails server
 ```
 5. open your web browser and visit http://localhost:3000 to access GameSalesTracker.
+
+
+**Project Developers:**
+- Claudio Cambone
+- Alessandro Darie
+- Karen Kolendowska
+
+This project was developed as part of an exam for the degree in computer engineering at La Sapienza.
+
