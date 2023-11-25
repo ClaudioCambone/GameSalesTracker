@@ -45,6 +45,10 @@ rails server
 5. open your web browser and visit http://localhost:3000 to access GameSalesTracker.
 
 
+
+
+
+
 **Project Developers:**
 - Claudio Cambone
 - Alessandro Darie
