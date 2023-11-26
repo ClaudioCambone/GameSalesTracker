@@ -41,7 +41,7 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100&region=eu2&country=CZ&shops=steam%2Cgog"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=20&region=eu2&country=CZ&shops=steam%2Cgog"
 
     begin
       response = RestClient.get(url)
@@ -79,6 +79,11 @@ class GamesController < ApplicationController
   
       game_data.each do |game|
         game['price_new'] = @prezzi_attuali_inferiori[game['plain']].to_s
+        game['image_url'] = game_image_url(game['plain'])
+        
+        # Aggiunta per ottenere le informazioni dettagliate del gioco
+        game_info = game_info(game['plain'])
+        game.merge!(game_info) if game_info.present?
       end
       
       lowest_price = Float::INFINITY
@@ -102,8 +107,8 @@ class GamesController < ApplicationController
       puts "Errore: #{e.message}"
       return []
     end
-  end  
- 
+  end
+
   def get_game_details(game_plains)
     details_url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{game_plains.join(',')}"
 

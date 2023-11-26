@@ -4,26 +4,31 @@
 </head>
 
 <% if @games.present? %>
-  <br><br>
-  <div class="row row-cols-1 row-cols-md-3">
-    <% displayed_titles = Set.new %>
-    <% @games.each do |game| %>
-      <% title = game['title'] %>
-      <% prezzo_attuale_inferiore = game['price_new'] %>
-      <% unless displayed_titles.include?(title) %>
-        <div class="col mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= title %></h5>
-              <p class="card-text">Prezzo Attuale: <%= "%.2f" % prezzo_attuale_inferiore %></p>
-              <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
-            </div>
+<br><br>
+<div class="row row-cols-1 row-cols-md-3">
+  <% displayed_titles = Set.new %>
+  <% @games.each do |game| %>
+    <% title = game['title'] %>
+    <% unless displayed_titles.include?(title) %>
+      <div class="col mb-4">
+        <div class="card">
+          <img src="<%= game['image_url'] %>" class="card-img-top" alt="<%= title %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= title %></h5>
+            <p class="card-text">Prezzo Attuale: <%= "%.2f" % game['price_new'] %></p>
+            <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
           </div>
         </div>
-        <% displayed_titles.add(title) %>
-      <% end %>
+      </div>
+      <% displayed_titles.add(title) %>
     <% end %>
-  </div>
+  <% end %>
+</div>
+
+<% if @lowest_price_game.present? %>
+  <p>Prezzo più basso trovato per <%= @lowest_price_game['title'] %>: <%= "%.2f" % @lowest_price_game['price_new'] %></p>
+<% end %>
+
 <% else %>
   <p>Risultati della ricerca:</p>
   <p>Nessun risultato trovato.</p>
