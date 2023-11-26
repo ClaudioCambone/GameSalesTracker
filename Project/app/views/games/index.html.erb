@@ -15,25 +15,13 @@
   <tbody>
   <% @deals.each do |deal| %>
     <tr>
-      <td><%= link_to deal['title'], details_game_path(plain: deal['plain']) %></td>
-      <td><%= "€ %.2f" % deal['price_new'] %></td>
-      <td><%= "€ %.2f" % deal['price_old'] %></td>
+      <td><%= deal_title(deal) %></td>
+      <td><%= formatted_price(deal['price_new']) %></td>
+      <td><%= formatted_price(deal['price_old']) %></td>
       <td><%= deal['price_cut'] %> %</td>
-      <td><%= deal['added'].present? ? Time.at(deal['added']).strftime("%Y-%m-%d %H:%M:%S") : 'Data non disponibile' %></td>
-      <td>
-        <% if deal['expiry'].present? %>
-          <%= Time.at(deal['expiry']).strftime("%Y-%m-%d %H:%M:%S") %>
-        <% else %>
-          Expiry non disponibile
-        <% end %>
-      </td>
-      <td>
-        <% if deal['shop'].present? %>
-          <%= link_to "Disponibile su #{deal['shop']['name']}", deal['urls']['buy'], target: '_blank' %>
-        <% else %>
-          Dettagli non disponibili
-        <% end %>
-      </td>
+      <td><%= formatted_time(deal['added']) %></td>
+      <td><%= formatted_expiry(deal['expiry']) %></td>
+      <td><%= shop_link(deal) %></td>
     </tr>
   <% end %>
 </tbody>

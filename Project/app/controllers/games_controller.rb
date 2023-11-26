@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @games = [] # O qualsiasi altra logica per ottenere i giochi desiderati
+    @games = []
     @deals = get_deals
   end
 
@@ -13,10 +13,11 @@ class GamesController < ApplicationController
     if params[:search_query].present?
       @search_query = params[:search_query]
       @games = search_games
+      @games = Kaminari.paginate_array(@games).page(params[:page]).per(9) # Imposta il numero desiderato di risultati per pagina
     else
       @games = []
     end
-  end
+  end  
 
   def details
     game_plain = params[:plain]
