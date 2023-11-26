@@ -41,7 +41,7 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=20&region=eu2&country=CZ&shops=steam%2Cgog"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100&region=eu2&country=CZ&shops=steam%2Cgog"
 
     begin
       response = RestClient.get(url)
@@ -59,19 +59,42 @@ class GamesController < ApplicationController
   end
 
   def search_games
-    url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=20&strict=0"
-
+    url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=100&strict=0"
+    
     begin
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
-
+    
       game_data = parsed_response['data']['list']
-
-      if game_data.present?
-        return game_data
-      else
-        return []
+  
+      @prezzi_attuali_inferiori = {}
+      game_data.each do |game|
+        plain = game['plain']
+        if @prezzi_attuali_inferiori.key?(plain)
+          @prezzi_attuali_inferiori[plain] = [game['price_new'].to_f, @prezzi_attuali_inferiori[plain]].min
+        else
+          @prezzi_attuali_inferiori[plain] = game['price_new'].to_f
+        end
       end
+  
+      game_data.each do |game|
+        game['price_new'] = @prezzi_attuali_inferiori[game['plain']].to_s
+      end
+      
+      lowest_price = Float::INFINITY
+      lowest_price_game = nil
+  
+      game_data.each do |game|
+        price_new = game['price_new'].to_f
+        if price_new < lowest_price
+          lowest_price = price_new
+          lowest_price_game = game
+        end
+      end
+      
+      @lowest_price_game = lowest_price_game if lowest_price_game.present?
+  
+      return game_data
     rescue RestClient::ExceptionWithResponse => e
       puts "Errore nella richiesta: #{e.response}"
       return []
@@ -79,8 +102,8 @@ class GamesController < ApplicationController
       puts "Errore: #{e.message}"
       return []
     end
-  end
-
+  end  
+ 
   def get_game_details(game_plains)
     details_url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{game_plains.join(',')}"
 

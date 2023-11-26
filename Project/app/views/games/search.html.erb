@@ -3,19 +3,19 @@
   <%= stylesheet_link_tag 'cards', media: 'all' %>
 </head>
 
-
 <% if @games.present? %>
-<br><br>
+  <br><br>
   <div class="row row-cols-1 row-cols-md-3">
     <% displayed_titles = Set.new %>
     <% @games.each do |game| %>
       <% title = game['title'] %>
+      <% prezzo_attuale_inferiore = game['price_new'] %>
       <% unless displayed_titles.include?(title) %>
         <div class="col mb-4">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"><%= title %></h5>
-              <p class="card-text">Prezzo Attuale: <%= "%.2f" % game['price_new'] %></p>
+              <p class="card-text">Prezzo Attuale: <%= "%.2f" % prezzo_attuale_inferiore %></p>
               <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
             </div>
           </div>
@@ -24,7 +24,6 @@
       <% end %>
     <% end %>
   </div>
-
 <% else %>
   <p>Risultati della ricerca:</p>
   <p>Nessun risultato trovato.</p>
