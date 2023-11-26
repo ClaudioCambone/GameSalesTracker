@@ -1,6 +1,6 @@
 .button-link {
     padding: 7px;
-    background-color: #4285f4;
+    background-color: #001F3F;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -8,16 +8,19 @@
 
   .button-login {
     padding: 7px;
-    background-color: teal;
+    background-color: #001F3F;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
   }
 
   .top-nav {
-    background-color: lightblue;
+    background-color: #4B5155;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 15px;
   }

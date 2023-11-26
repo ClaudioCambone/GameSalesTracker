@@ -1,27 +1,41 @@
 .profile-container {
-    display: flex;
-  }
-  
-  .profile-left-column {
-    width: 35%;
-    padding: 20px;
-  }
-  
-  .profile-right-column {
-    width: 65%;
-    padding: 20px;
-  }
-  
-  .profile-picture {
-    border-radius: 50%; /* Make the profile picture round */
-    width: 100px; /* Adjust the size as needed */
-    height: 100px;
-  }
-  
-  .edit-profile-button {
-      padding: 7px;
-      background-color: teal;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-  }
+  display: flex;
+}
+
+.profile-left-column {
+  width: 35%;
+  padding: 20px;
+  background-color: #4B5155;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.profile-right-column {
+  width: 65%;
+  padding: 20px;
+  margin: 10px;
+  background-color: #4B5155;
+  border-radius: 5px;
+}
+.wishlist {
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #4B5155;
+  border-radius: 5px;
+}
+
+.profile-picture {
+  border-radius: 50%; /* Make the profile picture round */
+  width: 100px; /* Adjust the size as needed */
+  height: 100px;
+}
+
+.edit-profile-button {
+    padding: 7px;
+    background-color: #001F3F;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
