@@ -276,8 +276,9 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   require 'omniauth-facebook'
    config.omniauth :facebook, '2855687551236717', '1fd49d5e142d20c026019c08e087e724',  scope: 'email', info_fields: 'email,name'
-
-  config.omniauth :google_oauth2, "194957612305-69kgcoieeujhuv64ffs4a8b4ie08mrk6.apps.googleusercontent.com", "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", access_type: "online"
+   config.omniauth :steam, '2C9ECEC9C6837B5C3981B38CD12F8C1D'
+   config.omniauth :google_oauth2, "194957612305-69kgcoieeujhuv64ffs4a8b4ie08mrk6.apps.googleusercontent.com", "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", access_type: "online"
+   config.omniauth :github, '891abe060b19f171503a', 'b3cf4872eb6bba2e1cf2594a0d08777f96fdff30', scope: 'email', info_fields: 'email,name'
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

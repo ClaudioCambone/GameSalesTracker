@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Devise modules
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2 steam github]
   
   validates :password, presence: true, if: -> { password.present? }
 
@@ -31,6 +31,8 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     # This line checks if the user email received by the Omniauth is already included in our databases.
       user = User.where(email: auth.info.email).first
+      puts "------------------------------------"
+      puts auth.info.mail
     # This line sets the user unless there is a user found in the line above, therefore we use ||= notation to evaluate if the user is nill, then set it to the User.create
       user ||= User.create!(provider: auth.provider, uid: auth.uid, email: auth.info.email, password: Devise.friendly_token[0, 20])
       user
@@ -46,6 +48,8 @@ class User < ApplicationRecord
       super
     end
   end
+
+  
   
   def password_required?
     false

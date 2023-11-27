@@ -30,4 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  devise:
+    registrations:
+      signed_up: 'Welcome! You have signed up successfully.'
+      check_your_email: 'Check your email for further instructions.'
+
