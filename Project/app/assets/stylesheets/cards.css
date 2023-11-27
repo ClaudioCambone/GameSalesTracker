@@ -1,9 +1,19 @@
 .card {
-    background-color: #a6c8e0; /* Pastel Blue */
+    background-color: #242424; 
     height: 100%; /* Ensures all cards have the same height */
+    border-color: #ffff;
+    border-radius: 5px;
+    border-width: 2px;
   }
+
+.card-title{
+  color:#ffff;
+}
+
+.card-text{
+  color: #ffff;
+}
   
   .card-body {
     padding: 20px; /* Adjust the padding as needed */
   }
-  

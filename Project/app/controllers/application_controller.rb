@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+
+
   helper ApplicationHelper
     def destroy
         sign_out(current_user) # This method is provided by Devise
