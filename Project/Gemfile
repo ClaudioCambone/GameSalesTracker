@@ -37,6 +37,9 @@ gem 'rest-client'
   gem 'omniauth-rails_csrf_protection'
   gem 'letter_opener'
   gem 'activestorage'
+gem 'kaminari'
+gem "turbo-rails"
+
 
    
 #For the use of avatars

@@ -1,11 +1,16 @@
+<!DOCTYPE html>
+<html>
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <%= stylesheet_link_tag 'cards', media: 'all' %>
 </head>
 
+<body style="background-color: #242424">
+
+<% per_page = 9 %> <!-- Imposta il numero desiderato di risultati per pagina -->
 
 <% if @games.present? %>
-<br><br>
+  <br><br>
   <div class="row row-cols-1 row-cols-md-3">
     <% displayed_titles = Set.new %>
     <% @games.each do |game| %>
@@ -13,9 +18,10 @@
       <% unless displayed_titles.include?(title) %>
         <div class="col mb-4">
           <div class="card">
+            <img src="<%= game['image_url'] %>" class="card-img-top" alt="<%= title %>">
             <div class="card-body">
               <h5 class="card-title"><%= title %></h5>
-              <p class="card-text">Prezzo Attuale: <%= "%.2f" % game['price_new'] %></p>
+              <p class="card-text">Prezzo Attuale: <%= "%.2f" % game['price_new'] %> €</p>
               <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
             </div>
           </div>
@@ -25,7 +31,19 @@
     <% end %>
   </div>
 
+  <!-- Aggiunta della Paginazione -->
+  <% if @games.size == per_page %>
+    <% next_page = params[:page].to_i + 1 %>
+    <%= link_to "Carica Altri", search_games_path(search_query: params[:search_query], page: next_page), remote: true %>
+  <% end %>
+
 <% else %>
   <p>Risultati della ricerca:</p>
   <p>Nessun risultato trovato.</p>
 <% end %>
+
+</body>
+</html>
+
+<!-- Aggiunta della Paginazione -->
+<%= paginate @games %>

@@ -8,19 +8,52 @@ module GamesHelper
       else
         'N/D'
       end
-    end
+    end    
+    
+    def game_image_url(plain)
+      game_info_url = "https://api.isthereanydeal.com/v01/game/info/?key=#{ENV['ITAD_API_KEY']}&plains=#{plain}"
+      response = RestClient.get(game_info_url)
+      parsed_response = JSON.parse(response)
+      image_url = parsed_response.dig('data', plain, 'image')
+      image_url.presence || placeholder_image_url
+    rescue RestClient::ExceptionWithResponse, JSON::ParserError
+      placeholder_image_url
+    end    
   
-    def display_percent(value)
-      if value.present?
-        "#{value}%"
-      else
-        'N/D'
+    def placeholder_image_url
+      'https://via.placeholder.com/150' # URL placeholder
+    end
+
+    def game_info(plain)
+      url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{plain}"
+      
+      begin
+        response = RestClient.get(url)
+        parsed_response = JSON.parse(response)
+        
+        game_data = parsed_response['data'][plain]
+        return {
+          'title' => game_data['title'],
+          'image_url' => game_data['image'],
+          'game_url' => game_data['urls']['game']
+        }
+      rescue RestClient::ExceptionWithResponse => e
+        puts "Errore nella richiesta: #{e.response}"
+        return {}
+      rescue => e
+        puts "Errore: #{e.message}"
+        return {}
       end
-    end
-  
+    end    
+
     def display_boolean(value)
       value.present? ? (value ? 'Yes' : 'No') : 'N/D'
     end
+    
+  
+    def display_percent(value)
+      value.present? ? "#{value}%" : 'N/D'
+    end    
   
     def display_review(review)
       if review.present?
@@ -37,5 +70,30 @@ module GamesHelper
         'N/D'
       end
     end
+
+    def deal_title(deal)
+      link_to deal['title'], details_game_path(plain: deal['plain'])
+    end
+
+    def formatted_price(price)
+      "€ #{'%.2f' % price}" if price.present?
+    end
+
+    def formatted_time(time)
+      time.present? ? Time.at(time).strftime("%Y-%m-%d %H:%M:%S") : 'Data non disponibile'
+    end
+
+    def formatted_expiry(expiry)
+      expiry.present? ? Time.at(expiry).strftime("%Y-%m-%d %H:%M:%S") : 'Expiry non disponibile'
+    end
+
+    def shop_link(deal)
+      if deal['shop'].present?
+        link_to "Disponibile su #{deal['shop']['name']}", deal['urls']['buy'], target: '_blank'
+      else
+        'Dettagli non disponibili'
+      end
+    end
+
   end
   
