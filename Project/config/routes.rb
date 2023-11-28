@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
   root "games#index"
+<<<<<<< HEAD
     get '/user', to: 'user#index'
     get '/support', to: 'support#index'
   get 'games/search', to: 'games#search', as: :search_games
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
 
+=======
+>>>>>>> refs/remotes/origin/main
 
  
 
@@ -20,8 +23,12 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
+<<<<<<< HEAD
   }  
 
+=======
+  }
+>>>>>>> refs/remotes/origin/main
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
   end  

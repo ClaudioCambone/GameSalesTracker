@@ -17,3 +17,17 @@
   .card-body {
     padding: 20px; /* Adjust the padding as needed */
   }
+
+  .image-container {
+    height: 47%;
+    overflow: hidden;
+  }
+
+  .container {
+    max-width: 100%; /* or specify a maximum width */
+  }
+
+  .card-img-top {
+    width: 100%; /* Make images inside cards responsive */
+    height: auto;
+  }

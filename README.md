@@ -29,7 +29,7 @@ Make sure you have the following installed:
 
 1. Navigate to the project directory
 
- 2. istall dependencies: 
+ 2. install dependencies: 
 ```
 bundle install
 ```
@@ -38,7 +38,7 @@ bundle install
 rails db:create
 rails db:migrate
 ```
-4. Start the server
+4. Start the server:
 ```
 rails server
 ```
@@ -62,5 +62,5 @@ This project is developed using the following technologies:
 - Alessandro Darie
 - Karen Kolendowska
 
-This project was developed as part of an exam for the degree in computer engineering at La Sapienza.
+This project was developed as part of an exam for the degree in Computer Engineering at La Sapienza university.
 

@@ -44,9 +44,14 @@ gem 'rest-client'
 
   gem 'letter_opener'
   gem 'activestorage'
+<<<<<<< HEAD
   gem 'kaminari'
 
+=======
+gem 'kaminari'
+>>>>>>> refs/remotes/origin/main
 
+gem 'mini_racer'
    
 #For the use of avatars
   gem 'file_validators'

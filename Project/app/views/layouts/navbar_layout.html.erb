@@ -12,7 +12,7 @@
         <div style="width: 50%; text-align: center;">
 
           <% if user_signed_in? %>
-            Welcome back, <%= current_user.email%>! [<%= link_to 'Logout', destroy_user_session_path, :method => :delete%>]
+            Welcome back, <%= current_user.username%>! <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: "button-login" %>
           <% else %>
         <!-- Content for non-logged-in users -->
             New here? <%= link_to "Sign Up", new_user_registration_path, class: "button-login" %>
@@ -31,7 +31,7 @@
         <%= link_to "Login", new_user_session_path, class: "button-link" %>
       <% end %>
       <br><br>
-        <%= link_to "Support", support_path, class: "button-link" %>
+        <%= link_to "Need Help?", support_path, class: "button-link" %>
       </div>
     </nav>
    <% flash.each do |type, msg| %> <div>
@@ -54,5 +54,3 @@
   </body>
   <br><br>
 </html>
-
-<%= link_to "Need help?", support_path %>

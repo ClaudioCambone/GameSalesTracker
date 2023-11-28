@@ -17,3 +17,7 @@
     background-color: #242424;
     color: #fff;
   }
+
+  .form-outline.form-white input.form-control {
+    font-size: 14px;
+  }

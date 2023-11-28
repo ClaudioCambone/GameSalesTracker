@@ -1,38 +1,49 @@
 <% if @game_details.present? %>
-  <h1><%= @game_details.values.first['title'] %></h1>
-  <% if @game_details.values.first['image'].present? %>
-    <h3><%= image_tag(@game_details.values.first['image']) %></h3>
-  <% else %>
-    <p>Immagine non disponibile al momento.</p>
-  <% end %>
-<% else %>
-  <p>Dettagli non disponibili al momento.</p>
-<% end %>
+  <div class="container mt-4">
+    <h1 class="mb-3"><%= @game_details.values.first['title'] %></h1>
 
-<h2>Recensioni:</h2>
-<% if @game_details.present? %>
-  <% game_plain = params[:plain] %>
-  <% reviews = @game_details[game_plain]['reviews'] %>
-  <div>
-    <% if reviews.present? && reviews['steam'].present? %>
-      <p>Valutazioni positive: <%= reviews['steam']['perc_positive'] || 'N/A' %> %</p>
-      <p>Totale recensioni: <%= reviews['steam']['total'] || 'N/A' %></p>
-      <p>Valutazione: <%= reviews['steam']['text'] || 'N/A' %></p>
+    <% if @game_details.values.first['image'].present? %>
+      <div class="mb-4">
+        <%= image_tag(@game_details.values.first['image'], class: 'img-fluid') %>
+      </div>
     <% else %>
-      <p>Recensioni non disponibili al momento.</p>
+      <div class="mb-4">
+        <%= image_tag('noimage.png', class: 'img-fluid', style: 'width: 40%; height: 40%;') %>
+      </div>
     <% end %>
   </div>
 <% else %>
-  <p>Dettagli non disponibili al momento.</p>
+  <div class="container mt-4">
+    <p>Dettagli non disponibili al momento.</p>
+  </div>
 <% end %>
 
-<% if @game_prices.present? %>
-  <% if @lowest_price.present? %>
-    <h2>Prezzo piu' basso di sempre:</h2>
-    <tr>
-      <td colspan="5">
+<div class="container mt-4">
+  <h2 class="mb-3">Recensioni:</h2>
+  <% if @game_details.present? %>
+    <% game_plain = params[:plain] %>
+    <% reviews = @game_details[game_plain]['reviews'] %>
+    <div class="mb-4">
+      <% if reviews.present? && reviews['steam'].present? %>
+        <p>Valutazioni positive: <%= reviews['steam']['perc_positive'] || 'N/A' %> %</p>
+        <p>Totale recensioni: <%= reviews['steam']['total'] || 'N/A' %></p>
+        <p>Valutazione: <%= reviews['steam']['text'] || 'N/A' %></p>
+      <% else %>
+        <p>Recensioni non disponibili al momento.</p>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Dettagli non disponibili al momento.</p>
+  <% end %>
+</div>
+
+<div class="container mt-4">
+  <% if @game_prices.present? %>
+    <% if @lowest_price.present? %>
+      <h2 class="mb-3">Prezzo piu' basso di sempre:</h2>
+      <div class="mb-4">
         <%= number_to_currency(@lowest_price['price'], unit: '€', precision: 2) %> su
-          <% case @lowest_price['shop']['name'] %>
+        <% case @lowest_price['shop']['name'] %>
         <% when 'Steam' %>
           <%= link_to 'Steam', 'https://store.steampowered.com/', target: '_blank' %>
         <% when 'Humble Store' %>
@@ -74,6 +85,7 @@
       <% end %>
     </td>
   </tr>
+  </div>
   <% end %>
 
   <h2>Prezzi:</h2>

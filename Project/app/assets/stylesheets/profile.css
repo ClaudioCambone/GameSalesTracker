@@ -5,8 +5,11 @@
 .profile-left-column {
   width: 35%;
   padding: 20px;
+<<<<<<< HEAD
   background-color: #242424;
   border-radius: 5px;
+=======
+>>>>>>> refs/remotes/origin/main
   margin: 10px;
 }
 
@@ -14,8 +17,11 @@
   width: 65%;
   padding: 20px;
   margin: 10px;
+<<<<<<< HEAD
   background-color: #242424;
   border-radius: 5px;
+=======
+>>>>>>> refs/remotes/origin/main
 }
 .wishlist {
   padding: 20px;
