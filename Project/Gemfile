@@ -29,16 +29,22 @@ gem "jbuilder"
 
 gem 'rest-client'
 
+
+  # Oauth
   gem 'omniauth'
   gem 'omniauth-facebook'
   gem 'omniauth-steam'
   gem 'omniauth-google-oauth2'
   gem 'omniauth-github'
   gem 'omniauth-rails_csrf_protection'
+
+  # Role - Based model 
+  gem 'canard', '~> 0.6.2.pre'
+
+
   gem 'letter_opener'
   gem 'activestorage'
-gem 'kaminari'
-gem "turbo-rails"
+  gem 'kaminari'
 
 
    

@@ -12,7 +12,6 @@
     <h2>Your Account</h2>
 
 
-
       <% if current_user.avatar.present? %>
       <%= image_tag current_user.avatar, class: "rounded-circle profile-picture", size: "100x100" %>
       <% else %>
@@ -35,13 +34,12 @@
     </ul>
   </div>
 </div>
-
+<hr class="separator">
 <div class="profile-container">
   <div class="wishlist">
-    <h1>Your wishlist:</h1>
+    <h1 style="align: center">Your wishlist:</h1>
   </div>
 </div>
 <br><br><br>
- <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
 
 

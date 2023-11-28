@@ -22,6 +22,12 @@ end
     @user = current_user
   end
 
+  def destroy
+    @user = current_user
+    authorize! :destroy, @user
+
+  end
+
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar)
   end

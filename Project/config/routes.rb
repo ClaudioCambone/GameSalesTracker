@@ -1,20 +1,17 @@
 Rails.application.routes.draw do
+
+
   root "games#index"
-<<<<<<< HEAD
     get '/user', to: 'user#index'
+    get '/support', to: 'support#index'
   get 'games/search', to: 'games#search', as: :search_games
   get 'games/details/:plain', to: 'games#details', as: :details_game
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
 
-=======
->>>>>>> 20f798f1f89b11f88d8ec960c5d2c22338e06360
 
-  get '/user', to: 'user#index'
-  get '/support', to: 'support#index'
+ 
 
-  get 'games/search', to: 'games#search', as: :search_games
-  get 'games/details/:plain', to: 'games#details', as: :details_game
 
   get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
 
@@ -23,12 +20,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     registrations: 'users/registrations',
     confirmations: 'users/confirmations'
-  }
-<<<<<<< HEAD
-  
-=======
+  }  
 
->>>>>>> 20f798f1f89b11f88d8ec960c5d2c22338e06360
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
   end  
@@ -38,4 +31,12 @@ Rails.application.routes.draw do
   end
 
   resources :deals
+
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+
+  namespace :admins do
+    resources :users, only: [:index, :destroy]
+    get 'index', to: 'admins#index', as: :index
+  end
 end

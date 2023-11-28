@@ -10,6 +10,7 @@
           <%= link_to "My Wishlist", support_path, class: "button-link" %>
         </div>
         <div style="width: 50%; text-align: center;">
+
           <% if user_signed_in? %>
             Welcome back, <%= current_user.email%>! [<%= link_to 'Logout', destroy_user_session_path, :method => :delete%>]
           <% else %>
@@ -47,6 +48,8 @@
   </head>
   <br>
   <body>
+  <!-- app/views/layouts/application.html.erb or wherever your navigation is -->
+
     <%= yield %>
   </body>
   <br><br>

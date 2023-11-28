@@ -4,13 +4,27 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :games, dependent: :destroy
-  has_many :comments, dependent: :destroy
+         
   # Devise modules
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2 steam github]
   
   validates :password, presence: true, if: -> { password.present? }
 
+
+
+  before_create :set_default_role
+
+
+  # This ensures that new users have a default role of "user" unless explixity said that they are "admins"
+
+  def set_default_role
+    self.role ||= 'user'
+  end
+ 
+
+  def admin?
+    role == 'admin'
+  end
 
   
   ##...Avatar Attachment...##
@@ -67,8 +81,6 @@ class User < ApplicationRecord
     self.encrypted_password.blank?
   end
 
-
-  
 
 end
 
