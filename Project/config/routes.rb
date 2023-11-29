@@ -19,8 +19,9 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks',
     passwords: 'users/passwords',
     registrations: 'users/registrations',
-    confirmations: 'users/confirmations'
+    confirmations: 'users/confirmations',
   }  
+
 
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
 
   namespace :admins do
     resources :users, only: [:index, :destroy]
-    get 'index', to: 'admins#index', as: :index
+    get 'index', to: 'users#index', as: :index
+    get 'destroy', to: 'users#destroy', as: :destroy
   end
 end

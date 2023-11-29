@@ -18,14 +18,25 @@ def create
   end
 end
 
+
+def panel
+  if current_user.admin?
+    @users = User.all
+    render 'admins/panel'
+  else
+    flash[:alert] = "You do not have permission to access this page."
+    redirect_to root_path
+  end
+end
+
   def show
     @user = current_user
   end
 
   def destroy
     @user = current_user
-    authorize! :destroy, @user
-
+    @user.destroy
+    redirect_to root_path, notice: 'Account deleted successfully.'
   end
 
   def user_params

@@ -1,6 +1,5 @@
-class Admins::AdminsController < ApplicationController
+class Admins::UsersController < ApplicationController
     before_action :authenticate_user!
-
 
     def index
         if current_user.admin?
@@ -13,12 +12,10 @@ class Admins::AdminsController < ApplicationController
       end
       
       def destroy
+        puts "Params: #{params.inspect}" # Add this line
         @user = User.find(params[:id])
-        @user.destroy
-        respond_to do |format|
-            format.html { redirect_to admin_index_path notice: 'User was successfully deleted.' }
-            format.json { head :no_content }
-        end
+        @user.destroy 
+           redirect_to admins_index_path notice: 'User was successfully deleted.' 
     end
     
     
