@@ -20,7 +20,7 @@
       <td><%= formatted_price(deal['price_old']) %></td>
       <td><%= deal['price_cut'] %> %</td>
       <td><%= formatted_time(deal['added']) %></td>
-      <td><%= formatted_expiry(deal['expiry']) %></td>
+      <td><%= countdown_to_end_date(deal['expiry']) %></td>
       <td><%= shop_link(deal) %></td>
     </tr>
   <% end %>

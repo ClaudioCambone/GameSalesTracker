@@ -37,7 +37,7 @@ gem 'rest-client'
   gem 'omniauth-google-oauth2'
   gem 'omniauth-github'
   gem 'omniauth-rails_csrf_protection'
-
+  gem 'time'
   # Role - Based model 
   gem 'canard', '~> 0.6.2.pre'
 

@@ -87,6 +87,19 @@ module GamesHelper
       expiry.present? ? Time.at(expiry).strftime("%Y-%m-%d %H:%M:%S") : 'Expiry non disponibile'
     end
 
+    def countdown_to_end_date(end_date)
+      return '--' unless end_date
+    
+      remaining_time = end_date.to_i - Time.now.to_i
+    
+      days = remaining_time / 1.day
+      hours = (remaining_time % 1.day) / 1.hour
+      minutes = (remaining_time % 1.hour) / 1.minute
+      seconds = remaining_time % 1.minute
+    
+      "#{days.to_i} d #{hours} h #{minutes} m #{seconds} s"
+    end
+
     def shop_link(deal)
       if deal['shop'].present?
         link_to "Disponibile su #{deal['shop']['name']}", deal['urls']['buy'], target: '_blank'

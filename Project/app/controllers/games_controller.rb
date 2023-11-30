@@ -42,7 +42,7 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=20&region=eu2&country=CZ&shops=steam%2Cgog"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100"
 
     begin
       response = RestClient.get(url)
