@@ -26,6 +26,9 @@ class User < ApplicationRecord
     role == 'admin'
   end
 
+  ## Collections
+  has_many :collections
+
   
   ##...Avatar Attachment...##
   has_one_attached :avatar

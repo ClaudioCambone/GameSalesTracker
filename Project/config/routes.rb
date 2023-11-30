@@ -2,14 +2,13 @@ Rails.application.routes.draw do
 
 
   root "games#index"
-    get '/user', to: 'user#index'
-    get '/support', to: 'support#index'
+  get '/user', to: 'user#index'
+  get '/support', to: 'support#index'
   get 'games/search', to: 'games#search', as: :search_games
   get 'games/details/:plain', to: 'games#details', as: :details_game
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
+  get '/collections', to: 'collections#index'
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
-
-
  
 
 
@@ -25,15 +24,15 @@ Rails.application.routes.draw do
 
   devise_scope :user do  
     get '/users/sign_out' => 'devise/sessions#destroy'     
-  end  
-
-  resources :games do
-    resources :comments
-  end
+  end 
 
   resources :deals
 
   resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+  resources :games do
+    resources :collections, only: [:new, :create], controller: 'game_collections'
+  end
 
 
   namespace :admins do
