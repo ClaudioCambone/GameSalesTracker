@@ -9,9 +9,9 @@ class CollectionsController < ApplicationController
     @collection = current_user.collections.build(collection_params)
 
     if @collection.save
-      redirect_to collections_path, notice: 'Collection was successfully created.'
+      redirect_to root_path, notice: 'Collection was successfully created.'
     else
-      render :index
+      redirect_to root_path, notice: 'There was an error in creating your collection.'
     end
   end
 

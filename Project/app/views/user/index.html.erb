@@ -37,7 +37,22 @@
 <hr class="separator">
 <div class="profile-container">
   <div class="wishlist">
-    <h1 style="align: center">Your wishlist:</h1>
+    <h1 style="align: center">
+    
+    <h2>Your Collections:</h2>
+<% if @collections.present? %>
+  <ul>
+    <% @collections.each do |collection| %>
+      <li><%= collection.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You don't have any collections yet.</p>
+<% end %>
+    
+    
+    
+    </h1>
   </div>
 </div>
 <br><br><br>

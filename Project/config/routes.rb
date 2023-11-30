@@ -31,9 +31,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
   resources :games do
-    resources :collections, only: [:new, :create], controller: 'game_collections'
+    resources :collections, only: [:index, :create], controller: 'game_collections'
   end
 
+  resources :collections, only: [:index, :create]
 
   namespace :admins do
     resources :users, only: [:index, :destroy]

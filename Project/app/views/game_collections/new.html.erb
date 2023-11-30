@@ -1,0 +1,8 @@
+<h2>Add <%= @game.name %> to Collection</h2>
+
+<%= form_with(model: @collection, url: game_collections_path(@game), method: :post) do |form| %>
+  <%= form.collection_select :id, @available_collections, :id, :name %>
+  or <%= link_to 'create a new collection', new_game_collection_path(@game) %>
+
+  <%= form.submit 'Add to Collection' %>
+<% end %>
