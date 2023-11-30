@@ -27,4 +27,7 @@ Togliere la scritta welcome back durante la ricerca
 
 NOTIFICHE —> le notifiche della wishilist sono ancora da pensare, tocca vedere se ci avanza tempo e come implementarle. Questo perchè è uno sbatti inviare delle mail ad un utente anche se non è loggato. Quello che possiamo fare è implementare un sistema di notifiche quando l’utente esegue il login. Gli appare un messaggio che lo avvisa se ci sono sconti nella sua wishlist
 
+
+EXTRA -> Far funzionare effettivamente la pagina get in touch 
+
 (Vedremo) RECENSIONI —> ogni volta che un utente inserisce una review, se non è presente il gioco nel db viene creata l’occorrenza, se l’occorrenza è già presente viene controllato prima che venga aperta la pagina di un gioco. Se recensioni sono presenti vengono visualizzate
