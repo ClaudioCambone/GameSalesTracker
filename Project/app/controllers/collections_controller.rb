@@ -15,6 +15,13 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def destroy
+    @collection = Collection.find(params[:id])
+    @collection.destroy
+
+    redirect_to root_path, notice: 'Collection was successfully deleted.'
+  end
+
   private
 
   def collection_params

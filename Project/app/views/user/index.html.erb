@@ -43,7 +43,9 @@
 <% if @collections.present? %>
   <ul>
     <% @collections.each do |collection| %>
-      <li><%= collection.name %></li>
+      <li><%= collection.name %>
+       <%= button_to 'Delete', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+       </li>
     <% end %>
   </ul>
 <% else %>
