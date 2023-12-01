@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'games/details/:plain', to: 'games#details', as: :details_game
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
   get '/collections', to: 'collections#index'
+  post 'games/add_to_collection', to: 'games#add_to_collection', as: :add_to_collection_game
+
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
  
 
@@ -32,8 +34,12 @@ Rails.application.routes.draw do
 
   resources :collections, only: [:index, :create, :destroy]
 
+  resources :game_collections, only: [:create] 
+
   resources :games do
-    resources :collections, only: [:index, :create, :destroy], controller: 'game_collections'
+    member do
+      post 'add_to_collection'
+    end
   end
 
   namespace :admins do

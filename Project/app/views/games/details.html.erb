@@ -124,3 +124,12 @@
 <% else %>
   <p>Prezzi non disponibili al momento.</p>
 <% end %>
+
+<% if user_signed_in? %>
+  <h2>Add to Collection:</h2>
+  <%= form_with(url: game_collections_path, method: :post) do |form| %>
+    <%= form.hidden_field :game_plain, value: @game_plain %>
+    <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
+    <%= form.submit 'Add to Collection', class: 'btn btn-primary' %>
+  <% end %>
+<% end %>

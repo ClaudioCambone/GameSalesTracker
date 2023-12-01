@@ -1,5 +1,10 @@
 class CollectionsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  
+  def show
+    @collection = Collection.find(params[:id])
+    @games = @collection.games
+  end
 
   def index
     @collections = current_user.collections
@@ -19,7 +24,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
     @collection.destroy
 
-    redirect_to root_path, notice: 'Collection was successfully deleted.'
+    redirect_to user_path, notice: 'Collection was successfully deleted.'
   end
 
   private

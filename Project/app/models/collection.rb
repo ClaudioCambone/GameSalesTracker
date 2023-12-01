@@ -1,5 +1,5 @@
 class Collection < ApplicationRecord
-    belongs_to :user
-    has_and_belongs_to_many :games
-  end
-  
+  belongs_to :user
+  has_many :game_collections
+  has_many :games, through: :game_collections
+end

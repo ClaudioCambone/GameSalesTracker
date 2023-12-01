@@ -21,18 +21,39 @@ class GamesController < ApplicationController
 
   def details
     game_plain = params[:plain]
-
+  
     begin
       @game_details = get_game_details([game_plain])
       @game_prices = get_game_prices(game_plain)
       @lowest_price = get_lowest_price(game_plain)
       store_lowest_prices
+
+      @game_plain = game_plain
+  
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
       @game_prices = nil
       @lowest_price = nil
     end
+  
+    # Create or find a game collection instance for the current user
+    @game_collection = current_user.collections.new
+  end
+  
+
+  def add_to_collection
+    @game = Game.find_by(plain: params[:plain])
+    collection_id = params[:collection_id]
+  
+    if @game && collection_id
+      @game.collections << Collection.find(collection_id)
+      flash[:notice] = 'Game added to collection successfully.'
+    else
+      flash[:error] = 'Failed to add game to collection.'
+    end
+  
+    redirect_back fallback_location: root_path
   end
 
   private
