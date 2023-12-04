@@ -38,6 +38,8 @@ gem 'rest-client'
   gem 'omniauth-github'
   gem 'omniauth-rails_csrf_protection'
   gem 'time'
+  gem 'lazyload-rails'
+
   # Role - Based model 
   gem 'canard', '~> 0.6.2.pre'
 

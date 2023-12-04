@@ -1,28 +1,34 @@
-<h1>Nuove Offerte</h1>
-<%= link_to 'Admin Panel', admins_index_path %>
-<table>
-  <thead>
-    <tr>
-      <th>Titolo</th>
-      <th>Prezzo Attuale</th>
-      <th>Prezzo Originale</th>
-      <th>Sconto</th>
-      <th>Data Inizio Sconto</th>
-      <th>Data Fine Sconto</th>
-      <th>Dettagli</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @deals.each do |deal| %>
-    <tr>
-      <td><%= deal_title(deal) %></td>
-      <td><%= formatted_price(deal['price_new']) %></td>
-      <td><%= formatted_price(deal['price_old']) %></td>
-      <td><%= deal['price_cut'] %> %</td>
-      <td><%= formatted_time(deal['added']) %></td>
-      <td><%= countdown_to_end_date(deal['expiry']) %></td>
-      <td><%= shop_link(deal) %></td>
-    </tr>
-  <% end %>
-</tbody>
-</table>
+<h1 class="text-light">Nuove Offerte</h1>
+<%= link_to 'Admin Panel', admins_index_path, class: "text-light" %>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover bg-dark">
+    <thead class="thead-dark">
+      <tr>
+        <th class="text-light">Titolo</th>
+        <th class="text-light">Prezzo Attuale</th>
+        <th class="text-light">Prezzo Originale</th>
+        <th class="text-light">Sconto</th>
+        <th class="text-light">Data Inizio Sconto</th>
+        <th class="text-light">Data Fine Sconto</th>
+        <th class="text-light">Dettagli</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @deals.each do |deal| %>
+      <tr>
+        <td class="text-light">
+          <%= deal_title(deal) %>
+          <%= game_image_tag(deal['image_url']) %>
+        </td>
+        <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
+        <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
+        <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
+        <td class="text-light"><%= formatted_time(deal['added']) %></td>
+        <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
+        <td class="text-light"><%= shop_link(deal) %></td>
+      </tr>
+    <% end %>    
+    </tbody>
+  </table>
+</div>

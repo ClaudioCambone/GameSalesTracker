@@ -19,32 +19,40 @@ module GamesHelper
     rescue RestClient::ExceptionWithResponse, JSON::ParserError
       placeholder_image_url
     end    
-  
+
+    def game_image_tag(image_url)
+      if image_url.present?
+        image_tag(image_url, class: "img-thumbnail", alt: "Game Image")
+      else
+        image_tag(placeholder_image_url, class: "img-thumbnail", alt: "Placeholder Image")
+      end
+    end
+    
     def placeholder_image_url
-      'https://via.placeholder.com/150' # URL placeholder
+      'https://via.placeholder.com/460x215' # URL placeholder
     end
 
     def game_info(plain)
       url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{plain}"
-      
+    
       begin
         response = RestClient.get(url)
         parsed_response = JSON.parse(response)
-        
+    
         game_data = parsed_response['data'][plain]
+        
         return {
-          'title' => game_data['title'],
           'image_url' => game_data['image'],
-          'game_url' => game_data['urls']['game']
-        }
+        } if game_data.present?
       rescue RestClient::ExceptionWithResponse => e
-        puts "Errore nella richiesta: #{e.response}"
-        return {}
+        puts "Errore nella richiesta di informazioni del gioco: #{e.response}"
       rescue => e
-        puts "Errore: #{e.message}"
-        return {}
+        puts "Errore nella richiesta di informazioni del gioco: #{e.message}"
       end
-    end    
+    
+      return {}
+    end
+      
 
     def display_boolean(value)
       value.present? ? (value ? 'Yes' : 'No') : 'N/D'

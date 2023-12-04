@@ -64,21 +64,29 @@ class GamesController < ApplicationController
 
   def get_deals
     url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100"
-
+  
     begin
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
       deals_data = parsed_response['data']['list']
-
+  
+      # Aggiungi le informazioni sull'immagine per ciascun gioco
+      deals_data.each do |deal|
+        plain = deal['plain']
+        game_info = game_info(plain)
+        deal['image_url'] = game_info['image_url'] if game_info.present?
+      end
+  
       return deals_data if deals_data.present?
     rescue RestClient::ExceptionWithResponse => e
       puts "Errore nella richiesta dei Deals: #{e.response}"
     rescue => e
       puts "Errore nella richiesta dei Deals: #{e.message}"
     end
-
+  
     return []
   end
+  
 
   def search_games
     url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=100&strict=0"
