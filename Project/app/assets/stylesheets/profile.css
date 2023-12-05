@@ -34,10 +34,14 @@
 
 .edit-profile-button {
     padding: 7px;
-    background-color: #001F3F;
+    background-color: #C0504D;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
+}
+
+.edit-profile-button:hover {
+  color: #ddd;
 }
 
 .separator{

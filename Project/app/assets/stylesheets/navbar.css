@@ -1,24 +1,53 @@
 .button-link {
-    padding: 7px;
-    background-color: #001F3F;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-  }
+  padding: 7px;
+  background-color: #C0504D;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
 
-  .button-login {
-    padding: 7px;
-    background-color: #001F3F;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-  }
+.button-link:hover {
+  color: #ddd;
+}
 
-  .top-nav {
-    background-color: #C0504D;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+.top-nav {
+  background-color: #212529;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-color: #FFFFFF;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 1rem;
+}
+
+.search {
+  width: 45%;
+  position: relative;
+  display: flex;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #1F4889;
+  border-right: none;
+  padding: 5px;
+  height: 30px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.searchButton {
+  border: 1px solid #1F4889;
+  background: #1F4889;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 15px;
+}

@@ -1,7 +1,7 @@
 Lunedì - Giovedì 
 
 Karen —> 
-Collezioni: tocca implementare delle collezioni; l’utente può aggiungere i giochi alle sue collezioni/raccolte con nomi diversi (es. giocati, da comprare). Un facile esempio di implementazione è con i tutorial base di ruby, quindi tipo articles/movies che hanno più commenti
+Sistemare view delle collezioni nella user page
 Wishlist: la wishlist è un entry della tabella collezione che viene creata automaticamente quando l’utente si iscrive (sembra il metodo migliore per implementarla, se ci sono altre idee scrivetelo
 
 
@@ -18,7 +18,7 @@ Fare una lista di ban, temporanei e permanenti
 
 
 ———GRAFICA———
-NAVBAR nello stesso stile dei form di login sign up (i colori le forme e la resa grafica è molto carina, rendila come quei form)
+NAVBAR nello stesso stile dei form di login sign up (i colori le forme e la resa grafica è molto carina, rendila come quei form) -> FATTO
 Sistemare pannello admin ( adesso funziona, dagli una buona resa estetica. Conta che nella tabella con tutti gli utenti apparirà un altro bottone per bannare l’account)
 Metti una searchbar carinella (cerca tipo su codepen.io). 
 Dato che hai fatto le cards per la ricerca con bootstrap implementa un carosello (usa i colori che abbiamo messo sulle cards) mettendoci un placeholder come immagine 
