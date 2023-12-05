@@ -13,6 +13,12 @@ class User < ApplicationRecord
 
 
   before_create :set_default_role
+  after_create :create_wishlist_collection
+
+  # Create a new collection for the user
+  def create_wishlist_collection
+    Collection.create(user: self, name: 'My Wishlist')
+  end
 
 
   # This ensures that new users have a default role of "user" unless explixity said that they are "admins"
