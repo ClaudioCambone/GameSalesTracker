@@ -63,7 +63,7 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=100"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=12"
   
     begin
       response = RestClient.get(url)

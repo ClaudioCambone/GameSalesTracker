@@ -43,9 +43,21 @@
 <% if @collections.present? %>
   <ul>
     <% @collections.each do |collection| %>
-      <li><%= collection.name %>
-       <%= button_to 'Delete', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
-       </li>
+      <li>
+        <%= collection.name %>
+        <%= button_to 'Delete', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+
+        <% games_in_collection = GameCollection.where(collection_id: collection.id).pluck(:plain) %>
+        <% if games_in_collection.present? %>
+          <ul>
+            <% games_in_collection.each do |game_plain| %>
+              <li><%= link_to game_plain, details_game_path(plain: game_plain) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No games in this collection.</p>
+        <% end %>
+      </li>
     <% end %>
   </ul>
 <% else %>
