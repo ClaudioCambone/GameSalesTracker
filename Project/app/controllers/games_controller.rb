@@ -16,11 +16,11 @@ class GamesController < ApplicationController
     else
       @games = []
     end
-  end  
+  end
 
   def details
     game_plain = params[:plain]
-  
+
     begin
       @game_details = get_game_details([game_plain])
       @game_prices = get_game_prices(game_plain)
@@ -28,28 +28,27 @@ class GamesController < ApplicationController
       store_lowest_prices
 
       @game_plain = game_plain
-  
+
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
       @game_prices = nil
       @lowest_price = nil
     end
-      @game_collection = current_user.collections.new
+    @game_collection = current_user.collections.new
   end
-  
 
   def add_to_collection
     @game = Game.find_by(plain: params[:plain])
     collection_id = params[:collection_id]
-  
+
     if @game && collection_id
       @game.collections << Collection.find(collection_id)
       flash[:notice] = 'Game added to collection successfully.'
     else
       flash[:error] = 'Failed to add game to collection.'
     end
-  
+
     redirect_back fallback_location: root_path
   end
 
@@ -60,12 +59,18 @@ class GamesController < ApplicationController
   end
 
   def get_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=12"
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0"
+  
+    url += "&limit=#{params[:limit]}" if params[:limit].present?
+    url += "&sort=#{params[:sort_by]}" if params[:sort_by].present?
+    url += ":#{params[:order]}" if params[:order].present?
+    url += "&shops=#{params[:shop_filter]}" if params[:shop_filter].present?
   
     begin
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
       deals_data = parsed_response['data']['list']
+  
       deals_data.each do |deal|
         plain = deal['plain']
         game_info = game_info(plain)
@@ -80,18 +85,17 @@ class GamesController < ApplicationController
     end
   
     return []
-  end
-  
+  end    
 
   def search_games
     url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=12&strict=0"
-    
+
     begin
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
-    
+
       game_data = parsed_response['data']['list']
-  
+
       @prezzi_attuali_inferiori = {}
       game_data.each do |game|
         plain = game['plain']
@@ -101,19 +105,17 @@ class GamesController < ApplicationController
           @prezzi_attuali_inferiori[plain] = game['price_new'].to_f
         end
       end
-  
+
       game_data.each do |game|
         game['price_new'] = @prezzi_attuali_inferiori[game['plain']].to_s
         game['image_url'] = game_image_url(game['plain'])
-        
-        # Aggiunta per ottenere le informazioni dettagliate del gioco
         game_info = game_info(game['plain'])
         game.merge!(game_info) if game_info.present?
       end
-      
+
       lowest_price = Float::INFINITY
       lowest_price_game = nil
-  
+
       game_data.each do |game|
         price_new = game['price_new'].to_f
         if price_new < lowest_price
@@ -121,9 +123,9 @@ class GamesController < ApplicationController
           lowest_price_game = game
         end
       end
-      
+
       @lowest_price_game = lowest_price_game if lowest_price_game.present?
-  
+
       return game_data
     rescue RestClient::ExceptionWithResponse => e
       puts "Errore nella richiesta: #{e.response}"
@@ -209,11 +211,23 @@ class GamesController < ApplicationController
   def store_lowest_prices
     game_plain = params[:plain]
     key = @api_key
-  
+
     response = RestClient.get "https://api.isthereanydeal.com/v01/game/storelow/?key=#{key}&plains=#{game_plain}"
     data = JSON.parse(response.body)
-  
+
     @lowest_prices = data.dig('data', game_plain) || []
   end
 
+  def get_expiry_filter_value(filter)
+    case filter
+    when '5 minuti'
+      300
+    when '30 minuti'
+      1800
+    when '1 ora'
+      3600
+    else
+      nil
+    end
+  end
 end

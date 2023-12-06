@@ -1,6 +1,47 @@
-<h1 class="text-light">Nuove Offerte</h1>
 <%= link_to 'Admin Panel', admins_index_path, class: "text-light" %>
 
+<div class="container mt-4">
+<%= form_tag(games_path, method: 'get') do %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= label_tag 'limit', 'Numero risultati:' %>
+      <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag 'sort_by', 'Ordina per:' %>
+      <%= select_tag 'sort_by', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut'], ['Scadenza', 'expiry']], params[:sort_by]), class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag 'order', 'Ordine:' %>
+      <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag 'shop_filter', 'Filtra per shop:' %>
+      <%= select_tag 'shop_filter', options_for_select([
+        ['Tutti gli Store', nil],
+        ['AllYouPlay', 'AllYouPlay'],
+        ['Amazon', 'amazonus'],
+        ['Epic Game Store', 'Epic'],
+        ['Fanatical', 'Fanatical'],
+        ['GameBillet', 'GameBillet'],
+        ['GamersGate', 'GamersGate'],
+        ['GamesPlanet', 'GamesPlanet'],
+        ['GreenManGaming', 'GreenManGaming'],
+        ['Humble Store', 'Humble Store'],
+        ['IndieGala Store', 'IndieGala Store'],
+        ['JoyBuggy', 'JoyBuggy'],
+        ['Noctre', 'Noctre'],
+        ['Steam', 'Steam'],
+        ['Ubisoft Store', 'Ubisoft Store'],
+        ['2game', '2game']
+      ], params[:shop_filter]), class: 'form-control' %>    </div>
+    <div class="col-md-2">
+      <%= submit_tag 'Applica filtri', class: 'btn btn-primary mt-4' %>
+    </div>
+  </div>
+<% end %>
+  
+<h1 class="text-light">Nuove Offerte</h1>
 <div class="table-responsive">
   <table class="table table-bordered table-hover bg-dark">
     <thead class="thead-dark">
@@ -15,21 +56,21 @@
       </tr>
     </thead>
     <tbody>
-    <% @deals.each do |deal| %>
-      <tr>
-        <td class="text-light">
-          <%= deal_title(deal) %>
-          <br>
-          <%= game_image_tag(deal['image_url']) %>
-        </td>
-        <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
-        <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
-        <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
-        <td class="text-light"><%= formatted_time(deal['added']) %></td>
-        <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
-        <td class="text-light"><%= shop_link(deal) %></td>
-      </tr>
-    <% end %>    
+      <% @deals.each do |deal| %>
+        <tr>
+          <td class="text-light">
+            <%= deal_title(deal) %>
+            <br>
+            <%= game_image_tag(deal['image_url']) %>
+          </td>
+          <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
+          <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
+          <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
+          <td class="text-light"><%= formatted_time(deal['added']) %></td>
+          <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
+          <td class="text-light"><%= shop_link(deal) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
