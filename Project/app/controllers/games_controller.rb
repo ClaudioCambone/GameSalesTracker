@@ -13,7 +13,6 @@ class GamesController < ApplicationController
     if params[:search_query].present?
       @search_query = params[:search_query]
       @games = search_games
-      @games = Kaminari.paginate_array(@games).page(params[:page]).per(9) # Imposta il numero desiderato di risultati per pagina
     else
       @games = []
     end
@@ -36,9 +35,7 @@ class GamesController < ApplicationController
       @game_prices = nil
       @lowest_price = nil
     end
-  
-    # Create or find a game collection instance for the current user
-    @game_collection = current_user.collections.new
+      @game_collection = current_user.collections.new
   end
   
 
@@ -69,8 +66,6 @@ class GamesController < ApplicationController
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
       deals_data = parsed_response['data']['list']
-  
-      # Aggiungi le informazioni sull'immagine per ciascun gioco
       deals_data.each do |deal|
         plain = deal['plain']
         game_info = game_info(plain)
@@ -89,7 +84,7 @@ class GamesController < ApplicationController
   
 
   def search_games
-    url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=100&strict=0"
+    url = "https://api.isthereanydeal.com/v01/search/search/?key=#{@api_key}&q=#{params[:search_query]}&limit=12&strict=0"
     
     begin
       response = RestClient.get(url)

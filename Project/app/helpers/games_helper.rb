@@ -29,8 +29,8 @@ module GamesHelper
     end
     
     def placeholder_image_url
-      'https://via.placeholder.com/460x215' # URL placeholder
-    end
+      ActionController::Base.helpers.asset_path('placeholder.png')
+    end       
 
     def game_info(plain)
       url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{plain}"

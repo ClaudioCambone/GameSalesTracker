@@ -8,8 +8,6 @@
 </head>
 
 <body>
-  <% per_page = 9 %> <!-- Imposta il numero desiderato di risultati per pagina -->
-
   <div class="container">
     <% if @games.present? %>
     <br><br>
@@ -21,7 +19,7 @@
         <div class="col mb-4">
           <div class="card">
             <div class="image-container">
-              <%= image_tag(game['image_url'] || 'noimage.png', class: 'card-img-top img-fluid', alt: title) %>
+            <%= image_tag(game['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: title) %>
             </div>
             <div class="card-body">
               <h5 class="card-title"><%= title %></h5>
@@ -35,21 +33,11 @@
       <% end %>
     </div>
 
-    <!-- Aggiunta della Paginazione -->
-    <% if @games.size == per_page %>
-      <% next_page = params[:page].to_i + 1 %>
-      <%= link_to "Carica Altri", search_games_path(search_query: params[:search_query], page: next_page), remote: true, class: "text-white-50" %>
-    <% end %>
-
     <% else %>
       <p>Risultati della ricerca:</p>
       <p>Nessun risultato trovato.</p>
     <% end %>
   </div>
-
-  <!-- Aggiunta della Paginazione -->
-  <%= paginate @games %>
-
 </body>
 
 </html>
