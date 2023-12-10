@@ -97,8 +97,12 @@ module GamesHelper
 
     def countdown_to_end_date(end_date)
       return '--' unless end_date
-    
+      
       remaining_time = end_date.to_i - Time.now.to_i
+      
+      if remaining_time.negative?
+        return 'ended'
+      end
     
       days = remaining_time / 1.day
       hours = (remaining_time % 1.day) / 1.hour
@@ -106,7 +110,7 @@ module GamesHelper
       seconds = remaining_time % 1.minute
     
       "#{days.to_i} d #{hours} h #{minutes} m #{seconds} s"
-    end
+    end    
 
     def shop_link(deal)
       if deal['shop'].present?
