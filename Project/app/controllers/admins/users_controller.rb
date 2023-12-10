@@ -25,6 +25,13 @@ class Admins::UsersController < ApplicationController
       @user.update(banned: true, ban_until: nil)
       redirect_to admins_index_path, notice: 'User banned successfully.'
     end
+
+    def temporary_ban
+      @user = User.find(params[:id])
+      duration = params[:duration].to_i.days
+      @user.update(banned: true, ban_until: Time.current + duration)
+      redirect_to admins_index_path, notice: "User temporarily banned for #{params[:duration]}"
+    end
   
     def unban
       puts "Params: #{params.inspect}"

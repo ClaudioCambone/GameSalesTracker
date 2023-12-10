@@ -47,6 +47,7 @@ Rails.application.routes.draw do
          member do
       put 'ban'
       put 'unban'
+      put 'temporary_ban'
     end
   end
     get 'index', to: 'users#index', as: :index

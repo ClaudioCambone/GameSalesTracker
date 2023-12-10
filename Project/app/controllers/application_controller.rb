@@ -6,8 +6,15 @@ class ApplicationController < ActionController::Base
   
   private 
   
+  def ban_expired?
+    current_user.ban_until.present? && Time.current > current_user.ban_until
+  end
+
   def check_ban_status
-    if user_signed_in? && current_user.banned?
+    if user_signed_in? && current_user.banned? && ban_expired?
+      current_user.update(banned: false, ban_until: nil)
+      flash[:notice] = 'Your temporary ban has expired. You can now sign in.'
+    elsif user_signed_in? && current_user.banned?
       sign_out(current_user)
       flash[:alert] = 'Your account has been banned. Please contact support for assistance.'
       redirect_to root_path

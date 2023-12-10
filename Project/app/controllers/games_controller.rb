@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   include GamesHelper
   layout 'navbar_layout'
   before_action :set_api_key
-  before_action :authenticate_user!, except: [:index, :show, :search, :detalis]
+  before_action :authenticate_user!, except: [:index, :show, :search, :details_game]
 
   def index
     @games = []
