@@ -43,8 +43,13 @@ Rails.application.routes.draw do
   end
 
   namespace :admins do
-    resources :users, only: [:index, :destroy]
+        resources :users, only: [:index, :destroy] do 
+         member do
+      put 'ban'
+      put 'unban'
+    end
+  end
     get 'index', to: 'users#index', as: :index
     get 'destroy', to: 'users#destroy', as: :destroy
-  end
+    end
 end

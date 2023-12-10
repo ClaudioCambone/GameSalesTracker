@@ -19,6 +19,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     
     @user = current_user
 
+
+    ##i think this mehtod is useless, should be checked
     if needs_password?
       successfully_updated = @user.update_with_password(account_update_params)
     else
