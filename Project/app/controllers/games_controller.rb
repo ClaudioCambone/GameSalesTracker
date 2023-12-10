@@ -12,7 +12,9 @@ class GamesController < ApplicationController
   def search
     if params[:search_query].present?
       @search_query = params[:search_query]
-      @games = search_games
+      @games = Rails.cache.fetch("search_results_#{@search_query}", expires_in: 1.hour) do
+        search_games
+      end
     else
       @games = []
     end
