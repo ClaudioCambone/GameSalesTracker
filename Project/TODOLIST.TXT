@@ -2,13 +2,12 @@ Lunedì
 
 Karen —> 
 Sistemare view delle collezioni nella user page
-Sistemare bottone nella pagina supporto (GameSalesTracker)
-Sistemare navbar dal punto di vista grafico
-carosello offerte che stanno per scadere
+Sistemare bottone nella pagina supporto (GameSalesTracker) (???)
+(rifinire carosello homepage)
 inserire layout a cards piuttosto che a lista
 aggiungere carosello con giochi consigliati nella pagina dettagli
 inserire la possibilita' di eliminare giochi dalla wishlist
-spostare add collection piu' in alto nella schermata
+(navbar: aggiungere dropdown menu a "my account")
 
 Alessandro —> 
 Richieste asincrone alla pagina per caricare più risultati divisi in più pagine

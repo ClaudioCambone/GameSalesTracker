@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   def index
     @games = []
     @deals = get_deals
+    @lastdeals = get_last_deals
   end
 
   def search
@@ -58,6 +59,28 @@ class GamesController < ApplicationController
 
   def set_api_key
     @api_key = 'b14274e8092bc14e227b32e4b66c2903bf4419c9'
+  end
+
+  def get_last_deals
+    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=18&sort=expiry:asc"
+
+    begin
+      response = RestClient.get(url)
+      parsed_response = JSON.parse(response)
+      last_deals_data = parsed_response['data']['list']
+
+      last_deals_data.each do |last_deal|
+        plain = last_deal['plain']
+        game_info = game_info(plain)
+        last_deal['image_url'] = game_info['image_url'] if game_info.present?
+      end
+      return last_deals_data if last_deals_data.present?
+    rescue RestClient::ExceptionWithResponse => e
+      puts "Errore nella richiesta dei Last Deals: #{e.response}"
+    rescue => e
+      puts "Errore nella richiesta dei Last Deals: #{e.message}"
+    end
+    return []
   end
 
   def get_deals

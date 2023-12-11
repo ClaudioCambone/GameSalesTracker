@@ -25,9 +25,20 @@
 
   .container {
     max-width: 100%; /* or specify a maximum width */
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .card-img-top {
     width: 100%; /* Make images inside cards responsive */
     height: auto;
+  }
+
+  .card-img-home {
+    width: 70%;
+    height: auto;
+  }
+
+  .carousel-item {
+    padding: 0 15px;
   }
