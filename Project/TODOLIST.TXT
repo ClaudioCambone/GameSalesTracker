@@ -1,25 +1,24 @@
-Lunedì - Giovedì 
+Lunedì
 
 Karen —> 
 Sistemare view delle collezioni nella user page
-Wishlist: la wishlist è un entry della tabella collezione che viene creata automaticamente quando l’utente si iscrive
-
+Sistemare bottone nella pagina supporto (GameSalesTracker)
+Sistemare navbar dal punto di vista grafico
+carosello offerte che stanno per scadere
+inserire layout a cards piuttosto che a lista
 
 Alessandro —> 
 Richieste asincrone alla pagina per caricare più risultati divisi in più pagine
-Immagini nella homepage per I new deals
-Contatore scadenza per degli sconti giochi (ovunque) 
-
+mostrare anche il prezzo originale (sia deals che search)
+mostrare anche lo sconto percentuale (sia deals che search)
+rimuovere la scadenza nei filtri
+aggiungere un top 20 per le offerte che stanno per scadere
 
 Claudio —> 
-Login di steam e GitHub (sono implementate al momento ma il login non viene eseguito)
-Fare una lista di ban, temporanei e permanenti 
-
-
+Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)
 
 ———GRAFICA———
 Sistemare pannello admin ( adesso funziona, dagli una buona resa estetica. Conta che nella tabella con tutti gli utenti apparirà un altro bottone per bannare l’account)
-Dato che hai fatto le cards per la ricerca con bootstrap implementa un carosello (usa i colori che abbiamo messo sulle cards) mettendoci un placeholder come immagine 
 Togliere la scritta welcome back durante la ricerca
 Support page
 Collections page
@@ -27,6 +26,8 @@ Search page
 Game details page
 Homepage (con caroselli)
 
+extra:
+-filtro da cards a lista
 
 NOTIFICHE —> le notifiche della wishilist sono ancora da pensare, tocca vedere se ci avanza tempo e come implementarle. Questo perchè è uno sbatti inviare delle mail ad un utente anche se non è loggato. Quello che possiamo fare è implementare un sistema di notifiche quando l’utente esegue il login. Gli appare un messaggio che lo avvisa se ci sono sconti nella sua wishlist
 
