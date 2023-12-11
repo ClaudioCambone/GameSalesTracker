@@ -1,84 +1,112 @@
-<%= link_to 'Admin Panel', admins_index_path, class: "text-light" %>
+<!DOCTYPE html>
+<html>
 
-<div class="container mt-4">
-<%= form_tag(games_path, method: 'get') do %>
-  <div class="row">
-    <div class="col-md-2">
-      <%= label_tag 'limit', 'Numero risultati:' %>
-      <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
-    </div>
-    <div class="col-md-2">
-      <%= label_tag 'sort_by', 'Ordina per:' %>
-      <%= select_tag 'sort_by', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut'], ['Scadenza', 'expiry']], params[:sort_by]), class: 'form-control' %>
-    </div>
-    <div class="col-md-2">
-      <%= label_tag 'order', 'Ordine:' %>
-      <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
-    </div>
-    <div class="col-md-2">
-      <%= label_tag 'shop_filter', 'Filtra per shop:' %>
-      <%= select_tag 'shop_filter', options_for_select([
-        ['Tutti gli Store', nil],
-        ['AllYouPlay', 'AllYouPlay'],
-        ['Amazon', 'amazonus'],
-        ['DLGamer','dlgamer'],
-        ['Dreamgame','dreamgame'],
-        ['Epic Game Store', 'Epic'],
-        ['Fanatical', 'bundlestars'],
-        ['GameBillet', 'GameBillet'],
-        ['GamersGate', 'GamersGate'],
-        ['Gamesload','gamesload'],
-        ['GamesPlanet UK', 'gamesplanet'],
-        ['GamesPlanet US', 'gamesplanetus'],
-        ['GamesPlanet FR', 'gamesplanetfr'],
-        ['GamesPlanet DE', 'gamesplanetde'],
-        ['GreenManGaming', 'GreenManGaming'],
-        ['Humble Store', 'humblestore'],
-        ['Itch.io','itchio'],
-        ['IndieGala Store', 'indiegalastore'],
-        ['JoyBuggy', 'JoyBuggy'],
-        ['Noctre', 'Noctre'],
-        ['Steam', 'Steam'],
-        ['Ubisoft Store', 'uplay'],
-        ['Voidu','voidu'],
-        ['2game', 'game2'],
-      ], params[:shop_filter]), class: 'form-control' %>    </div>
-    <div class="col-md-2">
-      <%= submit_tag 'Applica filtri', class: 'btn btn-primary mt-4' %>
-    </div>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <%= stylesheet_link_tag 'cards', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+
+  <!-- Collegamento a Select2 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <%= link_to 'Admin Panel', admins_index_path, class: "text-light" %>
+
+    <%= form_tag(games_path, method: 'get') do %>
+      <div class="row">
+        <div class="col-md-2">
+          <%= label_tag 'limit', 'Numero risultati:' %>
+          <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
+        </div>
+        <div class="col-md-2">
+          <%= label_tag 'sort_by', 'Ordina per:' %>
+          <%= select_tag 'sort_by', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut']], params[:sort_by]), class: 'form-control' %>
+        </div>
+        <div class="col-md-2">
+          <%= label_tag 'order', 'Ordine:' %>
+          <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
+        </div>
+        <div class="col-md-2">
+          <%= label_tag 'shop_filter', 'Filtra per shop:' %>
+          <%= select_tag 'shop_filter[]', options_for_select([
+            ['Tutti gli Store', nil],
+            ['AllYouPlay', 'AllYouPlay'],
+            ['Amazon', 'amazonus'],
+            ['DLGamer','dlgamer'],
+            ['Dreamgame','dreamgame'],
+            ['Epic Game Store', 'Epic'],
+            ['Fanatical', 'bundlestars'],
+            ['GameBillet', 'GameBillet'],
+            ['GamersGate', 'GamersGate'],
+            ['Gamesload','gamesload'],
+            ['GamesPlanet UK', 'gamesplanet'],
+            ['GamesPlanet US', 'gamesplanetus'],
+            ['GamesPlanet FR', 'gamesplanetfr'],
+            ['GamesPlanet DE', 'gamesplanetde'],
+            ['GreenManGaming', 'GreenManGaming'],
+            ['Humble Store', 'humblestore'],
+            ['Itch.io','itchio'],
+            ['IndieGala Store', 'indiegalastore'],
+            ['JoyBuggy', 'JoyBuggy'],
+            ['Noctre', 'Noctre'],
+            ['Steam', 'Steam'],
+            ['Ubisoft Store', 'uplay'],
+            ['Voidu','voidu'],
+            ['2game', 'game2'],
+          ], params[:shop_filter]), { multiple: true, class: 'form-control custom-select select2 shop-filter' } %>
+        </div>
+        <div class="col-md-2">
+          <%= submit_tag 'Applica filtri', class: 'btn btn-primary mt-4' %>
+        </div>
+      </div>
+    <% end %>
+
+    <h1 class="text-light">Nuove Offerte</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover bg-dark">
+        <thead class="thead-dark">
+          <tr>
+            <th class="text-light">Titolo</th>
+            <th class="text-light">Prezzo Attuale</th>
+            <th class="text-light">Prezzo Originale</th>
+            <th class="text-light">Sconto</th>
+            <th class="text-light">Data Inizio Sconto</th>
+            <th class="text-light">Data Fine Sconto</th>
+            <th class="text-light">Dettagli</th>
+          </tr>
+        </thead>
+      <tbody>
+        <% @deals.each do |deal| %>
+          <tr>
+            <td class="text-light">
+              <%= deal_title(deal) %>
+              <br>
+              <%= game_image_tag(deal['image_url']) %>
+            </td>
+            <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
+            <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
+            <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
+            <td class="text-light"><%= formatted_time(deal['added']) %></td>
+            <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
+            <td class="text-light"><%= shop_link(deal) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-<% end %>
-  
-<h1 class="text-light">Nuove Offerte</h1>
-<div class="table-responsive">
-  <table class="table table-bordered table-hover bg-dark">
-    <thead class="thead-dark">
-      <tr>
-        <th class="text-light">Titolo</th>
-        <th class="text-light">Prezzo Attuale</th>
-        <th class="text-light">Prezzo Originale</th>
-        <th class="text-light">Sconto</th>
-        <th class="text-light">Data Inizio Sconto</th>
-        <th class="text-light">Data Fine Sconto</th>
-        <th class="text-light">Dettagli</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @deals.each do |deal| %>
-        <tr>
-          <td class="text-light">
-            <%= deal_title(deal) %>
-            <br>
-            <%= game_image_tag(deal['image_url']) %>
-          </td>
-          <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
-          <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
-          <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
-          <td class="text-light"><%= formatted_time(deal['added']) %></td>
-          <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
-          <td class="text-light"><%= shop_link(deal) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+  <!-- Collegamento a jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Collegamento a Select2 JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <script>
+    // Inizializza Select2 sulla casella di selezione multipla
+    $(document).ready(function() {
+      $('.select2').select2();
+    });
+  </script>
+</body>
+
+</html>

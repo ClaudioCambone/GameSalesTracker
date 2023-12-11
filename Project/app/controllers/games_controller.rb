@@ -66,8 +66,12 @@ class GamesController < ApplicationController
     url += "&limit=#{params[:limit]}" if params[:limit].present?
     url += "&sort=#{params[:sort_by]}" if params[:sort_by].present?
     url += ":#{params[:order]}" if params[:order].present?
-    url += "&shops=#{params[:shop_filter]}" if params[:shop_filter].present?
-  
+
+    # Verifica se params[:shop_filter] è un array e lo converte in una stringa separata da virgole
+    shop_filter = Array(params[:shop_filter]).join(',')
+
+    url += "&shops=#{shop_filter}" if shop_filter.present?
+
     begin
       response = RestClient.get(url)
       parsed_response = JSON.parse(response)
