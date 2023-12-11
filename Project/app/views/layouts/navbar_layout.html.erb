@@ -1,63 +1,62 @@
 <!DOCTYPE html>
 <html>
+
+<head>
   <%= stylesheet_link_tag 'profile', media: 'all' %>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
 
-  <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <nav class="top-nav">
-      <div style="width: 25%; text-align: left;">
-        <%= link_to "GameSalesTracker", root_path, class: "button-link" %><br><br>
-        <%= link_to "My Collections", collections_path, class: "button-link" %>
-      </div>
-      <div style="width: 50%; text-align: center;">
+  <nav class="top-nav">
 
-        <% if user_signed_in? %>
-          Welcome back, <%= current_user.username %>! <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: "button-link" %>
-        <% else %>
-        <!-- Content for non-logged-in users -->
-          New here? <%= link_to "Sign Up", new_user_registration_path, class: "button-link" %>
-        <% end %>
-        <br><br>
-
-        <div class="wrap">
-          <%= form_with url: search_games_path, method: :get do |f| %>
-            <div class="search">
-              <%= f.text_field :search_query, class: "searchTerm", placeholder: "Search for games" %>
-              <button type="submit" class="searchButton">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          <% end %>
+    <div style="width: 40%;">
+      <div class="button-container-left">
+        <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
+        <%= form_with url: search_games_path, method: :get do |f| %>
+        <div class="search">
+          <%= f.text_field :search_query, class: "searchTerm", placeholder: "Search for games" %>
+          <button type="submit" class="searchButton">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
-
+        <% end %>
       </div>
-      <div style="width: 25%; text-align: right;">
+    </div>
+
+    <div style="width: 60%;">
+      <div class="button-container-right">
         <% if user_signed_in? %>
-          <%= link_to "My account", user_path, class: "button-link" %>
+              <%= link_to "My Account", user_path, class: "button-link" %>
+              <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: "button-link" %>
+              <% if current_user.role == 'admin' %>
+                <%= link_to "Admin panel", admins_index_path, class: "button-link" %>
+              <% end %>
         <% else %>
           <%= link_to "Login", new_user_session_path, class: "button-link" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "button-link" %>
         <% end %>
-        <br><br>
+
         <%= link_to "Need Help?", support_path, class: "button-link" %>
       </div>
-    </nav>
-    <% flash.each do |type, msg| %> <div>
-      Notification: <%= msg %>
     </div>
-    <% end %>
-    <title>GameSalesTracker</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-  <br>
-  <body>
+  </nav>
+  <% flash.each do |type, msg| %>
+  <div>
+    Notification: <%= msg %>
+  </div>
+  <% end %>
+  <title>GameSalesTracker</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield %>
-  </body>
-  <br><br>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+  <%= yield %>
+</body>
+
 </html>

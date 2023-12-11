@@ -1,9 +1,9 @@
 .button-link {
   padding: 7px;
-  background-color: #C0504D;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
+  margin-right: 10px;
 }
 
 .button-link:hover {
@@ -11,30 +11,25 @@
 }
 
 .top-nav {
-  background-color: #212529;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-color: #FFFFFF;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 1rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .search {
-  width: 45%;
+  width: 100%;
   position: relative;
   display: flex;
-  margin: auto;
+  margin-left: 20px;
   left: 0;
   right: 0;
 }
 
 .searchTerm {
   width: 100%;
-  border: 3px solid #1F4889;
+  border: 3px solid #C0504D;
   border-right: none;
   padding: 5px;
   height: 30px;
@@ -43,11 +38,22 @@
 }
 
 .searchButton {
-  border: 1px solid #1F4889;
-  background: #1F4889;
+  border: 1px solid #C0504D;
+  background: #C0504D;
   text-align: center;
   color: #fff;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   font-size: 15px;
 }
+
+  .button-container-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .button-container-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
