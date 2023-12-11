@@ -6,6 +6,9 @@ Sistemare bottone nella pagina supporto (GameSalesTracker)
 Sistemare navbar dal punto di vista grafico
 carosello offerte che stanno per scadere
 inserire layout a cards piuttosto che a lista
+aggiungere carosello con giochi consigliati nella pagina dettagli
+inserire la possibilita' di eliminare giochi dalla wishlist
+spostare add collection piu' in alto nella schermata
 
 Alessandro —> 
 Richieste asincrone alla pagina per caricare più risultati divisi in più pagine
@@ -13,9 +16,15 @@ mostrare anche il prezzo originale (sia deals che search)
 mostrare anche lo sconto percentuale (sia deals che search)
 rimuovere la scadenza nei filtri
 aggiungere un top 20 per le offerte che stanno per scadere
+aggiungere la possibilita' di vedere piu store alla volta
 
 Claudio —> 
 Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)
+funzione nomina admin
+email in caso di ThisTruzione account
+pulsante homepage in admin panel
+inserire anche l'immagine profilo degli utenti nell'admin panel
+email per support page
 
 ———GRAFICA———
 Sistemare pannello admin ( adesso funziona, dagli una buona resa estetica. Conta che nella tabella con tutti gli utenti apparirà un altro bottone per bannare l’account)
