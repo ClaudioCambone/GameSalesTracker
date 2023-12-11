@@ -1,8 +1,8 @@
-
 <head>
 <%= javascript_include_tag 'activestorage' %>
 <%= csrf_meta_tags %>
 <%= stylesheet_link_tag 'profile', media: 'all' %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 
@@ -38,37 +38,50 @@
 <div class="profile-container">
   <div class="wishlist">
     <h1 style="align: center">
-    
-<h2>Your Collections:</h2>
-<% if @collections.present? %>
-  <ul>
-    <% @collections.each do |collection| %>
-      <li>
-        <%= collection.name %>
-        <%= button_to 'Delete', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
 
-        <% games_in_collection = GameCollection.where(collection_id: collection.id).pluck(:plain) %>
-        <% if games_in_collection.present? %>
-          <ul>
-            <% games_in_collection.each do |game_plain| %>
-              <li><%= link_to game_plain, details_game_path(plain: game_plain) %></li>
+<h2>Your Collections:</h2>
+<br><br>
+
+<% if @collections.present? %>
+  <% @collections.each do |collection| %>
+    <div>
+      <h3><%= collection.name %></h3>
+      <% games_in_collection = GameCollection.where(collection_id: collection.id).pluck(:plain) %>
+      <% if games_in_collection.present? %>
+        <div id="<%= "collectionCarousel_#{collection.id}" %>" class="carousel slide" data-bs-interval="false">
+          <div class="carousel-inner">
+            <% games_in_collection.each_with_index do |game_plain, index| %>
+              <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= game_plain %></h5>
+                    <%= link_to "Details", details_game_path(plain: game_plain), class: "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
             <% end %>
-          </ul>
-        <% else %>
-          <p>No games in this collection.</p>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      <% else %>
+        <p>No games in this collection.</p>
+      <% end %><br>
+      <%= button_to 'Delete', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
+      <br><br>
+    </div>
+  <% end %>
 <% else %>
   <p>You don't have any collections yet.</p>
 <% end %>
-    
-    
-    
     </h1>
+    <%= link_to "Add a new collection", collections_path, class: "button-link" %>
   </div>
 </div>
-<br><br><br>
-
-
+<br>
