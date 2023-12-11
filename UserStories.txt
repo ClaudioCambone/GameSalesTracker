@@ -5,102 +5,112 @@ API: Google Authentication, Facebook Authentication, Steam Market, Epic Store Ga
 Nintendo E-shop, PlayStation Store, Metacritic, Howlongtobeat
 USER STORIES
 Ricerca
-1. Come un utente, voglio poter confrontare i prezzi dei giochi su diverse piattaforme
+V 1. Come un utente, voglio poter confrontare i prezzi dei giochi su diverse piattaforme
 online, in modo da trovare la miglior offerta disponibile.
-2. Come un utente, voglio poter confrontare le diverse versioni di un gioco (ad esempio,
+V 2. Come un utente, voglio poter confrontare le diverse versioni di un gioco (ad esempio,
 standard edition vs deluxe edition), in modo da poter scegliere quella che meglio
 soddisfa le mie esigenze.
-3. Come un utente, voglio poter cercare un gioco tramite il suo nome, in modo da
+V 3. Come un utente, voglio poter cercare un gioco tramite il suo nome, in modo da
 trovare facilmente il gioco che sto cercando.
-4. Come un utente, voglio poter cercare i DLC (contenuti aggiuntivi) disponibili per un
+V 4. Come un utente, voglio poter cercare i DLC (contenuti aggiuntivi) disponibili per un
 gioco o i pacchetti aggiuntivi, in modo da ampliare l'esperienza di gioco.
-5. Come un utente, voglio poter cercare giochi disponibili solo per computer, in modo da
+F 5. Come un utente, voglio poter cercare giochi disponibili solo per computer, in modo da
 poter trovare giochi che posso giocare sul mio computer.
-6. Come un utente, voglio poter cercare giochi disponibili in formato digitale (download)
+V 6. Come un utente, voglio poter cercare giochi disponibili in formato digitale (download)
 o in copia fisica (box), in modo da poter scegliere la modalità di acquisto che
 preferisco.
-7. Come un utente, voglio poter cercare giochi disponibili per console, utilizzando API
+V 7. Come un utente, voglio poter cercare giochi disponibili per console, utilizzando API
 come ps store o Nintendo store, in modo da trovare giochi compatibili con la mia
 console.
-8. Come un utente, voglio poter cercare giochi in base al loro genere o tag, come ad
+F 8. Come un utente, voglio poter cercare giochi in base al loro genere o tag, come ad
 esempio "platformer" o "sparatutto", in modo da trovare giochi che si adattano ai miei
 gusti.
-9. Come un utente, voglio poter applicare filtri alla mia ricerca, come ad esempio filtro
+V 9. Come un utente, voglio poter applicare filtri alla mia ricerca, come ad esempio filtro
 per prezzo massimo o minimo, disponibilità online o offline, punteggio utenti, lingua,
 ecc.
-10. Come un utente, voglio poter ordinare i risultati della mia ricerca in base a diversi
+V 10. Come un utente, voglio poter ordinare i risultati della mia ricerca in base a diversi
 criteri, come ad esempio prezzo decrescente, ordine alfabetico, data di uscita, ecc.
-11. Come un utente, voglio ricevere una segnalazione quando un gioco raggiunge il suo
+F 11. Come un utente, voglio ricevere una segnalazione quando un gioco raggiunge il suo
 prezzo minimo storico durante la ricerca, in modo da poter approfittare dell'offerta.
-12. Come un utente, voglio poter accedere alla mia cronologia di ricerca, in modo da
+F 12. Come un utente, voglio poter accedere alla mia cronologia di ricerca, in modo da
 poter riprendere una ricerca precedente o rivedere le mie ricerche passate.
-13. Come un utente, voglio trovare una sezione di consigli in homepage, in modo da
+V 13. Come un utente, voglio trovare una sezione di consigli in homepage, in modo da
 poter scoprire nuovi giochi o offerte interessanti in modo facile e veloce
 Pagina del gioco
-14. Come utente, voglio essere in grado di vedere il prezzo di listino e il prezzo scontato
+V 14. Come utente, voglio essere in grado di vedere il prezzo di listino e il prezzo scontato
 di un gioco per sapere quanto risparmierò.
-15. Come utente, voglio essere in grado di vedere da quanto e per quanto tempo il gioco
+V 15. Come utente, voglio essere in grado di vedere da quanto e per quanto tempo il gioco
 sara' scontato.
-16. Come utente, voglio essere in grado di vedere lo storico dei prezzi di un gioco per
-sapere se il prezzo è già stato scontato in passato e di quanto.
-17. Come utente, voglio essere in grado di vedere i dettagli del gioco (per esempio il
+V 16. Come utente, voglio essere in grado di vedere il prezzo piu' basso di un gioco di sempre per
+sapere di quanto il prezzo è già stato scontato in passato.
+V 17. Come utente, voglio essere in grado di vedere i dettagli del gioco (per esempio il
 genere, anno di rilascio, lingua disponibile ecc.) in modo da capire se potrebbe
 piacermi o meno.
-18. Come utente, voglio essere in grado di leggere una descrizione del gioco per capire
+F 18. Come utente, voglio essere in grado di leggere una descrizione del gioco per capire
 di cosa si tratta.
-19. Come utente, voglio essere in grado di vedere le immagini del gioco per capire come
+F 19. Come utente, voglio essere in grado di vedere le immagini del gioco per capire come
 è fatto.
-20. Come utente, voglio essere in grado di vedere la valutazione del gioco per avere
+V 20. Come utente, voglio essere in grado di vedere la valutazione del gioco per avere
 un'idea di quanto sia buono.
-21. Come utente, voglio essere in grado di vedere quanto tempo ci vuole in media per
+F 21. Come utente, voglio essere in grado di vedere quanto tempo ci vuole in media per
 completare un gioco per avere un'idea di quanto tempo dovrò dedicarci.
-22. Come utente, voglio essere in grado di vedere i requisiti hardware consigliati e
+F 22. Come utente, voglio essere in grado di vedere i requisiti hardware consigliati e
 ottimali per il gioco per sapere se il mio computer o console può gestirlo.
-23. Come utente, voglio essere in grado di vedere edizioni simili del gioco per avere
+V 23. Come utente, voglio essere in grado di vedere edizioni simili del gioco per avere
 un'idea di quale potrebbe essere la migliore per me.
-24. Come utente, voglio essere in grado di vedere quali altri giochi gli altri utenti hanno
+F 24. Come utente, voglio essere in grado di vedere quali altri giochi gli altri utenti hanno
 comprato per avere suggerimenti su giochi simili.
 Account
-24. Come utente, voglio poter modificare la mia foto profilo e il mio nome, così da
+V 24. Come utente, voglio poter modificare la mia foto profilo e il mio nome, così da
 personalizzare il mio account.
-25. Come utente, voglio poter accedere alla sezione "le mie recensioni", in modo da
+F 25. Come utente, voglio poter accedere alla sezione "le mie recensioni", in modo da
 visualizzare e gestire le recensioni che ho lasciato sui giochi.
-26. Come utente, voglio poter aggiungere giochi alla mia wishlist, così da tenerli sotto
+V 26. Come utente, voglio poter aggiungere giochi alla mia wishlist, così da tenerli sotto
 controllo e ricevere notifiche di sconto.
-27. Come utente, voglio poter eliminare giochi dalla mia wishlist, in modo da mantenerla
+V 27. Come utente, voglio poter eliminare giochi dalla mia wishlist, in modo da mantenerla
 sempre aggiornata. Come utente, voglio poter creare dei soggetti personalizzati per
 organizzare i miei giochi (ad esempio, collezione, giochi must-have, ecc.).
-28. Come utente, voglio poter lasciare recensioni sui giochi che ho acquistato o giocato,
+F 28. Come utente, voglio poter lasciare recensioni sui giochi che ho acquistato o giocato,
 in modo da condividere la mia esperienza con gli altri utenti.
-29. (opzionale)Come utente, voglio poter visualizzare e gestire la mia lista di follower,
+F 29. (opzionale)Come utente, voglio poter visualizzare e gestire la mia lista di follower,
 così da tenere sotto controllo le persone che seguono il mio profilo.
-30. (opzionale)Come utente, voglio poter visualizzare le mie statistiche di account, come
+F 30. (opzionale)Come utente, voglio poter visualizzare le mie statistiche di account, come
 la lista dei giochi acquistati, la data di acquisto e la lista dei preferiti.
 Notifiche
-31. Come utente, voglio ricevere una notifica via email quando un elemento nella mia
+F 31. Come utente, voglio ricevere una notifica via email quando un elemento nella mia
 wishlist è in sconto, in modo da poter approfittare dell'offerta.
-32. Come utente, voglio selezionare un range di prezzi per la mia wishlist, in modo da
+F 32. Come utente, voglio selezionare un range di prezzi per la mia wishlist, in modo da
 ricevere notifiche solo per gli sconti che rientrano in questo range.
-33. Come utente, voglio ricevere una newsletter settimanale con le nuove uscite, in
+F 33. Come utente, voglio ricevere una newsletter settimanale con le nuove uscite, in
 modo da rimanere sempre aggiornato sui nuovi giochi disponibili.
-34. Come utente, voglio ricevere una notifica quando un gioco nella mia wishlist è
+F 34. Come utente, voglio ricevere una notifica quando un gioco nella mia wishlist è
 disponibile per l'acquisto, in modo da poterlo acquistare subito.
-35. Come utente, voglio ricevere notifiche per i commenti e i mi piace sulle mie
+F 35. Come utente, voglio ricevere notifiche per i commenti e i mi piace sulle mie
 recensioni, in modo da sapere se altri utenti hanno apprezzato il mio contributo.
-36. (Opzionale) Come utente, voglio ricevere notifiche per le risposte e i mi piace sui
+F 36. (Opzionale) Come utente, voglio ricevere notifiche per le risposte e i mi piace sui
 thread a cui ho partecipato, in modo da non perdere nessuna novità.
-37. (Opzionale) Come utente, voglio ricevere notifiche per i nuovi follower e per i post dei
+F 37. (Opzionale) Come utente, voglio ricevere notifiche per i nuovi follower e per i post dei
 miei follower, in modo da poter interagire con loro e restare in contatto.
 Thread di discussione (opzionale)
-38. Come utente, voglio poter creare un thread di discussione sui giochi, in modo da
+F 38. Come utente, voglio poter creare un thread di discussione sui giochi, in modo da
 condividere le mie opinioni con gli altri utenti.
-39. Come utente, voglio poter rispondere ai commenti degli altri utenti nei thread di
+F 39. Come utente, voglio poter rispondere ai commenti degli altri utenti nei thread di
 discussione, in modo da partecipare attivamente alla conversazione.
-40. Come utente, voglio poter esprimere il mio apprezzamento per un commento
+F 40. Come utente, voglio poter esprimere il mio apprezzamento per un commento
 attraverso un "like", in modo da mostrare il mio sostegno senza scrivere un
 commento.
-41. Come utente, voglio poter condividere le immagini dei miei giochi o delle mie
+F 41. Come utente, voglio poter condividere le immagini dei miei giochi o delle mie
 esperienze di gioco, in modo da arricchire i thread di discussione e interagire con gli
 altri utenti.
-42. Come utente, voglio poter seguire altri utenti, in modo da rimanere aggiornato sulle
+F 42. Come utente, voglio poter seguire altri utenti, in modo da rimanere aggiornato sulle
 loro attività e sui loro commenti nei thread di discussione
+V 43. Login attraverso google, facebook, x, github e steam
+V 48. Poter creare un account direttamente sul sito
+V 49. Conferma account tramite email
+V 50. Recupero e modifica password
+F 51. Email per il lato support
+V 52. Possibilita' di creare  account di ruolo admin
+V 53. possibilita' di visionare tutti gli account iscritti in quanto admin
+V 54. possibilita' di bannare utenti in quanto admin
+v 55. possibilita' di eliminare un account e email di avvertimento in quanto admin
+v 56. possibilita' di eliminare il proprio account in quanto user
