@@ -61,27 +61,51 @@ class GamesController < ApplicationController
     @api_key = 'b14274e8092bc14e227b32e4b66c2903bf4419c9'
   end
 
-  def get_last_deals
-    url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0&limit=18&sort=expiry:asc"
-
-    begin
-      response = RestClient.get(url)
-      parsed_response = JSON.parse(response)
-      last_deals_data = parsed_response['data']['list']
-
-      last_deals_data.each do |last_deal|
-        plain = last_deal['plain']
-        game_info = game_info(plain)
-        last_deal['image_url'] = game_info['image_url'] if game_info.present?
+  def get_last_deals(limit = 18)
+    url_base = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset="
+    sort_param = "&sort=expiry:asc"
+  
+    current_epoch_time = Time.now.to_i
+    offset = 0
+    valid_deals = []
+  
+    loop do
+      url = "#{url_base}#{offset}&limit=#{limit}#{sort_param}"
+  
+      begin
+        response = RestClient.get(url)
+        parsed_response = JSON.parse(response)
+        last_deals_data = parsed_response['data']['list']
+  
+        if last_deals_data.empty?
+          puts "No more deals to fetch."
+          break
+        end
+  
+        last_valid_deals = last_deals_data.select { |deal| deal['expiry'] >= current_epoch_time }
+        valid_deals.concat(last_valid_deals)
+  
+        offset += last_deals_data.length
+  
+      rescue RestClient::ExceptionWithResponse => e
+        puts "Error in the request for Last Deals: #{e.response}"
+        break
+      rescue => e
+        puts "Error in the request for Last Deals: #{e.message}"
+        break
       end
-      return last_deals_data if last_deals_data.present?
-    rescue RestClient::ExceptionWithResponse => e
-      puts "Errore nella richiesta dei Last Deals: #{e.response}"
-    rescue => e
-      puts "Errore nella richiesta dei Last Deals: #{e.message}"
+  
+      break if valid_deals.length >= limit
     end
-    return []
+  
+    return valid_deals.take(limit)
   end
+  
+  
+  
+  
+  
+  
 
   def get_deals
     url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0"
