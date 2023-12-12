@@ -97,15 +97,15 @@ class GamesController < ApplicationController
   
       break if valid_deals.length >= limit
     end
+
+    valid_deals.each do |deal|
+      plain = deal['plain']
+      game_info = game_info(plain)
+      deal['image_url'] = game_info['image_url'] if game_info.present?
+    end
   
     return valid_deals.take(limit)
   end
-  
-  
-  
-  
-  
-  
 
   def get_deals
     url = "https://api.isthereanydeal.com/v01/deals/list/?key=#{@api_key}&offset=0"

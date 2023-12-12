@@ -21,7 +21,7 @@
 <br>
 <h1 class="text-light">Offerte in Scadenza</h1>
 <div class="container mt-4 mb-10">
-  <div id="last_deals" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000" style="height: 300px;" data-bs-pause="false">
+  <div id="last_deals" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-ride="carousel" data-bs-interval="7000" data-bs-pause="false">
     <div class="carousel-inner">
       <% @lastdeals.each_slice(3).with_index do |deal_slice, index| %>
         <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
@@ -33,10 +33,22 @@
                     <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid') %>
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title"><%= deal_title(deal) %></h5>
-                    <%= shop_link(deal) %>
+                    <h5 class="card-title text-center"><%= deal_title(deal) %></h5>
+                    <p class="card-text text-center">
+                      <del><%= "%.2f" % deal['price_old'] %> €</del>
+                      <span class="fw-bold fs-3"><%= "%.2f" % deal['price_new'] %> €</span>
+                    </p>
+                    <% discount_percent = 100 - ((deal['price_new'].to_f / deal['price_old'].to_f) * 100).round(2) %>
+                    <div class="text-center fw-bold fs-5">
+                      Get <%= number_with_precision(discount_percent, precision: 1) %>% off!
+                    </div>
+                    <p class="card-text text-center">
+                      <%= countdown_to_end_date(deal['expiry']) %>
+                    </p>
                     <br>
-                    <%= countdown_to_end_date(deal['expiry']) %>
+                    <div class="text-center">
+                      <%= shop_link(deal) %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -46,18 +58,18 @@
       <% end %>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#last_deals" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#last_deals" data-bs-slide="prev" style="left: -10%;">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#last_deals" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#last_deals" data-bs-slide="next" style="right: -10%;">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
 </div>
 
-<br><br>
+<br>
   <div class="container mt-4">
   <h1 class="text-light">Nuove Offerte</h1>
 

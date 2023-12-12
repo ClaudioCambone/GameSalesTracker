@@ -26,7 +26,8 @@
               <p class="card-text"><del><%= "%.2f" % game['price_old'] %> €</del></p>
               <p class="card-text"> <%= "%.2f" % game['price_new'] %> €</p>
               <% discount_percent = 100 - ((game['price_new'].to_f / game['price_old'].to_f) * 100).round(2) %>
-              <p class="card-text">Sconto: <%= number_with_precision(discount_percent, precision: 1) %> %</p>              <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
+              <p class="card-text">Sconto: <%= number_with_precision(discount_percent, precision: 1) %> %</p>
+              <%= link_to 'Dettagli', details_game_path(plain: game['plain']), class: 'btn btn-primary' %>
             </div>
           </div>
         </div>
