@@ -270,17 +270,4 @@ class GamesController < ApplicationController
 
     @lowest_prices = data.dig('data', game_plain) || []
   end
-
-  def get_expiry_filter_value(filter)
-    case filter
-    when '5 minuti'
-      300
-    when '30 minuti'
-      1800
-    when '1 ora'
-      3600
-    else
-      nil
-    end
-  end
 end
