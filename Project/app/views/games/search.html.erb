@@ -5,6 +5,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <%= stylesheet_link_tag 'cards', media: 'all' %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
 </head>
 
 <body>
@@ -14,11 +15,13 @@
       <div class="row row-cols-1 row-cols-md-3">
         <% displayed_titles = Set.new %>
         <% @games.each do |game| %>
+          <% discount_percent = 100 - ((game['price_new'].to_f / game['price_old'].to_f) * 100).round(2) %>
           <% title = game['title'] %>
           <% unless displayed_titles.include?(title) %>
           <div class="col mb-4">
-          <div class="card">
-            <div class="image-container">
+            <div class="card" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
+              <div class="vanilla-tilt-child">
+                <div class="image-container">
               <%= link_to details_game_path(plain: game['plain']) do %>
                 <%= image_tag(game['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: game['title']) %>
               <% end %>
@@ -30,25 +33,35 @@
                 <% end %>
               </h5>
               <p class="card-text text-center">
-                <del><%= number_to_currency(game['price_old'], unit: '', format: '%n %u') %></del>
-                <span class="fw-bold fs-3"><%= number_to_currency(game['price_new'], unit: '€', format: '%n %u') %></span>
-              </p>
-              <% discount_percent = 100 - ((game['price_new'].to_f / game['price_old'].to_f) * 100).round(2) %>
-              <div class="text-center fw-bold fs-5">
-                Get <%= number_with_precision(discount_percent, precision: 1) %>% off!
-              </div>         
+                <% if discount_percent > 0 %>
+                  <del><%= number_to_currency(game['price_old'], unit: '', format: '%n %u') %></del>
+                  <span class="price-new fw-bold fs-3"><%= number_to_currency(game['price_new'], unit: '€', format: '%n %u') %></span>
+                  <span class="discounted-price fw-bold fs-6">-<%= number_with_precision(discount_percent, precision: 1) %>%</span>
+                <% else %>
+                  <span class="price-new fw-bold fs-3"><%= number_to_currency(game['price_new'], unit: '€', format: '%n %u') %></span>
+                <% end %>
+              </p>       
             </div>
           </div>
+          <div class="vanilla-tilt-glare"></div>
         </div>
-            <% displayed_titles.add(title) %>
-          <% end %>
-        <% end %>
       </div>
-    <% else %>
-      <p>Risultati della ricerca:</p>
-      <p>Nessun risultato trovato.</p>
+      <% displayed_titles.add(title) %>
     <% end %>
-  </div>
+  <% end %>
+</div>
+<% else %>
+  <p>Risultati della ricerca:</p>
+  <p>Nessun risultato trovato.</p>
+<% end %>
+</div>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
+    });
+  </script>
+
 </body>
 
 </html>

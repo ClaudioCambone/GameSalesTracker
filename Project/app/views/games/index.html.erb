@@ -12,6 +12,7 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <!-- Collegamento a Select2 JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
   <%= stylesheet_link_tag 'cards', media: 'all' %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
 </head>
@@ -19,7 +20,7 @@
 <body>
 
 <br>
-<h1 class="text-light">Offerte in Scadenza</h1>
+<h1 class="text-light">Stanno per terminare:</h1>
 <div class="container mt-4 mb-10">
   <div id="last_deals" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-ride="carousel" data-bs-interval="7000" data-bs-pause="false">
     <div class="carousel-inner">
@@ -27,8 +28,10 @@
         <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
           <div class="row">
             <% deal_slice.each do |deal| %>
+              <% discount_percent = 100 - ((deal['price_new'].to_f / deal['price_old'].to_f) * 100).round(2) %>
               <div class="col-md-4">
-                <div class="card">
+              <div class="card" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
+              <div class="vanilla-tilt-child">
                   <div class="image-container">
                     <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid') %>
                   </div>
@@ -36,22 +39,20 @@
                     <h5 class="card-title text-center"><%= deal_title(deal) %></h5>
                     <p class="card-text text-center">
                       <del><%= "%.2f" % deal['price_old'] %> €</del>
-                      <span class="fw-bold fs-3"><%= "%.2f" % deal['price_new'] %> €</span>
-                    </p>
-                    <% discount_percent = 100 - ((deal['price_new'].to_f / deal['price_old'].to_f) * 100).round(2) %>
-                    <div class="text-center fw-bold fs-5">
-                      Get <%= number_with_precision(discount_percent, precision: 1) %>% off!
-                    </div>
+                      <span class="price-new fw-bold fs-3"><%= "%.2f" % deal['price_new'] %> €</span>
+                      <span class="discounted-price fw-bold fs-6">-<%= number_with_precision(discount_percent, precision: 1) %>%</span>      
+                    </p>              
                     <p class="card-text text-center">
-                      <%= countdown_to_end_date(deal['expiry']) %>
+                      Ends in: <%= countdown_to_end_date(deal['expiry']) %>
                     </p>
-                    <br>
-                    <div class="text-center">
+                    <div class="card-text text-center">
                       <%= shop_link(deal) %>
                     </div>
                   </div>
                 </div>
+                <div class="vanilla-tilt-glare"></div>
               </div>
+            </div>
             <% end %>
           </div>
         </div>
@@ -71,7 +72,7 @@
 
 <br>
   <div class="container mt-4">
-  <h1 class="text-light">Nuove Offerte</h1>
+  <h1 class="text-light">Deals</h1>
 
     <%= form_tag(games_path, method: 'get') do %>
       <div class="row">
@@ -87,7 +88,7 @@
           <%= label_tag 'order', 'Ordine:' %>
           <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
           <%= label_tag 'shop_filter', 'Filtra per shop:' %>
           <%= select_tag 'shop_filter[]', options_for_select([
             ['Tutti gli Store', nil],
@@ -161,6 +162,11 @@
     $(document).ready(function() {
       $('.select2').select2();
     });
+
+    // Inizializza Vanilla Tilt sulle carte del carosello
+      document.addEventListener('DOMContentLoaded', function () {
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
+      });
   </script>
 </body>
 

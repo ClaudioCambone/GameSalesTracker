@@ -21,3 +21,25 @@
   .form-outline.form-white input.form-control {
     font-size: 14px;
   }
+
+  /* Aggiungi stili per la selezione multipla Select2 */
+.select2-container--default .select2-selection--multiple {
+  border-radius: 0;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__choice {
+  color: #000 !important; /* Sostituisci con il colore desiderato per il testo */
+}
+.select2-container .select2-selection--multiple .select2-selection__choice,
+  .select2-container .select2-results__option {
+    color: #000 !important; /* Sostituisci con il colore desiderato per il testo */
+  }
+
+.select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+  color: #808080 !important; /* Sostituisci con il colore desiderato per il testo */
+}
+
+/* Aggiungi margini per spaziatura tra le opzioni del filtro */
+.shop-filter option {
+  margin-bottom: 5px;
+}
