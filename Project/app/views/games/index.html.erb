@@ -74,6 +74,7 @@
   <div class="container mt-4">
   <h1 class="text-light">Deals</h1>
 
+
     <%= form_tag(games_path, method: 'get') do %>
       <div class="row">
         <div class="col-md-2">
@@ -122,6 +123,7 @@
         </div>
       </div>
     <% end %>
+    <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4">Show Table</button>
     <br>
 
     <div class="table-responsive">
@@ -157,6 +159,36 @@
     </table>
   </div>
 
+  <div class="container card-cont">
+  <% if @deals.present? %>
+    <div class="row row-cols-1 row-cols-md-3">
+      <% @deals.each do |deal| %>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="image-container">
+              <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: deal_title(deal)) %>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><%= deal_title(deal) %></h5>
+              <p class="card-text text-center"><%= formatted_price(deal['price_new']) %></p>
+              <p class="card-text text-center"><del><%= formatted_price(deal['price_old']) %></del></p>
+              <p class="card-text text-center">Sconto: <%= deal['price_cut'] %> %</p>
+              <p class="card-text text-center">Data Inizio Sconto: <%= formatted_time(deal['added']) %></p>
+              <p class="card-text text-center">Data Fine Sconto: <%= countdown_to_end_date(deal['expiry']) %></p>
+              <div class="text-center">
+                <%= shop_link(deal) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Risultati della ricerca:</p>
+    <p>Nessun risultato trovato.</p>
+  <% end %>
+</div>
+
   <script>
     // Inizializza Select2 sulla casella di selezione multipla
     $(document).ready(function() {
@@ -167,6 +199,40 @@
       document.addEventListener('DOMContentLoaded', function () {
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
       });
+
+    // Passare da list layout a cards layout
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initially hide the table and show the card view
+        toggleTableView(false);
+
+      // Add click event listener to the toggle button
+      document.getElementById('toggleViewButton').addEventListener('click', function () {
+        // Toggle between table and card views
+        const showTableView = toggleTableView();
+
+        // Optionally, you can update the button text based on the current view
+        const buttonText = showTableView ? 'Show Cards' : 'Show Table';
+        this.innerText = buttonText;
+      });
+
+      // Function to toggle between table and card views
+      function toggleTableView(forceShowTable = null) {
+        const tableView = document.querySelector('.table-responsive');
+        const cardView = document.querySelector('.card-cont');
+
+        // Determine the current state
+        const isTableVisible = tableView.style.display !== 'none';
+
+        // Determine the desired state based on the input parameter or toggle
+        const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
+
+        // Update the display property accordingly
+        tableView.style.display = showTable ? 'block' : 'none';
+        cardView.style.display = showTable ? 'none' : 'block';
+
+        return showTable;
+      }
+    });
   </script>
 </body>
 

@@ -33,9 +33,6 @@ Search page
 Game details page
 Homepage (con caroselli)
 
-extra:
--filtro da cards a lista
-
 NOTIFICHE —> le notifiche della wishilist sono ancora da pensare, tocca vedere se ci avanza tempo e come implementarle. Questo perchè è uno sbatti inviare delle mail ad un utente anche se non è loggato. Quello che possiamo fare è implementare un sistema di notifiche quando l’utente esegue il login. Gli appare un messaggio che lo avvisa se ci sono sconti nella sua wishlist
 
 
