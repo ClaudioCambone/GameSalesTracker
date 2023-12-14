@@ -3,10 +3,8 @@ Lunedì
 Karen —> 
 Sistemare view delle collezioni nella user page
 Sistemare bottone nella pagina supporto (GameSalesTracker) (???)
-inserire layout a cards piuttosto che a lista
 aggiungere carosello con giochi consigliati nella pagina dettagli
 inserire la possibilita' di eliminare giochi dalla wishlist
-(navbar: aggiungere dropdown menu a "my account")
 
 Alessandro —> 
 Richieste asincrone alla pagina per caricare più risultati divisi in più pagine

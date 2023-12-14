@@ -5,8 +5,7 @@
   <%= stylesheet_link_tag 'profile', media: 'all' %>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <nav class="top-nav">
 
     <div style="width: 40%;">
@@ -23,22 +22,32 @@
       </div>
     </div>
 
-    <div style="width: 60%;">
-      <div class="button-container-right">
-        <% if user_signed_in? %>
-              <%= link_to "My Account", user_path, class: "button-link" %>
-              <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: "button-link" %>
-              <% if current_user.role == 'admin' %>
-                <%= link_to "Admin panel", admins_index_path, class: "button-link" %>
-              <% end %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path, class: "button-link" %>
-          <%= link_to "Sign Up", new_user_registration_path, class: "button-link" %>
-        <% end %>
+<div style="width: 60%;">
+  <div class="button-container-right">
+    <% if user_signed_in? %>
+      <div class="dropdown" style="padding: 7px;">
+        <a class="button-link dropdown-toggle" href="#" role="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          My Account
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+          <li><%= link_to 'My Profile', user_path(current_user), class: 'dropdown-item' %></li>
+          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
 
-        <%= link_to "Need Help?", support_path, class: "button-link" %>
+          <% if current_user.role == 'admin' %>
+            <li class="dropdown-divider"></li>
+            <li><%= link_to 'Admin panel', admins_index_path, class: 'dropdown-item' %></li>
+          <% end %>
+        </ul>
       </div>
-    </div>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'button-link' %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'button-link' %>
+    <% end %>
+
+    <%= link_to 'Need Help?', support_path, class: 'button-link' %>
+  </div>
+</div>
+
 
   </nav>
   <% flash.each do |type, msg| %>
@@ -55,8 +64,11 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body>
+<body data-turbo-action="replace">
   <%= yield %>
+
+  <!-- Bootstrap JavaScript bundle at the end of the HTML body -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
