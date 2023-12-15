@@ -107,3 +107,38 @@
   border-radius: 5px;
   font-size: 1em; 
 }
+
+.text-success {
+  color: #28a745;
+}
+
+/* Aggiungi questa regola CSS per lo stile del badge "Free" */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0.25rem 0 0;
+  font-size: 1rem;
+}
+
+/* Personalizza lo stile del badge Free */
+.bg-success {
+  background-color: #28a745; /* Colore verde di default in Bootstrap */
+  color: #fff; /* Colore del testo */
+}
+
+/* Stile verde per più di un'ora rimanente */
+.text-success {
+    color: #28a745; /* Verde di default in Bootstrap */
+}
+
+/* Stile arancione per più di 15 minuti ma meno di un'ora rimanente */
+.text-warning {
+    color: #ffc107; /* Arancione di default in Bootstrap */
+}
+
+/* Stile rosso per meno di 15 minuti rimanenti */
+.text-danger {
+    color: #dc3545; /* Rosso di default in Bootstrap */
+}
