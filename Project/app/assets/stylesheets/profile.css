@@ -52,3 +52,17 @@
     h1 {
       text-align: center;
     }
+
+.btn-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  color: #C0504D;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  color:crimson;
+}

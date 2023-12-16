@@ -30,7 +30,7 @@
             <% deal_slice.each do |deal| %>
               <% discount_percent = 100 - ((deal['price_new'].to_f / deal['price_old'].to_f) * 100).round(2) %>
               <div class="col-md-4">
-              <div class="card" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
+              <div class="card card-tilt" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
               <div class="vanilla-tilt-child">
                   <div class="image-container">
                     <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid') %>
@@ -180,7 +180,7 @@
     <div class="row row-cols-1 row-cols-md-3">
       <% @deals.each do |deal| %>
         <div class="col mb-4">
-          <div class="card">
+          <div class="card card-tilt">
             <div class="image-container">
               <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: deal_title(deal)) %>
             </div>

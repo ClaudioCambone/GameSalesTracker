@@ -1,21 +1,24 @@
 .card {
-    background-color: #242424; 
-    height: 100%; /* Ensures all cards have the same height */
-    border-color: #ffff;
-    border-radius: 5px;
-    border-width: 2px;
-    position: relative;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transform-origin: center bottom;
-    transition: transform 0.5s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  background-color: #242424; 
+  height: 100%; /* Ensures all cards have the same height */
+  border-color: #ffff;
+  border-radius: 5px;
+  border-width: 2px;
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover {
+.card-tilt {
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+  transition: transform 0.5s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+}
+
+.card-tilt:hover {
   transform: scale(1.05) rotateX(5deg) rotateY(5deg);
 } 
 
-.card:hover .vanilla-tilt-glare {
+.card-tilt:hover .vanilla-tilt-glare {
   opacity: 1;
 }
 
