@@ -6,6 +6,12 @@
 <%= stylesheet_link_tag 'application', media: 'all' %>
 
 </head>
+<div class="button-container-left">
+    <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
+</div>
+
+ 
+<!-- USER LIST -->
 
 <button id="toggleUsersButton">Show Users</button>
 
@@ -13,35 +19,58 @@
 
   <thead>
     <tr> 
-      <th>ID</th>
+    <!-- user id is actually usless, for now we simply comment it -->
+      <th>Avatar</th>
+      <%# <th>ID</th> %>
       <th>Username</th>
       <th>Email</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr class="user-row">
-        <td><%= user.id%>
+
+        <td>
+         <% if user.avatar.present? %>
+         <%= image_tag user.avatar, class: "rounded-circle profile-picture", size: "100x100" %>
+         <%else %>
+        <%= image_tag("user.jpg", alt: "User Image", class: "rounded-circle profile-picture", size: "100x100") %>
+        <%end%>
+         
+        <%# <td><%= user.id%>
         <td><%= user.username %></td>
         <td><%= user.email %></td>
-        <td><%= button_to "Destroy", admins_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-md" %>
-        </td>
-        <td><% if user.banned? %>
-              <%= button_to 'Unban', unban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to unban this user?' }, class: "btn btn-primary btn-md" %>
-            <% else %>
+       <!-- this line prevent an admin from banning/revoking himself-->
+        <% unless current_user.admin? && current_user == user %>
+          <% if user.admin? %>
+            <td><%= button_to 'Revoke Admin', revoke_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want make this user an admin?' }, class: "btn btn-primary btn-md" %>
+          <%else%>
+            <td><%= button_to 'Make Admin', make_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want make this user an admin?' }, class: "btn btn-primary btn-md" %>
+          <%end%>
+          <td><%= button_to "Destroy", admins_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-md" %>
+          </td>
+          <td>
+          <% if user.banned? %>
+            <%= button_to 'Unban', unban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to unban this user?' }, class: "btn btn-primary btn-md" %>
+          <% else %>
             <%= form_tag temporary_ban_admins_user_path(user), method: :put do %>
             <%= hidden_field_tag :id, user.id %>
             <%= select_tag :duration, options_for_select([['1 week', 7], ['1 month', 30], ['6 months', 180]]) %>
             <%= submit_tag 'Temporary Ban', class: 'btn btn-primary' %> 
             </td>
-            <% end %>
+          <% end %>
             <td>  <%= button_to 'PermaBan', ban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to ban this user?' }, class: "btn btn-primary btn-md" %> </td>
-            <% end %>
-            </td>
+          <% end %>  
+        <%end%>
+      </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+<!-- END OF USER LIST -->
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

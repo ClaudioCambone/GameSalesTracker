@@ -13,5 +13,10 @@ class ApplicationMailer < ActionMailer::Base
         @token = token
         mail(to: user.email, subject: 'Password Reset')
       end
+
+      def account_deleted_notification(user_email)
+        mail(to: user_email, subject: 'Your account has been deleted, because you violated our policy')
+      end
+
     end
   

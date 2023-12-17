@@ -1,5 +1,5 @@
 class CollectionsController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!
   
   def show
     @collection = Collection.find(params[:id])

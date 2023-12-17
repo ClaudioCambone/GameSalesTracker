@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   root "games#index"
   get '/user', to: 'user#index'
-  get '/support', to: 'support#index'
   get 'games/search', to: 'games#search', as: :search_games
   get 'games/details/:plain', to: 'games#details', as: :details_game
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
@@ -11,7 +10,14 @@ Rails.application.routes.draw do
   post 'games/add_to_collection', to: 'games#add_to_collection', as: :add_to_collection_game
 
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
- 
+
+
+ # support page routes 
+  # Add a route for the new action (displaying the contact form)
+  get '/support', to: 'support#new', as: :new_support
+
+  # Add a route for the create action (processing the form submission)
+  post '/support', to: 'support#create', as: :create_support
 
 
   get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
@@ -48,6 +54,8 @@ Rails.application.routes.draw do
       put 'ban'
       put 'unban'
       put 'temporary_ban'
+      put 'make_admin'
+      put 'revoke_admin'
     end
   end
     get 'index', to: 'users#index', as: :index

@@ -1,6 +1,7 @@
 class UserController < ApplicationController
   layout 'layouts/navbar_layout'
   # POST /users or /users.json
+  before_action :authenticate_user!
   
 def create
   @user = User.new(user_params)

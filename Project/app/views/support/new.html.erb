@@ -40,46 +40,34 @@
   </style>
 </head>
 <body>
-  <section class="vh-70">
-    <div class="container py-5 card-container">
-      <div class="card">
-        <h1>Get in touch:</h1>
-        <br><br>
-        <h3>Address</h3>
-        <br>
-        <h3>Phone</h3>
-        <br>
-        <h3>E-mail</h3>
-      </div>
       <div class="card" style="padding: 40px;">
-        <h2>Something wrong?</h2>
+        <h1>Something wrong?</h1>
         <h1>Contact us!</h1>
         <br>
 
-        <%= form_tag(url: root_path) do %>
+        <%= form_with(model: @support, url: new_support_path, method: :post) do |form| %>
+
           <!-- Your support form fields here -->
           <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+              <%= form.label :username %>
+              <%= form.text_field :username %>
           </div><br>
 
           <div>
-            <label for="surname">Surname:</label>
-            <input type="text" id="surname" name="surname" required>
           </div><br>
 
           <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <%= form.label :email %>
+            <%= form.email_field :email %>
           </div><br>
 
           <div>
-            <label for="message">Your comment here:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+            <%= form.label :message %>
+            <%= form.text_area :message %>
           </div><br>
 
           <div>
-            <input type="submit" value="Submit" class="btn button-link">
+            <button type="submit" value="Submit" class="button">send an e-mail</button>
           </div>
         <% end %>
 

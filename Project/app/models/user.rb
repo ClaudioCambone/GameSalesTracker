@@ -22,12 +22,11 @@ class User < ApplicationRecord
 
 
   # This ensures that new users have a default role of "user" unless explixity said that they are "admins"
-
   def set_default_role
     self.role ||= 'user'
   end
  
-
+  #check if user is admin or not
   def admin?
     role == 'admin'
   end
@@ -52,11 +51,9 @@ class User < ApplicationRecord
   # Omniauth modules
 
   def self.from_omniauth(auth)
-    # This line checks if the user email received by the Omniauth is already included in our databases.
       user = User.where(email: auth.info.email).first
       puts "------------------------------------"
       puts auth.info.mail
-    # This line sets the user unless there is a user found in the line above, therefore we use ||= notation to evaluate if the user is nill, then set it to the User.create
       user ||= User.create!(provider: auth.provider, uid: auth.uid, email: auth.info.email, password: Devise.friendly_token[0, 20])
       user
     end
