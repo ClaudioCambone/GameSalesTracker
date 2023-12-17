@@ -8,11 +8,12 @@ inserire la possibilita' di eliminare giochi dalla wishlist
 
 Alessandro —> 
 Richieste asincrone alla pagina per caricare più risultati divisi in più pagine
-mostrare anche il prezzo originale (sia deals che search)
-mostrare anche lo sconto percentuale (sia deals che search)
-rimuovere la scadenza nei filtri
-aggiungere un top 20 per le offerte che stanno per scadere
-aggiungere la possibilita' di vedere piu store alla volta
+mostrare anche il prezzo originale (sia deals che search) [done]
+mostrare anche lo sconto percentuale (sia deals che search) [done]
+rimuovere la scadenza nei filtri [done]
+aggiungere un top 20 per le offerte che stanno per scadere [done]
+aggiungere la possibilita' di vedere piu store alla volta [done]
+sistemare layouts cards (aggiunto tridimensionalita', controlli sul prezzo e sulla data di scatenza, css vario) [done]
 
 Claudio —> 
 Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)

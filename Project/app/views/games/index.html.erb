@@ -209,7 +209,19 @@
   <script>
     // Inizializza Select2 sulla casella di selezione multipla
     $(document).ready(function() {
-      $('.select2').select2();
+      var selectElement = $('.select2');
+    
+    // Imposta il placeholder
+    selectElement.attr('data-placeholder', 'Seleziona uno o più store...');
+
+    // Inizializza Select2
+    selectElement.select2();
+
+    // Aggiunge un listener per gestire la selezione
+    selectElement.on('select2:select', function (e) {
+      // Rimuovi il placeholder dopo la selezione
+      $(this).find('[value=""]').remove();
+    });
     });
 
     // Inizializza Vanilla Tilt sulle carte del carosello
