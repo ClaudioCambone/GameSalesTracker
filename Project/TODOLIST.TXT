@@ -16,11 +16,11 @@ aggiungere la possibilita' di vedere piu store alla volta
 
 Claudio —> 
 Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)
-funzione nomina admin
-email in caso di ThisTruzione account
-pulsante homepage in admin panel
-inserire anche l'immagine profilo degli utenti nell'admin panel
-email per support page
+funzione nomina/revoca admin (done)
+email in caso di ThisTruzione account (done, aggiunte mail anche in caso di ban/unban/makeadmin/revokeadmin)
+pulsante homepage in admin panel (done, needs to be modified)
+inserire anche l'immagine profilo degli utenti nell'admin panel (done)
+email per support page (done)
 
 ———GRAFICA———
 Sistemare pannello admin ( adesso funziona, dagli una buona resa estetica. Conta che nella tabella con tutti gli utenti apparirà un altro bottone per bannare l’account)
