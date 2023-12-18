@@ -2,39 +2,24 @@ Lunedì
 
 Karen —> 
 Sistemare view delle collezioni nella user page
-Sistemare bottone nella pagina supporto (GameSalesTracker) (???)
 aggiungere carosello con giochi consigliati nella pagina dettagli
 inserire la possibilita' di eliminare giochi dalla wishlist
+fare un controllo per non cancellare la wishlist
+ri-aggiungere pulsante per creare una collezione
+sistemare pannello admin
 
 Alessandro —> 
-Richieste asincrone alla pagina per caricare più risultati divisi in più pagine
-mostrare anche il prezzo originale (sia deals che search) [done]
-mostrare anche lo sconto percentuale (sia deals che search) [done]
-rimuovere la scadenza nei filtri [done]
-aggiungere un top 20 per le offerte che stanno per scadere [done]
-aggiungere la possibilita' di vedere piu store alla volta [done]
-sistemare layouts cards (aggiunto tridimensionalita', controlli sul prezzo e sulla data di scatenza, css vario) [done]
+sistemare layouts cards/table
+provare ad ottimizzare le pagine in termini di velocita' di caricamento
 
 Claudio —> 
 Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)
-funzione nomina/revoca admin (done)
-email in caso di ThisTruzione account (done, aggiunte mail anche in caso di ban/unban/makeadmin/revokeadmin)
-pulsante homepage in admin panel (done, needs to be modified)
-inserire anche l'immagine profilo degli utenti nell'admin panel (done)
-email per support page (done)
+
 
 ———GRAFICA———
-Sistemare pannello admin ( adesso funziona, dagli una buona resa estetica. Conta che nella tabella con tutti gli utenti apparirà un altro bottone per bannare l’account)
-Togliere la scritta welcome back durante la ricerca
 Support page
 Collections page
 Search page
 Game details page
-Homepage (con caroselli)
-
-NOTIFICHE —> le notifiche della wishilist sono ancora da pensare, tocca vedere se ci avanza tempo e come implementarle. Questo perchè è uno sbatti inviare delle mail ad un utente anche se non è loggato. Quello che possiamo fare è implementare un sistema di notifiche quando l’utente esegue il login. Gli appare un messaggio che lo avvisa se ci sono sconti nella sua wishlist
-
-
-EXTRA -> Far funzionare effettivamente la pagina get in touch 
 
 (Vedremo) RECENSIONI —> ogni volta che un utente inserisce una review, se non è presente il gioco nel db viene creata l’occorrenza, se l’occorrenza è già presente viene controllato prima che venga aperta la pagina di un gioco. Se recensioni sono presenti vengono visualizzate
