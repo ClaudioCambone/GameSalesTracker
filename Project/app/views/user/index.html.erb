@@ -76,10 +76,39 @@
       <% else %>
         <p>No games in this collection.</p>
       <% end %><br>
-      <%= button_to 'Delete Collection', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
-      <br><br>
+      <% if collection.name != "My Wishlist" %>
+        <%= button_to 'Delete Collection', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
+      <% end %>
+      <br>
     </div>
   <% end %>
 <% else %>
   <p>You don't have any collections yet.</p>
 <% end %>
+
+<br><br>
+<!-- Button to trigger the modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newCollectionModal">
+  New Collection
+</button>
+
+<!-- Modal for the new collection form -->
+<div class="modal fade" id="newCollectionModal" tabindex="-1" aria-labelledby="newCollectionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newCollectionModalLabel">New Collection</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: Collection.new, url: collections_path, remote: true, id: "newCollectionForm") do |form| %>
+          <div class="mb-3">
+            <%= form.label :name, 'Collection Name', class: 'form-label' %>
+            <%= form.text_field :name, class: 'form-control', required: true %>
+          </div>
+          <%= form.submit 'Save', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

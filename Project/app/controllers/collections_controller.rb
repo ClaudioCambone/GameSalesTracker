@@ -12,13 +12,18 @@ class CollectionsController < ApplicationController
 
   def create
     @collection = current_user.collections.build(collection_params)
-
-    if @collection.save
-      redirect_to root_path, notice: 'Collection was successfully created.'
-    else
-      redirect_to root_path, notice: 'There was an error in creating your collection.'
+  
+    respond_to do |format|
+      if @collection.save
+        format.html { redirect_to root_path, notice: 'Collection was successfully created.' }
+        format.js   # Render create.js.erb
+      else
+        format.html { redirect_to root_path, notice: 'There was an error in creating your collection.' }
+        format.js   # Render create.js.erb
+      end
     end
   end
+  
 
   def destroy
     @collection = Collection.find(params[:id])

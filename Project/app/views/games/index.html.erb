@@ -140,7 +140,7 @@
         </div>
       </div>
     <% end %>
-    <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4">Show Table</button>
+    <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4"></button>
     <br>
 
     <div class="table-responsive">
@@ -230,39 +230,47 @@
       });
 
     // Passare da list layout a cards layout
-      document.addEventListener('DOMContentLoaded', function () {
-        // Initially hide the table and show the card view
-        toggleTableView(false);
+  document.addEventListener('DOMContentLoaded', function () {
+    // Declare showTableView variable outside the toggleTableView function
+    let showTableView;
 
-      // Add click event listener to the toggle button
-      document.getElementById('toggleViewButton').addEventListener('click', function () {
-        // Toggle between table and card views
-        const showTableView = toggleTableView();
+    // Initially hide the table and show the card view
+    showTableView = toggleTableView(false);
 
-        // Optionally, you can update the button text based on the current view
-        const buttonText = showTableView ? 'Show Cards' : 'Show Table';
-        this.innerText = buttonText;
-      });
+    // Set the initial button text based on the current view
+    const buttonText = showTableView ? 'Show Cards' : 'Show Table';
+    document.getElementById('toggleViewButton').innerText = buttonText;
 
-      // Function to toggle between table and card views
-      function toggleTableView(forceShowTable = null) {
-        const tableView = document.querySelector('.table-responsive');
-        const cardView = document.querySelector('.card-cont');
+    // Add click event listener to the toggle button
+    document.getElementById('toggleViewButton').addEventListener('click', function () {
+      // Toggle between table and card views
+      showTableView = toggleTableView();
 
-        // Determine the current state
-        const isTableVisible = tableView.style.display !== 'none';
-
-        // Determine the desired state based on the input parameter or toggle
-        const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
-
-        // Update the display property accordingly
-        tableView.style.display = showTable ? 'block' : 'none';
-        cardView.style.display = showTable ? 'none' : 'block';
-
-        return showTable;
-      }
+      // Update the button text based on the current view
+      const buttonText = showTableView ? 'Show Cards' : 'Show Table';
+      this.innerText = buttonText;
     });
-  </script>
+
+    // Function to toggle between table and card views
+    function toggleTableView(forceShowTable = null) {
+      const tableView = document.querySelector('.table-responsive');
+      const cardView = document.querySelector('.card-cont');
+
+      // Determine the current state
+      const isTableVisible = tableView.style.display !== 'none';
+
+      // Determine the desired state based on the input parameter or toggle
+      const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
+
+      // Update the display property accordingly
+      tableView.style.display = showTable ? 'block' : 'none';
+      cardView.style.display = showTable ? 'none' : 'block';
+
+      return showTable;
+    }
+  });
+</script>
+
 </body>
 
 </html>
