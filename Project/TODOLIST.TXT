@@ -1,10 +1,10 @@
 Lunedì
 
 Karen —> 
-Sistemare view delle collezioni nella user page
+Sistemare view delle collezioni nella user page (done)
 aggiungere carosello con giochi consigliati nella pagina dettagli
 inserire la possibilita' di eliminare giochi dalla wishlist (done)
-fare un controllo per non cancellare la wishlist
+fare un controllo per non cancellare la wishlist (done)
 ri-aggiungere pulsante per creare una collezione (done)
 sistemare pannello admin
 

@@ -32,7 +32,7 @@
   height: 100px;
 }
 
-.edit-profile-button {
+.profile-button {
     padding: 7px;
     background-color: #C0504D;
     color: #fff;
@@ -40,7 +40,7 @@
     border-radius: 5px;
 }
 
-.edit-profile-button:hover {
+.profile-button:hover {
   color: #ddd;
 }
 
@@ -65,4 +65,14 @@
 
 .btn-delete:hover {
   color:crimson;
+}
+
+.custom-modal {
+  background-color: #242424;
+  border-color: #ffff;
+  border-width: 2px;
+}
+
+.card-body {
+  padding: 20px;
 }

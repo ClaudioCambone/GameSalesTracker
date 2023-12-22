@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   include GamesHelper
+  include SharedHelper
   layout 'navbar_layout'
   before_action :set_api_key
   before_action :authenticate_user!, except: [:index, :show, :search, :details_game]
@@ -213,29 +214,6 @@ class GamesController < ApplicationController
   rescue => e
     puts "Errore nella richiesta di dettagli dei giochi: #{e.message}"
     return []
-  end
-
-  def get_game_prices(game_plain)
-    prices_url = "https://api.isthereanydeal.com/v01/game/prices/?key=#{@api_key}&plains=#{game_plain}"
-
-    begin
-      response = RestClient.get(prices_url)
-      parsed_response = JSON.parse(response)
-
-      game_prices = parsed_response['data'][game_plain]
-
-      if game_prices.present?
-        return game_prices
-      else
-        return []
-      end
-    rescue RestClient::ExceptionWithResponse => e
-      puts "Errore nella richiesta di prezzi del gioco: #{e.response}"
-      return []
-    rescue => e
-      puts "Errore nella richiesta di prezzi del gioco: #{e.message}"
-      return []
-    end
   end
 
   def get_lowest_price(game_plain)

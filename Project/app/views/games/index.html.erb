@@ -23,7 +23,7 @@
   <!-- LAST DEALS SECTION -->
 <h1 class="text-light">Stanno per terminare:</h1>
 <div class="container mt-4 mb-10">
-  <div id="last_deals" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-ride="carousel" data-bs-interval="7000" data-bs-pause="false">
+  <div id="last_deals" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
     <div class="carousel-inner">
       <% @lastdeals.each_slice(3).with_index do |deal_slice, index| %>
         <div class="carousel-item <%= index == 0 ? 'active' : '' %>">

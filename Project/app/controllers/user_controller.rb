@@ -1,7 +1,9 @@
 class UserController < ApplicationController
   layout 'layouts/navbar_layout'
+  include SharedHelper
   # POST /users or /users.json
   before_action :authenticate_user!
+  before_action :set_api_key
   
 def create
   @user = User.new(user_params)
@@ -19,6 +21,9 @@ def create
   end
 end
 
+def set_api_key
+  @api_key = 'b14274e8092bc14e227b32e4b66c2903bf4419c9'
+end
 
 def panel
   if current_user.admin?
