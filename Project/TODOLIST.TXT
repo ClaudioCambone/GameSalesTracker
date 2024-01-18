@@ -1,19 +1,22 @@
 Lunedì
 
 Karen —> 
-Sistemare view delle collezioni nella user page (done)
 aggiungere carosello con giochi consigliati nella pagina dettagli
-inserire la possibilita' di eliminare giochi dalla wishlist (done)
-fare un controllo per non cancellare la wishlist (done)
-ri-aggiungere pulsante per creare una collezione (done)
 sistemare pannello admin
+sistemare pagina del gioco
+togliere il redirect alla home dopo aver aggiunto un gioco alla collezione
+togliere il redirect alla home dopo aver eliminato un gioco alla collezione
+
 
 Alessandro —> 
-sistemare layouts cards/table
+provare ad integrare nuova versione api 
 provare ad ottimizzare le pagine in termini di velocita' di caricamento
 
 Claudio —> 
-Login di Steam e GitHub (sono implementate al momento ma il login non viene eseguito)
+Login di Steam
+Elimina login Github
+Login X?
+Sistemare conferma della mail e varie (prova un po' di cose)
 
 
 ———GRAFICA———
@@ -22,4 +25,16 @@ Collections page
 Search page
 Game details page
 
-(Vedremo) RECENSIONI —> ogni volta che un utente inserisce una review, se non è presente il gioco nel db viene creata l’occorrenza, se l’occorrenza è già presente viene controllato prima che venga aperta la pagina di un gioco. Se recensioni sono presenti vengono visualizzate
+———COMMENTI———
+Ogni utente può lasciare dei commenti per ogni gioco, a fondo pagina (tipo delle recensioni). 
+Aggiungere un campo "Like" per segnare se ad un utente è piaciuto il gioco o meno. 
+Fare una media dei commenti positivi/negativi e far apparire se il gioco è apprezzato o meno (tipo steam); con da 100% a 75% voti negativi --> storngly not raccomanded
+da 74% a 51% voti negativi --> not raccomanded
+da 50% a 25% voti negativi --> raccomanded
+da 25% a 0% voti negativi --> strongly raccomanded
+I commenti possono essere moderati dagli Admin
+
+
+———TESTING———
+???
+
