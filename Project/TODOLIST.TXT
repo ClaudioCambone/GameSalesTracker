@@ -2,17 +2,18 @@ Lunedì
 
 Karen —> 
 aggiungere carosello con giochi consigliati nella pagina dettagli
-sistemare pannello admin
-sistemare pagina del gioco
 togliere il redirect alla home dopo aver aggiunto un gioco alla collezione
 togliere il redirect alla home dopo aver eliminato un gioco alla collezione
+SEZIONE COMMENTI 
 
 
 Alessandro —> 
+sistemare pagina del gioco
 provare ad integrare nuova versione api 
 provare ad ottimizzare le pagine in termini di velocita' di caricamento
 
 Claudio —> 
+sistemare pannello admin
 Login di Steam
 Elimina login Github
 Login X?
@@ -36,5 +37,5 @@ I commenti possono essere moderati dagli Admin
 
 
 ———TESTING———
-???
+a fine progetto implementeremo il testing uno per ciascuno, sulle user stories a cui abbiamo lavorato tutti e tre 
 
