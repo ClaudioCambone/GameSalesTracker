@@ -14,6 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
   <%= stylesheet_link_tag 'cards', media: 'all' %>
+  <%= stylesheet_link_tag 'table', media: 'all' %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
 </head>
 
@@ -142,59 +143,83 @@
     <% end %>
     <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4"></button>
     <br>
-
+    
     <div class="table-responsive">
-      <table class="table table-bordered table-hover bg-dark">
-        <thead class="thead-dark">
-          <tr>
-            <th class="text-light">Titolo</th>
-            <th class="text-light">Prezzo Attuale</th>
-            <th class="text-light">Prezzo Originale</th>
-            <th class="text-light">Sconto</th>
-            <th class="text-light">Data Inizio Sconto</th>
-            <th class="text-light">Data Fine Sconto</th>
-            <th class="text-light">Dettagli</th>
-          </tr>
-        </thead>
+    <table class="table table-custom">
+      <thead class="thead-dark">
+        <tr>
+          <th class="text-light">Immagine</th>
+          <th class="text-light">Titolo</th>
+          <th class="text-light">Prezzo Attuale</th>
+          <th class="text-light">Prezzo Originale</th>
+          <th class="text-light">Sconto</th>
+          <th class="text-light">Data Inizio Sconto</th>
+          <th class="text-light">Data Fine Sconto</th>
+          <th class="text-light">Dettagli</th>
+        </tr>
+      </thead>
       <tbody>
         <% @deals.each do |deal| %>
           <tr>
             <td class="text-light">
-              <%= deal_title(deal) %>
-              <br>
               <%= game_image_tag(deal['image_url']) %>
             </td>
-            <td class="text-light text-center"><%= formatted_price(deal['price_new']) %></td>
-            <td class="text-light text-center"><%= formatted_price(deal['price_old']) %></td>
-            <td class="text-light text-center"><%= deal['price_cut'] %> %</td>
-            <td class="text-light"><%= formatted_time(deal['added']) %></td>
-            <td class="text-light"><%= countdown_to_end_date(deal['expiry']) %></td>
-            <td class="text-light"><%= shop_link(deal) %></td>
+            <td class="text-light">
+              <%= deal_title(deal) %>
+            </td>
+            <td class="text-light text-center price_new"><%= formatted_price(deal['price_new']) %></td>
+            <td class="price_original"><%= formatted_price(deal['price_old']) %></td>
+            <td class="price_cut"><%= deal['price_cut'] %> %</td>
+            <td class="deal_added"><%= formatted_time(deal['added']) %></td>
+            <td class="deal_expiry"><%= countdown_to_end_date(deal['expiry']) %></td>
+            <td class="text-light deal_shop"><%= shop_link(deal) %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
+  
 
   <div class="container card-cont">
   <% if @deals.present? %>
     <div class="row row-cols-1 row-cols-md-3">
       <% @deals.each do |deal| %>
-        <div class="col mb-4">
+        <div class="col mb-2">
           <div class="card card-tilt">
-            <div class="image-container">
-              <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: deal_title(deal)) %>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= deal_title(deal) %></h5>
-              <p class="card-text text-center"><%= formatted_price(deal['price_new']) %></p>
-              <p class="card-text text-center"><del><%= formatted_price(deal['price_old']) %></del></p>
-              <p class="card-text text-center">Sconto: <%= deal['price_cut'] %> %</p>
-              <p class="card-text text-center">Data Inizio Sconto: <%= formatted_time(deal['added']) %></p>
-              <p class="card-text text-center">Data Fine Sconto: <%= countdown_to_end_date(deal['expiry']) %></p>
-              <div class="text-center">
-                <%= shop_link(deal) %>
+            <div class="vanilla-tilt-child">
+              <div class="image-container">
+                <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: deal_title(deal)) %>
               </div>
+              <div class="card-body">
+                <h5 class="card-title text-center"><%= deal_title(deal) %></h5>
+                <p class="card-text text-center">
+                  <del><%= formatted_price(deal['price_old']) %> €</del>
+                  <% if deal['price_new'] == 0 %>
+                    <span class="price-new fw-bold fs-3 text-success"><%= formatted_price(deal['price_new']) %> €</span>
+                    <span class="badge bg-success">Free</span>
+                  <% else %>
+                    <span class="price-new fw-bold fs-3"><%= formatted_price(deal['price_new']) %> €</span>
+                  <% end %>
+                  <span class="discounted-price fw-bold fs-6">-<%= deal['price_cut'] %> %</span>      
+                </p>              
+                <p class="card-text text-center">
+                  Ends in: 
+                  <% remaining_time = countdown_to_end_date(deal['expiry']) %>
+                  <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
+                  <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>
+                  <% if total_minutes > 60 %>
+                    <span class="text-success"><%= remaining_time %></span>
+                  <% elsif total_minutes > 15 %>
+                    <span class="text-warning"><%= remaining_time %></span>
+                  <% else %>
+                    <span class="text-danger"><%= remaining_time %></span>
+                  <% end %>
+                </p>
+                <div class="card-text text-center">
+                  <%= shop_link(deal) %>
+                </div>
+              </div>
+              <div class="vanilla-tilt-glare"></div>
             </div>
           </div>
         </div>

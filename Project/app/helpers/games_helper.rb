@@ -98,5 +98,12 @@ module GamesHelper
       end
     end
 
+  def game_image_tag(image_url, options = {})
+    options[:class] ||= ''
+    options[:class] += ' card-img-top img-fluid'
+    options[:alt] ||= 'Game Image'
+    image_tag(image_url.presence || 'placeholder.png', options)
   end
+
+end
   

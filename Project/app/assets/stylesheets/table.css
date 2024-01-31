@@ -1,0 +1,54 @@
+/* styles.css */
+
+/* Stile generale per la tabella */
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  /* Stile per l'intestazione della tabella */
+  .table-custom th {
+    background-color: #242424; 
+    color: orange; 
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Stile per le righe della tabella */
+  .table-custom td {
+    background-color: #242424; 
+    color: #fff; 
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  
+  .table-custom img {
+    max-width: 120px; 
+    height: auto;
+  }
+
+  /* Aggiungi questa regola per rendere il prezzo in grassetto */
+.table-custom .price_new {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.table-custom .price_original {
+  color: #999; /* Colore grigio */
+  text-decoration: line-through; /* Sbarrato */
+}
+
+.table-custom .price_cut {
+  color:aquamarine;
+}
+
+.table-custom .deal_expiry {
+  color:aqua;
+}
