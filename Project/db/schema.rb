@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_10_103244) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_31_155429) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_10_103244) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["collection_id"], name: "index_game_collections_on_collection_id"
+    t.index ["plain", "collection_id"], name: "index_game_collections_on_plain_and_collection_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

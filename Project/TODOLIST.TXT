@@ -2,8 +2,8 @@ Lunedì
 
 Karen —> 
 aggiungere carosello con giochi consigliati nella pagina dettagli
-togliere il redirect alla home dopo aver aggiunto un gioco alla collezione
-togliere il redirect alla home dopo aver eliminato un gioco alla collezione
+togliere il redirect alla home dopo aver aggiunto un gioco alla collezione (done)
+togliere il redirect alla home dopo aver eliminato un gioco alla collezione (done)
 SEZIONE COMMENTI 
 
 
