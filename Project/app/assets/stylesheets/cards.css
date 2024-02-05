@@ -86,6 +86,8 @@
 
   .carousel-item {
     padding: 0 15px;
+    overflow: hidden;
+    width: 100%;
   }
 
 .carousel-inner {

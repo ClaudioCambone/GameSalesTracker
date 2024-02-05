@@ -24,6 +24,8 @@
   margin-right: 10px;
   background-color: #242424;
   border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
 }
 
 .profile-picture {
