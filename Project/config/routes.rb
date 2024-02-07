@@ -36,13 +36,16 @@ Rails.application.routes.draw do
 
   resources :deals
 
-  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    resources :comments, only: [:index, :create, :edit, :destroy]
+  end
 
   resources :collections, only: [:index, :create, :destroy]
 
   resources :game_collections, only: [:create, :destroy] 
 
   resources :games do
+    resources :comments, only: [:index, :create, :edit, :destroy]
     member do
       post 'add_to_collection'
     end

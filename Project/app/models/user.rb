@@ -34,6 +34,9 @@ class User < ApplicationRecord
   ## Collections
   has_many :collections
 
+  ## Comments
+  has_many :comments
+
   
   ##...Avatar Attachment...##
   has_one_attached :avatar

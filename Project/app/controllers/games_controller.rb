@@ -32,6 +32,7 @@ class GamesController < ApplicationController
       store_lowest_prices
 
       @game_plain = game_plain
+      @comments = Comment.where(gameplain: @game_plain)
 
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"

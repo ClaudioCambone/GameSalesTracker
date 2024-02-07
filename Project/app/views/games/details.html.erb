@@ -136,3 +136,29 @@
   <p>Prezzi non disponibili al momento.</p>
 <% end %>
 <br>
+
+<!-- Add comments section -->
+<div class="container mt-4">
+  <h2>Comments</h2>
+  <% @comments.each do |comment| %>
+    <div class="comment">
+      <p><strong><%= comment.user.username %>:</strong> <%= comment.body %></p>
+    </div>
+  <% end %>
+</div>
+
+<!-- Form for adding new comment -->
+<% if user_signed_in? %>
+  <div class="container mt-4">
+    <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_plain), local: true) do |form| %>
+      <%= form.radio_button :like, true %> Like
+      <%= form.radio_button :like, false %> Dislike
+      <div class="field">
+        <%= form.label :body %>
+        <%= form.text_area :body, rows: 3 %>
+      </div>
+      <%= form.hidden_field :gameplain, value: @game_plain %>
+      <%= form.submit "Add Comment", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>
