@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :deals
 
   resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-    resources :comments, only: [:index, :create, :edit, :destroy]
+    resources :comments, only: [:index, :create, :edit, :destroy, :update]
   end
 
   resources :collections, only: [:index, :create, :destroy]
@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   resources :game_collections, only: [:create, :destroy] 
 
   resources :games do
-    resources :comments, only: [:index, :create, :edit, :destroy]
+    resources :comments, only: [:index, :create, :edit, :destroy, :update]
     member do
       post 'add_to_collection'
     end
