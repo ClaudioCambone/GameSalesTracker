@@ -38,6 +38,12 @@
   </style>
 </head>
 <body>
+<!--FLASH MESSAGES/ALERT-->
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
       <div class="card" style="padding: 40px;">
         <h1>Something wrong?</h1>
         <h1>Contact us!</h1>

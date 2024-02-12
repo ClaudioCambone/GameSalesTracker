@@ -11,6 +11,12 @@
   </style>
 </head>
 <body>
+<!--FLASH MESSAGES/ALERT-->
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
 
 <section class="vh-100">
   <div class="container py-5 h-100">

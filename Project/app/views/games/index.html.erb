@@ -19,6 +19,12 @@
 </head>
 
 <body>
+<!--FLASH MESSAGES/ALERT-->
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
 
 <br>    
   <!-- LAST DEALS SECTION -->

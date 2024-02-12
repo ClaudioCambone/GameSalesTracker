@@ -86,7 +86,7 @@
     end
    
     sign_in_and_redirect @user, event: :authentication
-    flash[:message] = "Authentication via Google successful"
+    flash[:alert] = "Authentication via Google successful"
     
 
   end

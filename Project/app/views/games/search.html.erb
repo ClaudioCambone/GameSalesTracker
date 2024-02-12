@@ -9,6 +9,12 @@
 </head>
 
 <body>
+<!--FLASH MESSAGES/ALERT-->
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
   <div class="container">
     <% if @games.present? %>
       <br><br>

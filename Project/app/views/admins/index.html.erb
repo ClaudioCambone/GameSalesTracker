@@ -6,6 +6,12 @@
 <%= stylesheet_link_tag 'application', media: 'all' %>
 
 </head>
+<!--FLASH MESSAGES/ALERT-->
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
 <div class="button-container-left">
     <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
 </div>
