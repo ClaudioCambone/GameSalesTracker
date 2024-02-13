@@ -1,91 +1,235 @@
-
-<h1>Admin Panel</h1>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<%= javascript_include_tag 'activestorage' %>
-<%= csrf_meta_tags %>
-<%= stylesheet_link_tag 'application', media: 'all' %>
 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <title>Admin Panel</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'activestorage' %>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #242424;
+      color: #fff; 
+    }
+    .search {
+      width: 100%;
+      position: relative;
+      display: flex;
+      margin-left: 20px;
+      left: 0;
+      right: 0;
+    }
+
+    .searchTerm {
+      width: 20%;
+      border: 3px solid #C0504D;
+      border-right: none;
+      padding: 5px;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+
+    .searchButton {
+      border: 1px solid #C0504D;
+      background: #C0504D;
+      text-align: center;
+      color: #fff;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+    }
+    .alert {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #555; 
+      background-color: #333; 
+      color: #fff;
+    }
+    .button-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .button-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+  #userTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  #userTable th, #userTable td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #fff;
+  }
+
+  #userTable td.email {
+    border-right: 2px solid #fff;
+  }
+
+  .profile-picture {
+    border-radius: 50%;
+  }
+
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    /* BUTTON STYLES */
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+    }
+    .btn-success {
+      background-color: #28a745;
+      border: 1px solid #28a745;
+      border-radius: 5px;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      border: 1px solid #dc3545;
+      border-radius: 5px;
+    }
+  </style>
 </head>
-<!--FLASH MESSAGES/ALERT-->
-<% flash.each do |type, msg| %>
-  <div class="alert alert-info">
-    <%= msg %>
-  </div>
-<% end %>
-<div class="button-container-left">
+<body>
+  <h1>Admin Panel</h1>
+
+  <!-- FLASH MESSAGES/ALERT -->
+  <% flash.each do |type, msg| %>
+    <div class="alert">
+      <%= msg %>
+    </div>
+  <% end %>
+
+  
+
+
+  <!-- BUTTON LINK -->
+  <div class="button-container">
     <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
-</div>
+  </div>
 
- 
-<!-- USER LIST -->
-
-<button id="toggleUsersButton">Show Users</button>
-
-<table id="userTable" style="display: none;">
-
-  <thead>
-    <tr> 
-    <!-- user id is actually usless, for now we simply comment it -->
-      <th>Avatar</th>
-      <%# <th>ID</th> %>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr class="user-row">
-
-        <td>
-         <% if user.avatar.present? %>
-         <%= image_tag user.avatar, class: "rounded-circle profile-picture", size: "100x100" %>
-         <%else %>
-        <%= image_tag("user.jpg", alt: "User Image", class: "rounded-circle profile-picture", size: "100x100") %>
-        <%end%>
-         
-        <%# <td><%= user.id%>
-        <td><%= user.username %></td>
-        <td><%= user.email %></td>
-       <!-- this line prevent an admin from banning/revoking himself-->
-        <% unless current_user.admin? && current_user == user %>
-          <% if user.admin? %>
-            <td><%= button_to 'Revoke Admin', revoke_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want make this user an admin?' }, class: "btn btn-primary btn-md" %>
-          <%else%>
-            <td><%= button_to 'Make Admin', make_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want make this user an admin?' }, class: "btn btn-primary btn-md" %>
-          <%end%>
-          <td><%= button_to "Destroy", admins_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary btn-md" %>
+<!-- SEARCHBAR -->
+       <div class="search">
+           <input type="text" id="search" name="search" placeholder="Enter username or email" class="searchTerm">
+           <button onclick=searchUsers() class="searchButton">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+  
+  <!-- USER LIST -->
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Destroy</th>
+        <th>Temp Ban / Perma Ban</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <% if user.avatar.present? %>
+              <%= image_tag user.avatar, class: "profile-picture", size: "100x100" %>
+            <% else %>
+              <%= image_tag("user.jpg", alt: "User Image", class: "profile-picture", size: "100x100") %>
+            <% end %>
+          </td>
+          <td><%= user.username.present? ? user.username : "Not Available" %></td>
+          <td class="email"><%= user.email %></td>
+          <td>
+            <% unless current_user.admin? && current_user == user %>
+              <% if user.admin? %>
+                <%= button_to 'Revoke Admin', revoke_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to revoke admin privileges?' }, class: "btn btn-danger" %>
+              <% else %>
+                <%= button_to 'Make Admin', make_admin_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to make this user an admin?' }, class: "btn btn-success" %>
+              <% end %>
+            <% end %>
           </td>
           <td>
-          <% if user.banned? %>
-            <%= button_to 'Unban', unban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to unban this user?' }, class: "btn btn-primary btn-md" %>
-          <% else %>
-            <%= form_tag temporary_ban_admins_user_path(user), method: :put do %>
-            <%= hidden_field_tag :id, user.id %>
-            <%= select_tag :duration, options_for_select([['1 week', 7], ['1 month', 30], ['6 months', 180]]) %>
-            <%= submit_tag 'Temporary Ban', class: 'btn btn-primary' %> 
-            </td>
-          <% end %>
-            <td>  <%= button_to 'PermaBan', ban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to ban this user?' }, class: "btn btn-primary btn-md" %> </td>
-          <% end %>  
-        <%end%>
-      </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+            <% unless current_user.admin? && current_user == user %>
+              <%= button_to "Destroy", admins_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+            <% end %>
+          </td>
+          <td>
+            <% unless current_user.admin? && current_user == user %>
+              <% if user.banned? %>
+                <%= button_to 'Unban', unban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to unban this user?' }, class: "btn btn-success" %>
+              <% else %>
+                <%= form_tag temporary_ban_admins_user_path(user), method: :put do %>
+                  <%= hidden_field_tag :id, user.id %>
+                  <%= select_tag :duration, options_for_select([['1 week', 7], ['1 month', 30], ['6 months', 180]]) %>
+                  <%= submit_tag 'Temporary Ban', class: 'btn btn-primary' %> 
+                <% end %>
+                <%= button_to 'PermaBan', ban_admins_user_path(user), method: :put, data: { confirm: 'Are you sure you want to ban this user?' }, class: "btn btn-danger" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <!-- END OF USER LIST -->
 
 
-<!-- END OF USER LIST -->
-
+    <!-- SEARCHBAR SCRIPT -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var userTable = document.getElementById('userTable');
-    var toggleButton = document.getElementById('toggleUsersButton');
+  function searchUsers() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("userTable");
+    tr = table.getElementsByTagName("tr");
 
-    toggleButton.addEventListener('click', function() {
-      // Toggle the visibility of the user table
-      userTable.style.display = userTable.style.display === 'none' ? 'table' : 'none';
-    });
-  });
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      td = tr[i].getElementsByTagName("td")[2];
+
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
 </script>
+
+
+</body>
+</html>
