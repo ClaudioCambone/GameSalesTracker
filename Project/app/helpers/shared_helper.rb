@@ -1,26 +1,34 @@
 module SharedHelper
     
-    def game_info(plain)
-        url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{plain}"
+  def game_info(plain)
+    url = "https://api.isthereanydeal.com/v01/game/info/?key=#{@api_key}&plains=#{plain}"
+    
+    begin
+      response = RestClient.get(url)
+      parsed_response = JSON.parse(response)
+  
+      game_data = parsed_response['data'][plain]
       
-        begin
-          response = RestClient.get(url)
-          parsed_response = JSON.parse(response)
-      
-          game_data = parsed_response['data'][plain]
-          
-          return {
-            'title' => game_data['title'],
-            'image_url' => game_data['image'],
-          } if game_data.present?
-        rescue RestClient::ExceptionWithResponse => e
-          puts "Errore nella richiesta di informazioni del gioco: #{e.response}"
-        rescue => e
-          puts "Errore nella richiesta di informazioni del gioco: #{e.message}"
-        end
-      
-        return {}
+      if game_data.present?
+        title = game_data['title']
+        image_url = game_data['image'].present? ? game_data['image'] : 'placeholder.png'
+        return {
+          'title' => title,
+          'image_url' => image_url
+        }
+      end
+    rescue RestClient::ExceptionWithResponse => e
+      puts "Errore nella richiesta di informazioni del gioco: #{e.response}"
+    rescue => e
+      puts "Errore nella richiesta di informazioni del gioco: #{e.message}"
     end
+  
+    return {
+      'title' => 'Unknown Game',
+      'image_url' => 'placeholder.png'
+    }
+  end
+  
 
     def get_game_prices(game_plain)
         prices_url = "https://api.isthereanydeal.com/v01/game/prices/?key=#{@api_key}&plains=#{game_plain}"

@@ -6,22 +6,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
 
-
 <div class="profile-container">
   <!-- Left Column (30% of total width) -->
   <div class="profile-left-column">
     <h2>Your Account</h2>
 
-
-      <% if current_user.avatar.present? %>
+    <% if current_user.avatar.present? %>
       <%= image_tag current_user.avatar, class: "rounded-circle profile-picture", size: "100x100" %>
-      <% else %>
+    <% else %>
       <%= image_tag("user.jpg", alt: "User Image", class: "rounded-circle profile-picture", size: "100x100") %>
-
-      <% end %>
+    <% end %>
     <p><strong>Username:</strong> <%= current_user.username %></p>
     
     <%= link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'profile-button' %>
+    <br><br>
+    <%= link_to 'Show My Comments', user_comments_path, class: 'profile-button' %>
   </div>
 
   <!-- Right Column (70% of total width) -->
@@ -30,102 +29,107 @@
     <ul>
       <li><strong>Username:</strong> <%= current_user.username %></li>
       <li><strong>Email:</strong> <%= current_user.email %></li>
-      <li><strong>Description:</strong> <% if current_user.description.present?%>  <%= current_user.description %> <% else %> You can add a Description through Edit Profile button! <%end%> </li>
-    
+      <li><strong>Description:</strong> <% if current_user.description.present? %><%= current_user.description %><% else %> You can add a Description through Edit Profile button! <% end %> </li>
     </ul>
   </div>
 </div>
 <hr class="separator">
 <div class="profile-container">
   <div class="wishlist">
-    <h1 style="align: center">
+    <h1 style="align: center"> <h2>Your Collections:</h2> <br><br>
 
-<h2>Your Collections:</h2>
-<br><br>
+    <% if @collections.present? %>
+      <% @collections.each do |collection| %>
+        <div>
+          <div class="mb-4">
+            <h3 style="padding-left: 10px;"><%= collection.name %></h3><br>
+            <% games_in_collection = GameCollection.where(collection_id: collection.id).pluck(:plain) %>
+            <% if games_in_collection.present? %>
+              <div id="<%= "collectionCarousel_#{collection.id}" %>" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-interval="false">
+                <div class="carousel-inner">
+                  <% games_in_collection.each_slice(3).with_index do |games_batch, index| %>
+                    <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                      <div class="row">
+                        <% games_batch.each do |game_plain| %>
+                          <% game_info = game_info(game_plain) %>
+                          <% prices = get_game_prices(game_plain) %>
+                          <div class="col">
+                            <div class="card">
+                              <% if game_info['image_url'].present? %>
+                                <div class="mb-4">
+                                  <%= image_tag(game_info['image_url'], class: 'img-fluid') %>
+                                </div>
+                              <% else %>
+                                <div class="mb-4">
+                                  <%= image_tag(image_path('placeholder.png'), class: 'img-fluid', style: 'width: 40%; height: 40%;') %>
+                                </div>
+                              <% end %>
 
-<% if @collections.present? %>
-  <% @collections.each do |collection| %>
-    <div>
-      <div class="mb-4">
-        <h3 style="padding-left: 10px;"><%= collection.name %></h3><br>
-        <% games_in_collection = GameCollection.where(collection_id: collection.id).pluck(:plain) %>
-        <% if games_in_collection.present? %>
-          <div id="<%= "collectionCarousel_#{collection.id}" %>" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-interval="false">
-            <div class="carousel-inner">
-              <% games_in_collection.each_slice(3).with_index do |games_batch, index| %>
-                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
-                  <div class="row">
-                    <% games_batch.each do |game_plain| %>
-                      <% game_info = game_info(game_plain) %>
-                      <% prices = get_game_prices(game_plain) %>
-                      <div class="col">
-                        <div class="card">
-                          <img src="<%= game_info['image_url'].presence || image_path('placeholder.png') %>" class="card-img-top" alt="<%= game_info['title'] %>">
-                          <div class="card-body">
-                            <h5 class="card-title"><%= game_info['title'] %></h5>
-                            <p class="card-text text-center"><%= formatted_price(prices['list'][0]['price_new']) %></p>
-                            <p class="card-text text-center"><del><%= formatted_price(prices['list'][0]['price_old']) %></del></p>
-                            <p class="card-text text-center">Sconto: <%= prices['list'][0]['price_cut'] %> %</p>
-                            <br>
-                            <%= link_to "Details", details_game_path(plain: game_plain), class: "btn profile-button" %>
-                            <%= button_to raw('<i class="fas fa-times"></i>'), { controller: 'game_collections', action: 'destroy', id: collection.id, plain: game_plain }, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure you want to delete this game from your collection?" }, 
-                              method: :delete, class: "btn btn-delete" %>
+                              <div class="card-body">
+                                <h5 class="card-title"><%= game_info['title'] %></h5>
+
+                                <br>
+                                <%= link_to "Details", details_game_path(plain: game_plain), class: "btn profile-button" %>
+                                <%= button_to raw('<i class="fas fa-times"></i>'), { controller: 'game_collections', action: 'destroy', id: collection.id, plain: game_plain }, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure you want to delete this game from your collection?" }, 
+                                  method: :delete, class: "btn btn-delete" %>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        <% end %>
+                        <% (3 - games_batch.size).times do %>
+                          <div class="col"></div>
+                        <% end %>
                       </div>
-                    <% end %>
-                    <% (3 - games_batch.size).times do %>
-                      <div class="col"></div>
-                    <% end %>
-                  </div>
+                    </div>
+                  <% end %>
                 </div>
-              <% end %>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="prev" style="left: -12%;">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="next" style="right: -12%;">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+                <button class="carousel-control-prev" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="prev" style="left: -12%;">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="<%= "#collectionCarousel_#{collection.id}" %>" data-bs-slide="next" style="right: -12%;">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            <% else %>
+              <p>No games in this collection.</p>
+            <% end %><br>
+            <% if collection.name != "My Wishlist" %>
+              <%= button_to 'Delete Collection', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
+            <% end %>
+            <br>
           </div>
-        <% else %>
-          <p>No games in this collection.</p>
-        <% end %><br>
-        <% if collection.name != "My Wishlist" %>
-          <%= button_to 'Delete Collection', collection, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
-        <% end %>
-        <br>
-      </div>
-    </div>
-  <% end %>
-<% else %>
-  <p>You don't have any collections yet.</p>
-<% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>You don't have any collections yet.</p>
+    <% end %>
 
-<br><br>
-<!-- Button to trigger the modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newCollectionModal">
-  New Collection
-</button>
+    <br><br>
+    <!-- Button to trigger the modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newCollectionModal">
+      New Collection
+    </button>
 
-<!-- Modal for the new collection form -->
-<div class="modal fade" id="newCollectionModal" tabindex="-1" aria-labelledby="newCollectionModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content custom-modal">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newCollectionModalLabel">Create a New Collection</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= form_with(model: Collection.new, url: collections_path, remote: true, id: "newCollectionForm") do |form| %>
-          <div class="mb-3">
-            <%= form.label :name, 'Collection Name', class: 'form-label' %>
-            <%= form.text_field :name, class: 'form-control', required: true %>
+    <!-- Modal for the new collection form -->
+    <div class="modal fade" id="newCollectionModal" tabindex="-1" aria-labelledby="newCollectionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newCollectionModalLabel">Create a New Collection</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <%= form.submit 'Save', class: 'btn btn-primary' %>
-        <% end %>
+          <div class="modal-body">
+            <%= form_with(model: Collection.new, url: collections_path, remote: true, id: "newCollectionForm") do |form| %>
+              <div class="mb-3">
+                <%= form.label :name, 'Collection Name', class: 'form-label' %>
+                <%= form.text_field :name, class: 'form-control', required: true %>
+              </div>
+              <%= form.submit 'Save', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

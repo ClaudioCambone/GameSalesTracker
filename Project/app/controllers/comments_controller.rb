@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
           # Handle failed update
           render 'games/details', plain: comment_params[:gameplain], alert: 'Error creating comment.'
         end
-      end
+    end
   
     private
   

@@ -44,6 +44,11 @@ end
     @collections = @user.collections
   end
 
+
+  def user_comments
+    @user_comments = current_user.comments
+  end
+
   def destroy
     @user = current_user
     @user.destroy

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
   get '/collections', to: 'collections#index'
   post 'games/add_to_collection', to: 'games#add_to_collection', as: :add_to_collection_game
+  get '/my_comments', to: 'user#user_comments', as: 'user_comments'
 
  #  get '/auth/facebook/callback', to: 'users/omniauth_callbacks#facebook'
 
