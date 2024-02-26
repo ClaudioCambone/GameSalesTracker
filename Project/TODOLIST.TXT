@@ -26,8 +26,8 @@ Search page
 Game details page
 
 ———COMMENTI———
-Ogni utente può lasciare dei commenti per ogni gioco, a fondo pagina (tipo delle recensioni). 
-Aggiungere un campo "Like" per segnare se ad un utente è piaciuto il gioco o meno. 
+Ogni utente può lasciare dei commenti per ogni gioco, a fondo pagina (tipo delle recensioni). (done)
+Aggiungere un campo "Like" per segnare se ad un utente è piaciuto il gioco o meno. (done)
 Fare una media dei commenti positivi/negativi e far apparire se il gioco è apprezzato o meno (tipo steam); con da 100% a 75% voti negativi --> storngly not raccomanded
 da 74% a 51% voti negativi --> not raccomanded
 da 50% a 25% voti negativi --> raccomanded
