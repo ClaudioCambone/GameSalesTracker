@@ -1,101 +1,101 @@
-<% if @game_details.present? %>
-  <div class="container mt-4">
-    <h1 class="mb-3"><%= @game_details.values.first['title'] %></h1>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-    <% if @game_details.values.first['image'].present? %>
-      <div class="mb-4">
-        <%= image_tag(@game_details.values.first['image'], class: 'img-fluid') %>
-      </div>
-    <% else %>
-      <div class="mb-4">
-        <%= image_tag(placeholder_image_url, class: 'img-fluid', style: 'width: 40%; height: 40%;') %>
-      </div>
-    <% end %>
+<% if @game_details.present? %>
+<div class="container mt-4">
+  <h1 class="mb-3"><%= @game_details.values.first['title'] %></h1>
+
+  <% if @game_details.values.first['image'].present? %>
+  <div class="mb-4">
+    <%= image_tag(@game_details.values.first['image'], class: 'img-fluid') %>
   </div>
+  <% else %>
+  <div class="mb-4">
+    <%= image_tag(placeholder_image_url, class: 'img-fluid', style: 'width: 40%; height: 40%;') %>
+  </div>
+  <% end %>
+</div>
 <% else %>
-  <div class="container mt-4">
-    <p>Dettagli non disponibili al momento.</p>
-  </div>
+<div class="container mt-4">
+  <p>Dettagli non disponibili al momento.</p>
+</div>
 <% end %>
 
 <div class="container mt-4">
   <% if user_signed_in? %>
-    <h2>Add to Collection:</h2>
-    <%= form_with(url: game_collections_path, method: :post) do |form| %>
-      <%= form.hidden_field :game_plain, value: @game_plain %>
-      <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
-      <%= form.submit 'Add to Collection', class: 'btn btn-primary' %>
-    <% end %>
+  <h2>Add to Collection:</h2>
+  <%= form_with(url: game_collections_path, method: :post) do |form| %>
+  <%= form.hidden_field :game_plain, value: @game_plain %>
+  <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
+  <%= form.submit 'Add to Collection', class: 'btn btn-primary' %>
+  <% end %>
   <% end %>
 </div>
 
 <div class="container mt-4">
   <h2 class="mb-3">Recensioni:</h2>
   <% if @game_details.present? %>
-    <% game_plain = params[:plain] %>
-    <% reviews = @game_details[game_plain]['reviews'] %>
-    <div class="mb-4">
-      <% if reviews.present? && reviews['steam'].present? %>
-        <p>Valutazioni positive: <%= reviews['steam']['perc_positive'] || 'N/A' %> %</p>
-        <p>Totale recensioni: <%= reviews['steam']['total'] || 'N/A' %></p>
-        <p>Valutazione: <%= reviews['steam']['text'] || 'N/A' %></p>
-      <% else %>
-        <p>Recensioni non disponibili al momento.</p>
-      <% end %>
-    </div>
+  <% game_plain = params[:plain] %>
+  <% reviews = @game_details[game_plain]['reviews'] %>
+  <div class="mb-4">
+    <% if reviews.present? && reviews['steam'].present? %>
+    <p>Valutazioni positive: <%= reviews['steam']['perc_positive'] || 'N/A' %> %</p>
+    <p>Totale recensioni: <%= reviews['steam']['total'] || 'N/A' %></p>
+    <p>Valutazione: <%= reviews['steam']['text'] || 'N/A' %></p>
+    <% else %>
+    <p>Recensioni non disponibili al momento.</p>
+    <% end %>
+  </div>
   <% else %>
-    <p>Dettagli non disponibili al momento.</p>
+  <p>Dettagli non disponibili al momento.</p>
   <% end %>
 </div>
 
 <div class="container mt-4">
   <% if @game_prices.present? %>
-    <% if @lowest_price.present? %>
-      <h2 class="mb-3">Prezzo piu' basso di sempre:</h2>
-      <div class="mb-4">
-        <%= number_to_currency(@lowest_price['price'], unit: '€', precision: 2) %> su
-        <% case @lowest_price['shop']['name'] %>
-        <% when 'Steam' %>
-          <%= link_to 'Steam', 'https://store.steampowered.com/', target: '_blank' %>
-        <% when 'Humble Store' %>
-          <%= link_to 'Humble Store', 'https://www.humblebundle.com/store', target: '_blank' %>
-        <% when 'GameBillet' %>
-          <%= link_to 'GameBillet', 'https://www.gamebillet.com/', target: '_blank' %>
-        <% when 'GamesPlanet US' %>
-          <%= link_to 'GamesPlanet US', 'https://us.gamesplanet.com/', target: '_blank' %>
-        <% when 'Fanatical' %>
-          <%= link_to 'Fanatical', 'https://www.fanatical.com/', target: '_blank' %>
-        <% when 'JoyBuggy' %>
-          <%= link_to 'JoyBuggy', 'https://www.joybuggy.com/', target: '_blank' %>
-        <% when '2game' %>
-          <%= link_to '2game', 'https://2game.com/', target: '_blank' %>
-        <% when 'GamesPlanet UK' %>
-          <%= link_to 'GamesPlanet UK', 'https://uk.gamesplanet.com/', target: '_blank' %>
-        <% when 'GamesPlanet FR' %>
-          <%= link_to 'GamesPlanet FR', 'https://fr.gamesplanet.com/', target: '_blank' %>
-        <% when 'GamesPlanet DE' %>
-          <%= link_to 'GamesPlanet DE', 'https://de.gamesplanet.com/', target: '_blank' %>
-        <% when 'Ubisoft Store' %>
-          <%= link_to 'Ubisoft Store', 'https://store.ubisoft.com/', target: '_blank' %>
-        <% when 'GamersGate' %>
-          <%= link_to 'GamersGate', 'https://www.gamersgate.com/', target: '_blank' %>
-        <% when 'AllYouPlay' %>
-          <%= link_to 'AllYouPlay', 'https://www.allyouplay.com/', target: '_blank' %>
-        <% when 'GreenManGaming' %>
-          <%= link_to 'GreenManGaming', 'https://www.greenmangaming.com/', target: '_blank' %>
-        <% when 'Noctre' %>
-          <%= link_to 'Noctre', 'https://www.noctre.com/', target: '_blank' %>
-        <% when 'IndieGala Store' %>
-          <%= link_to 'IndieGala Store', 'https://www.indiegala.com/', target: '_blank' %>
-        <% when 'Amazon' %>
-          <%= link_to 'Amazon', 'https://www.amazon.com/', target: '_blank' %>
-        <% when 'Epic Games Store' %>
-          <%= link_to 'Epic Games Store', 'https://store.epicgames.com/it/', target: '_blank' %>
-        <% else %>
-          <%= @lowest_price['shop']['name'] %>
-      <% end %>
-    </td>
-  </tr>
+  <% if @lowest_price.present? %>
+  <h2 class="mb-3">Prezzo piu' basso di sempre:</h2>
+  <div class="mb-4">
+    <%= number_to_currency(@lowest_price['price'], unit: '€', precision: 2) %> su
+    <% case @lowest_price['shop']['name'] %>
+    <% when 'Steam' %>
+    <%= link_to 'Steam', 'https://store.steampowered.com/', target: '_blank' %>
+    <% when 'Humble Store' %>
+    <%= link_to 'Humble Store', 'https://www.humblebundle.com/store', target: '_blank' %>
+    <% when 'GameBillet' %>
+    <%= link_to 'GameBillet', 'https://www.gamebillet.com/', target: '_blank' %>
+    <% when 'GamesPlanet US' %>
+    <%= link_to 'GamesPlanet US', 'https://us.gamesplanet.com/', target: '_blank' %>
+    <% when 'Fanatical' %>
+    <%= link_to 'Fanatical', 'https://www.fanatical.com/', target: '_blank' %>
+    <% when 'JoyBuggy' %>
+    <%= link_to 'JoyBuggy', 'https://www.joybuggy.com/', target: '_blank' %>
+    <% when '2game' %>
+    <%= link_to '2game', 'https://2game.com/', target: '_blank' %>
+    <% when 'GamesPlanet UK' %>
+    <%= link_to 'GamesPlanet UK', 'https://uk.gamesplanet.com/', target: '_blank' %>
+    <% when 'GamesPlanet FR' %>
+    <%= link_to 'GamesPlanet FR', 'https://fr.gamesplanet.com/', target: '_blank' %>
+    <% when 'GamesPlanet DE' %>
+    <%= link_to 'GamesPlanet DE', 'https://de.gamesplanet.com/', target: '_blank' %>
+    <% when 'Ubisoft Store' %>
+    <%= link_to 'Ubisoft Store', 'https://store.ubisoft.com/', target: '_blank' %>
+    <% when 'GamersGate' %>
+    <%= link_to 'GamersGate', 'https://www.gamersgate.com/', target: '_blank' %>
+    <% when 'AllYouPlay' %>
+    <%= link_to 'AllYouPlay', 'https://www.allyouplay.com/', target: '_blank' %>
+    <% when 'GreenManGaming' %>
+    <%= link_to 'GreenManGaming', 'https://www.greenmangaming.com/', target: '_blank' %>
+    <% when 'Noctre' %>
+    <%= link_to 'Noctre', 'https://www.noctre.com/', target: '_blank' %>
+    <% when 'IndieGala Store' %>
+    <%= link_to 'IndieGala Store', 'https://www.indiegala.com/', target: '_blank' %>
+    <% when 'Amazon' %>
+    <%= link_to 'Amazon', 'https://www.amazon.com/', target: '_blank' %>
+    <% when 'Epic Games Store' %>
+    <%= link_to 'Epic Games Store', 'https://store.epicgames.com/it/', target: '_blank' %>
+    <% else %>
+    <%= @lowest_price['shop']['name'] %>
+    <% end %>
   </div>
   <% end %>
 
@@ -112,85 +112,107 @@
       </tr>
     </thead>
     <tbody>
-  <% @game_prices['list'].each do |price| %>
-    <tr>
-      <td><%= price['shop']['name'] %></td>
-      <td><%= number_to_currency(price['price_new'], unit: '€', precision: 2) %></td>
-      <td>
-        <% lowest_price = @lowest_prices.find { |lp| lp['shop'] == price['shop']['id'] } %>
-        <% if lowest_price.present? %>
+      <% @game_prices['list'].each do |price| %>
+      <tr>
+        <td><%= price['shop']['name'] %></td>
+        <td><%= number_to_currency(price['price_new'], unit: '€', precision: 2) %></td>
+        <td>
+          <% lowest_price = @lowest_prices.find { |lp| lp['shop'] == price['shop']['id'] } %>
+          <% if lowest_price.present? %>
           <%= number_to_currency(lowest_price['price'], unit: '€', precision: 2) %>
-        <% else %>
+          <% else %>
           N/A
-        <% end %>
-      </td>
-      <td><%= number_to_currency(price['price_old'], unit: '€', precision: 2) %></td>
-      <td><%= price['price_cut'] %> %</td>
-      <td><a href="<%= price['url'] %>" target="_blank">Acquista</a></td>
-    </tr>
-  <% end %>
-</tbody>
-
-    </table>
-<% else %>
-  <p>Prezzi non disponibili al momento.</p>
-<% end %>
-<br>
-
-<div class="container mt-4">
-  <h2>Comments</h2>
-  <% if @comments.present? %>
-    <% @comments.each do |comment| %>
-      <div class="comment">
-        <p><strong><%= comment.user.username %>:</strong> <%= comment.body %></p>
-      </div>
-    <% end %>
+          <% end %>
+        </td>
+        <td><%= number_to_currency(price['price_old'], unit: '€', precision: 2) %></td>
+        <td><%= price['price_cut'] %> %</td>
+        <td><a href="<%= price['url'] %>" target="_blank">Acquista</a></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
   <% else %>
-    <p>No comments yet.</p>
+  <p>Prezzi non disponibili al momento.</p>
   <% end %>
-</div>
+  <br>
 
-<!-- Check if the current user has already commented -->
-<% if user_signed_in? %>
-  <% if current_user.comments.exists?(gameplain: @game_plain) %>
-    <!-- Show the user's existing comment -->
-    <div class="container mt-4">
-      <h3>Your Comment:</h3>
-      <div id="user-comment">
-        <% if @comments.present? %>
-          <% comment = @comments.first %>
-          <p id="user-comment-text"><strong><%= comment.user.username %>:</strong> <%= comment.body %></p>
-          <button id="edit-comment-btn">Edit</button>
-        <% end %>
+  <div class="container mt-4">
+    <h2>Comments</h2>
+    <% if @comments.present? %>
+    <% @comments.each do |comment| %>
+    <div class="comment">
+      <div class="card mb-3 position-relative" style="max-width: 500px;">
+        <div class="card-body p-3">
+          <div class="d-flex align-items-center">
+            <%= image_tag(comment.user.avatar, class: "rounded-circle shadow-1-strong me-3 mb-4", size: "60x60") if comment.user.avatar.present? %>
+            <div>
+              <h6 class="text-white fw-bold mb-1">
+                <%= comment.user.username %>
+              </h6>
+              <p class="text-white mb-3 mt-2"><%= comment.body %></p>
+              <p class="text-muted mb-0"><%= time_ago_in_words(comment.created_at) %> ago</p>
+            </div>
+            <div class="thumbs-up-down-icons position-absolute top-0 end-0 mt-2 me-2">
+              <% if comment.like %>
+              <i class="fas fa-thumbs-up text-primary fa-lg"></i>
+              <span>&nbsp;</span>
+              <i class="far fa-thumbs-down text-muted fa-lg"></i>
+              <% else %>
+              <i class="far fa-thumbs-up text-muted fa-lg"></i>
+              <span>&nbsp;</span>
+              <i class="fas fa-thumbs-down text-primary fa-lg"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-      <!-- Edit comment form -->
-      <div id="edit-comment-form" style="display: none;">
-  <%= form_with(model: comment, url: game_comment_path(@game_plain, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
+    <% end %>
+    <% else %>
+    <p>No comments yet.</p>
+    <% end %>
+  </div>
+
+<!-- Check if the current user has already commented -->
+ <% if user_signed_in? %>
+  <% if current_user.comments.exists?(gameplain: @game_plain) %>
+  <!-- Show the user's existing comment -->
+  <div class="container mt-4">
+    <h3>Your Comment:</h3>
+    <div id="user-comment">
+      <% if @comments.present? %>
+      <% comment = @comments.first %>
+      <p id="user-comment-text"><strong><%= comment.user.username %>:</strong> <%= comment.body %></p>
+      <button id="edit-comment-btn">Edit</button>
+      <% end %>
+    </div>
+  </div>
+  <!-- Edit comment form -->
+  <div id="edit-comment-form" style="display: none;">
+    <%= form_with(model: comment, url: game_comment_path(@game_plain, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
     <div class="form-group">
       <%= form.label :body, class: "form-control-label" %>
       <%= form.text_area :body, rows: 3, class: "form-control" %>
     </div>
     <%= form.submit "Update Comment", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<% else %>
+<!-- Show the comment form -->
+<div class="container mt-4">
+  <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_plain), local: true) do |form| %>
+  <%= form.radio_button :like, true %> Like
+  <%= form.radio_button :like, false %> Dislike
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body, rows: 3 %>
+  </div>
+  <%= form.hidden_field :gameplain, value: @game_plain %>
+  <%= form.submit "Add Comment", class: "btn btn-primary" %>
   <% end %>
 </div>
-
-    </div>
-  <% else %>
-    <!-- Show the comment form -->
-    <div class="container mt-4">
-      <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_plain), local: true) do |form| %>
-        <%= form.radio_button :like, true %> Like
-        <%= form.radio_button :like, false %> Dislike
-        <div class="field">
-          <%= form.label :body %>
-          <%= form.text_area :body, rows: 3 %>
-        </div>
-        <%= form.hidden_field :gameplain, value: @game_plain %>
-        <%= form.submit "Add Comment", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-  <% end %>
+<% end %>
 <% end %>
 
 <br><br>
