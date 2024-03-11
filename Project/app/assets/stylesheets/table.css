@@ -34,7 +34,6 @@
     height: auto;
   }
 
-  /* Aggiungi questa regola per rendere il prezzo in grassetto */
 .table-custom .price_new {
     font-weight: bold;
     font-size: 1.1em;

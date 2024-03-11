@@ -1,0 +1,168 @@
+.game-details-section {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .game-details-section h2 {
+    color: aqua;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .game-details-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .game-details-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .game-details-section ul li strong {
+    color:coral;
+  }
+
+  .high-score {
+    color:chartreuse;
+  }
+  
+  .medium-score {
+    color:darkgoldenrod;
+  }
+  
+  .low-score {
+    color:crimson;
+  }
+
+  .source {
+    color: khaki; 
+  }
+  
+  .url {
+    color: magenta;
+    text-decoration: none;
+  }  
+
+  .url:hover {
+    text-decoration: underline;
+    color: magenta;
+}
+
+.game-prices-section {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+
+  .header-row th {
+    font-size: larger;
+    color: aqua;
+}
+  
+  .prices-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .prices-table th, .prices-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .prices-table a {
+    color:magenta;
+    text-decoration: none;
+  }
+  
+  .prices-table a:hover {
+      text-decoration: underline;
+  }
+
+
+  .bold-text {
+    font-weight: bold;
+    color: white;
+}
+
+.crossed-out {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.prices-table .voucher {
+  color:darkturquoise; 
+}
+  
+  .prices-table .cut {
+    color:aquamarine; 
+  }
+
+  .prices-table .deal {
+    color:coral;
+  }
+
+  .prices-table .drm {
+    color:khaki;
+    background-color: none;
+  }
+
+  .prices-table .type {
+    color:chartreuse;
+  }
+
+  .no-info-message {
+    margin-top: 2% ;
+    color: red; 
+    font-size: 18px; 
+  }
+  
+  .platform-icons {
+    white-space: nowrap;
+  }
+
+  .platform-icon {
+    max-width: 20px;
+    margin-right: 5px;
+  }
+
+  .info {
+    width: 48%;
+  }
+
+  .game-banner {
+    width: 50%;
+    margin-right: 0%;
+  }
+  .game-banner img {
+    width: 100%;
+    height: auto;
+  }
+  .game-details {
+    display: flex;
+    flex-direction: row;
+  }
+
+
+  /* Regola responsive per rendere la tabella scrollabile su dispositivi di dimensioni ridotte */
+  @media only screen and (max-width: 768px) {
+    .prices-table {
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+    }
+  
+    .prices-table th, .prices-table td {
+      min-width: 150px; /* Imposta una larghezza minima per le celle */
+    }
+  }
+  

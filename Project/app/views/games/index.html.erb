@@ -19,14 +19,14 @@
 </head>
 
 <body>
-<!--FLASH MESSAGES/ALERT-->
-<% flash.each do |type, msg| %>
-  <div class="alert alert-info">
-    <%= msg %>
-  </div>
-<% end %>
+  <!--FLASH MESSAGES/ALERT-->
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
 
-<br>    
+  <br>    
   <!-- LAST DEALS SECTION -->
 <h1 class="text-light">Stanno per terminare:</h1>
 <div class="container mt-4 mb-10">
@@ -36,53 +36,37 @@
         <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
           <div class="row">
             <% deal_slice.each do |deal| %>
-              <% discount_percent = 100 - ((deal['price_new'].to_f / deal['price_old'].to_f) * 100).round(2) %>
               <div class="col-md-4">
-              <div class="card card-tilt" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
-              <div class="vanilla-tilt-child">
-                  <div class="image-container">
-                    <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid') %>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title text-center"><%= deal_title(deal) %></h5>
-                    <p class="card-text text-center">
-                      <del><%= "%.2f" % deal['price_old'] %> €</del>
-                      <% if deal['price_new'] == 0 %>
-                        <span class="price-new fw-bold fs-3 text-success"><%= "%.2f" % deal['price_new'] %> €</span>
-                                    <span class="badge bg-success">Free</span>
+                <div class="card card-tilt" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
+                  <div class="vanilla-tilt-child">
+                    <div class="image-container">
+                      <% if deal['game_details'] && deal['game_details']['assets'] && deal['game_details']['assets']['banner300'] %>
+                        <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid') %>
                       <% else %>
-                        <span class="price-new fw-bold fs-3"><%= "%.2f" % deal['price_new'] %> €</span>
+                        <%= image_tag('placeholder.png', class: 'card-img-top img-fluid') %>
                       <% end %>
-                      <span class="discounted-price fw-bold fs-6">-<%= number_with_precision(discount_percent, precision: 1) %>%</span>      
-                    </p>              
-                    <p class="card-text text-center">
-        Ends in: 
-        <% remaining_time = countdown_to_end_date(deal['expiry']) %>
-        <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
-        <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>
-        
-        <% if total_minutes > 60 %>
-            <span class="text-success"><%= remaining_time %></span>
-        <% elsif total_minutes > 15 %>
-            <span class="text-warning"><%= remaining_time %></span>
-        <% else %>
-            <span class="text-danger"><%= remaining_time %></span>
-        <% end %>
-    </p>
-                    <div class="card-text text-center">
-                      <%= shop_link(deal) %>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title text-center"><%= link_to details_game_path(id: deal['game_details']['id']) do %>
+                        <%= deal['title'] %>
+                      <% end %>
+                      </h5>
+                      <!-- Rimuovere il codice relativo alla visualizzazione dei prezzi e della durata del deal -->
+                      <!-- Aggiungere qui eventuali altri dettagli del deal -->
+                      <div class="card-text text-center">
+                        <%= shop_link(deal['deal']['shop']) %>
+                      </div>
                     </div>
                   </div>
+                  <div class="vanilla-tilt-glare"></div>
                 </div>
-                <div class="vanilla-tilt-glare"></div>
               </div>
-            </div>
             <% end %>
           </div>
         </div>
       <% end %>
     </div>
-
+    <!-- Aggiornare i controlli del carousel -->
     <button class="carousel-control-prev" type="button" data-bs-target="#last_deals" data-bs-slide="prev" style="left: -10%;">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -94,10 +78,10 @@
   </div>
 </div>
 <!-- END OF LAST DEALS SECTION -->
-<br>
-  <div class="container mt-4">
-  <h1 class="text-light">Deals</h1>
 
+  <br>
+  <div class="container mt-4">
+    <h1 class="text-light">Deals</h1>
 
     <%= form_tag(games_path, method: 'get') do %>
       <div class="row">
@@ -106,16 +90,16 @@
           <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
         </div>
         <div class="col-md-2">
-          <%= label_tag 'sort_by', 'Ordina per:' %>
-          <%= select_tag 'sort_by', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut']], params[:sort_by]), class: 'form-control' %>
+          <%= label_tag 'sort', 'Ordina per:' %>
+          <%= select_tag 'sort', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut']], params[:sort]), class: 'form-control' %>
         </div>
         <div class="col-md-2">
           <%= label_tag 'order', 'Ordine:' %>
           <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
         </div>
         <div class="col-md-4">
-          <%= label_tag 'shop_filter', 'Filtra per shop:' %>
-          <%= select_tag 'shop_filter[]', options_for_select([
+          <%= label_tag 'shops[]', 'Filtra per shop:' %>
+          <%= select_tag 'shops[]', options_for_select([
             ['Tutti gli Store', nil],
             ['AllYouPlay', 'AllYouPlay'],
             ['Amazon', 'amazonus'],
@@ -140,7 +124,7 @@
             ['Ubisoft Store', 'uplay'],
             ['Voidu','voidu'],
             ['2game', 'game2'],
-          ], params[:shop_filter]), { multiple: true, class: 'form-control custom-select select2 shop-filter' } %>
+          ], params[:shops]), { multiple: true, class: 'form-control custom-select select2 shop-filter' } %>
         </div>
         <div class="col-md-2">
           <%= submit_tag 'Applica filtri', class: 'btn btn-primary mt-4' %>
@@ -151,42 +135,68 @@
     <br>
     
     <div class="table-responsive">
-    <table class="table table-custom">
-      <thead class="thead-dark">
-        <tr>
-          <th class="text-light">Immagine</th>
-          <th class="text-light">Titolo</th>
-          <th class="text-light">Prezzo Attuale</th>
-          <th class="text-light">Prezzo Originale</th>
-          <th class="text-light">Sconto</th>
-          <th class="text-light">Data Inizio Sconto</th>
-          <th class="text-light">Data Fine Sconto</th>
-          <th class="text-light">Dettagli</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @deals.each do |deal| %>
+      <table class="table table-custom">
+        <thead class="thead-dark">
           <tr>
-            <td class="text-light">
-              <%= game_image_tag(deal['image_url']) %>
-            </td>
-            <td class="text-light">
-              <%= deal_title(deal) %>
-            </td>
-            <td class="text-light text-center price_new"><%= formatted_price(deal['price_new']) %></td>
-            <td class="price_original"><%= formatted_price(deal['price_old']) %></td>
-            <td class="price_cut"><%= deal['price_cut'] %> %</td>
-            <td class="deal_added"><%= formatted_time(deal['added']) %></td>
-            <td class="deal_expiry"><%= countdown_to_end_date(deal['expiry']) %></td>
-            <td class="text-light deal_shop"><%= shop_link(deal) %></td>
+            <th class="text-light">Immagine</th>
+            <th class="text-light">Titolo</th>
+            <th class="text-light">Prezzo Attuale</th>
+            <th class="text-light">Prezzo Originale</th>
+            <th class="text-light">Sconto</th>
+            <th class="text-light">Data Inizio Sconto</th>
+            <th class="text-light">Data Fine Sconto</th>
+            <th class="text-light">Dettagli</th>
           </tr>
+        </thead>
+        <tbody>
+  <% @deals.each do |deal| %>
+    <tr>
+      <td class="text-light">
+        <div class="image-container">
+        <% if deal['game_details'].is_a?(Hash) && deal['game_details']['assets'].is_a?(Hash) && deal['game_details']['assets']['banner300'].is_a?(String) %>
+        <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid', alt: deal['title']) %>
+      <% else %>
+        <%= image_tag('placeholder.png', class: 'card-img-top img-fluid', alt: deal['title']) %>
+      <% end %>      
+        </div>
+      </td>
+      <td class="text-light">
+      <%= link_to details_game_path(id: deal['game_details']['id']) do %>
+        <%= deal['title'] %>
+      <% end %>      
+      </td>
+      <td class="text-light text-center price_new"><%= "%.2f" % (deal['deal']['price']['amount'].to_f || 0) %> <%= deal['deal']['price']['currency'] %></td>
+      <td class="price_original"><%= "%.2f" % (deal['deal']['regular']['amount'].to_f || 0) %> <%= deal['deal']['regular']['currency'] %></td>
+      <td class="price_cut"><%= deal['deal']['cut'] %> %</td>
+      <td class="deal_added"><%= formatted_time(deal['deal']['timestamp']) %></td>
+      <td class="deal_expiry">
+        <% if deal['deal']['expiry'] %>
+          <% expiry_time = Time.parse(deal['deal']['expiry']) %>
+          <% remaining_time = expiry_time - Time.now %>
+          <% days = (remaining_time / 1.day).to_i %>
+          <% hours = (remaining_time / 1.hour % 24).to_i %>
+          <% minutes = (remaining_time / 1.minute % 60).to_i %>
+          <% total_minutes = days * 24 * 60 + hours * 60 + minutes %>
+          <% if total_minutes > 60 %>
+            <span class="text-success"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
+          <% elsif total_minutes > 15 %>
+            <span class="text-warning"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
+          <% else %>
+            <span class="text-danger"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
+          <% end %>
+        <% else %>
+          N/A
         <% end %>
-      </tbody>
-    </table>
-  </div>
-  
+      </td>
+      <td class="text-light deal_shop"><%= shop_link(deal['deal']['shop']) %></td>
+    </tr>
+  <% end %>      
+</tbody>
 
-  <div class="container card-cont">
+      </table>
+    </div>
+
+    <div class="container card-cont">
   <% if @deals.present? %>
     <div class="row row-cols-1 row-cols-md-3">
       <% @deals.each do |deal| %>
@@ -194,23 +204,30 @@
           <div class="card card-tilt">
             <div class="vanilla-tilt-child">
               <div class="image-container">
-                <%= image_tag(deal['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: deal_title(deal)) %>
+              <% if deal['game_details'].is_a?(Hash) && deal['game_details']['assets'].is_a?(Hash) && deal['game_details']['assets']['banner300'].is_a?(String) %>
+              <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid', alt: deal['title']) %>
+            <% else %>
+              <%= image_tag('placeholder.png', class: 'card-img-top img-fluid', alt: deal['title']) %>
+            <% end %>            
               </div>
               <div class="card-body">
-                <h5 class="card-title text-center"><%= deal_title(deal) %></h5>
+                <h5 class="card-title text-center"><%= link_to details_game_path(id: deal['game_details']['id']) do %>
+                  <%= deal['title'] %>
+                <% end %>
+                </h5>
                 <p class="card-text text-center">
-                  <del><%= formatted_price(deal['price_old']) %> €</del>
-                  <% if deal['price_new'] == 0 %>
-                    <span class="price-new fw-bold fs-3 text-success"><%= formatted_price(deal['price_new']) %> €</span>
+                  <del><%= "%.2f" % deal['deal']['regular']['amount'].to_f %> <%= deal['deal']['regular']['currency'] %></del>
+                  <% if deal['deal']['price']['amount'] == 0 %>
+                    <span class="price-new fw-bold fs-3 text-success"><%= "%.2f" % deal['deal']['price']['amount'].to_f %> <%= deal['deal']['price']['currency'] %></span>
                     <span class="badge bg-success">Free</span>
                   <% else %>
-                    <span class="price-new fw-bold fs-3"><%= formatted_price(deal['price_new']) %> €</span>
+                    <span class="price-new fw-bold fs-3"><%= "%.2f" % deal['deal']['price']['amount'].to_f %> <%= deal['deal']['price']['currency'] %></span>
                   <% end %>
-                  <span class="discounted-price fw-bold fs-6">-<%= deal['price_cut'] %> %</span>      
+                  <span class="discounted-price fw-bold fs-6">-<%= deal['deal']['cut'] %> %</span>      
                 </p>              
                 <p class="card-text text-center">
                   Ends in: 
-                  <% remaining_time = countdown_to_end_date(deal['expiry']) %>
+                  <% remaining_time = countdown_to_end_date(deal['deal']['expiry']) %>
                   <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
                   <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>
                   <% if total_minutes > 60 %>
@@ -222,7 +239,7 @@
                   <% end %>
                 </p>
                 <div class="card-text text-center">
-                  <%= shop_link(deal) %>
+                  <%= shop_link(deal['deal']['shop']) %>
                 </div>
               </div>
               <div class="vanilla-tilt-glare"></div>
@@ -237,71 +254,72 @@
   <% end %>
 </div>
 
-  <script>
-    // Inizializza Select2 sulla casella di selezione multipla
-    $(document).ready(function() {
-      var selectElement = $('.select2');
-    
-    // Imposta il placeholder
-    selectElement.attr('data-placeholder', 'Seleziona uno o più store...');
 
-    // Inizializza Select2
-    selectElement.select2();
+    <script>
+      // Inizializza Select2 sulla casella di selezione multipla
+      $(document).ready(function() {
+        var selectElement = $('.select2');
 
-    // Aggiunge un listener per gestire la selezione
-    selectElement.on('select2:select', function (e) {
-      // Rimuovi il placeholder dopo la selezione
-      $(this).find('[value=""]').remove();
-    });
-    });
+        // Imposta il placeholder
+        selectElement.attr('data-placeholder', 'Seleziona uno o più store...');
 
-    // Inizializza Vanilla Tilt sulle carte del carosello
+        // Inizializza Select2
+        selectElement.select2();
+
+        // Aggiunge un listener per gestire la selezione
+        selectElement.on('select2:select', function (e) {
+          // Rimuovi il placeholder dopo la selezione
+          $(this).find('[value=""]').remove();
+        });
+      });
+
+      // Inizializza Vanilla Tilt sulle carte del carosello
       document.addEventListener('DOMContentLoaded', function () {
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
       });
 
-    // Passare da list layout a cards layout
-  document.addEventListener('DOMContentLoaded', function () {
-    // Declare showTableView variable outside the toggleTableView function
-    let showTableView;
+      // Passare da list layout a cards layout
+      document.addEventListener('DOMContentLoaded', function () {
+        // Declare showTableView variable outside the toggleTableView function
+        let showTableView;
 
-    // Initially hide the table and show the card view
-    showTableView = toggleTableView(false);
+        // Initially hide the table and show the card view
+        showTableView = toggleTableView(false);
 
-    // Set the initial button text based on the current view
-    const buttonText = showTableView ? 'Show Cards' : 'Show Table';
-    document.getElementById('toggleViewButton').innerText = buttonText;
+        // Set the initial button text based on the current view
+        const buttonText = showTableView ? 'Show Cards' : 'Show Table';
+        document.getElementById('toggleViewButton').innerText = buttonText;
 
-    // Add click event listener to the toggle button
-    document.getElementById('toggleViewButton').addEventListener('click', function () {
-      // Toggle between table and card views
-      showTableView = toggleTableView();
+        // Add click event listener to the toggle button
+        document.getElementById('toggleViewButton').addEventListener('click', function () {
+          // Toggle between table and card views
+          showTableView = toggleTableView();
 
-      // Update the button text based on the current view
-      const buttonText = showTableView ? 'Show Cards' : 'Show Table';
-      this.innerText = buttonText;
-    });
+          // Update the button text based on the current view
+          const buttonText = showTableView ? 'Show Cards' : 'Show Table';
+          this.innerText = buttonText;
+        });
 
-    // Function to toggle between table and card views
-    function toggleTableView(forceShowTable = null) {
-      const tableView = document.querySelector('.table-responsive');
-      const cardView = document.querySelector('.card-cont');
+        // Function to toggle between table and card views
+        function toggleTableView(forceShowTable = null) {
+          const tableView = document.querySelector('.table-responsive');
+          const cardView = document.querySelector('.card-cont');
 
-      // Determine the current state
-      const isTableVisible = tableView.style.display !== 'none';
+          // Determine the current state
+          const isTableVisible = tableView.style.display !== 'none';
 
-      // Determine the desired state based on the input parameter or toggle
-      const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
+          // Determine the desired state based on the input parameter or toggle
+          const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
 
-      // Update the display property accordingly
-      tableView.style.display = showTable ? 'block' : 'none';
-      cardView.style.display = showTable ? 'none' : 'block';
+          // Update the display property accordingly
+          tableView.style.display = showTable ? 'block' : 'none';
+          cardView.style.display = showTable ? 'none' : 'block';
 
-      return showTable;
-    }
-  });
-</script>
+          return showTable;
+        }
+      });
+    </script>
 
-</body>
+  </body>
 
 </html>

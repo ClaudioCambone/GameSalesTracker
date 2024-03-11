@@ -66,8 +66,12 @@ module GamesHelper
     end
 
     def formatted_time(time)
-      time.present? ? Time.at(time).strftime("%Y-%m-%d %H:%M:%S") : 'Data non disponibile'
-    end
+      if time.present? && time.is_a?(Numeric)
+        Time.at(time).strftime("%Y-%m-%d %H:%M:%S")
+      else
+        'Data non disponibile'
+      end
+    end    
 
     def formatted_expiry(expiry)
       expiry.present? ? Time.at(expiry).strftime("%Y-%m-%d %H:%M:%S") : 'Expiry non disponibile'
@@ -105,5 +109,22 @@ module GamesHelper
     image_tag(image_url.presence || 'placeholder.png', options)
   end
 
+  def calculate_cut(price, regular_price)
+    cut = ((regular_price.to_f - price.to_f) / regular_price.to_f * 100).round(2)
+    "#{cut}%"
+  end
+
+  def score_color_class(score)
+    if score.present? && score >= 75
+      'high-score'
+    elsif score.present? && score >= 50
+      'medium-score'
+    elsif score.present?
+      'low-score'
+    else
+      # Gestione nel caso in cui score sia nullo
+      'default-score'
+    end
+  end
 end
   

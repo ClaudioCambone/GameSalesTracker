@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root "games#index"
   get '/user', to: 'user#index'
   get 'games/search', to: 'games#search', as: :search_games
-  get 'games/details/:plain', to: 'games#details', as: :details_game
+  get 'games/details/:id', to: 'games#details', as: :details_game
   get 'games/store_lowest_prices', to: 'games#store_lowest_prices'
   get '/collections', to: 'collections#index'
   post 'games/add_to_collection', to: 'games#add_to_collection', as: :add_to_collection_game

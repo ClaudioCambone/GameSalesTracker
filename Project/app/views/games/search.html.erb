@@ -1,73 +1,119 @@
-<!DOCTYPE html>
-<html>
-
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <%= stylesheet_link_tag 'cards', media: 'all' %>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <title>Search</title>
+  <%= stylesheet_link_tag 'details', media: 'all' %>
 </head>
 
-<body>
-<!--FLASH MESSAGES/ALERT-->
-<% flash.each do |type, msg| %>
-  <div class="alert alert-info">
-    <%= msg %>
-  </div>
-<% end %>
-  <div class="container">
-    <% if @games.present? %>
-      <br><br>
-      <div class="row row-cols-1 row-cols-md-3">
-        <% displayed_titles = Set.new %>
-        <% @games.each do |game| %>
-          <% discount_percent = 100 - ((game['price_new'].to_f / game['price_old'].to_f) * 100).round(2) %>
-          <% title = game['title'] %>
-          <% unless displayed_titles.include?(title) %>
-          <div class="col mb-4">
-            <div class="card" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
-              <div class="vanilla-tilt-child">
-                <div class="image-container">
-              <%= link_to details_game_path(plain: game['plain']) do %>
-                <%= image_tag(game['image_url'] || 'placeholder.png', class: 'card-img-top img-fluid', alt: game['title']) %>
+<h1>Search Results</h1>
+
+<div class="container">
+  <% if @games.present? %>
+    <div class="game-prices-section">
+      <table class="prices-table">
+        <thead>
+          <tr class="header-row">
+            <th>Title</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Regular Price</th>
+            <th>Cut</th>
+            <th>Shop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @games.each do |game| %>
+            <tr>
+              <td class="title">
+                <%= link_to details_game_path(id: game['id']) do %>
+                <%= game['title'] %>
               <% end %>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <%= link_to details_game_path(plain: game['plain']) do %>
-                  <%= game['title'] %>
-                <% end %>
-              </h5>
-              <p class="card-text text-center">
-                <% if discount_percent > 0 %>
-                  <del><%= number_to_currency(game['price_old'], unit: '', format: '%n %u') %></del>
-                  <span class="price-new fw-bold fs-3"><%= number_to_currency(game['price_new'], unit: '€', format: '%n %u') %></span>
-                  <span class="discounted-price fw-bold fs-6">-<%= number_with_precision(discount_percent, precision: 1) %>%</span>
+              </td>
+
+              <td class="type">
+                <% if game['type'].present? %>
+                  <%= game['type'] %>
+                <%else %>
+                 N/A
+                <%end %>
+              </td>
+
+              <td class="price bold-text">
+              <% if game['prices'].present? %>
+              <% first_price = game['prices'].first %>
+              <% if first_price['deals'].present? %>
+                <% first_deal = first_price['deals'].first %>
+                <% if first_deal['price'] %>
+                  <%= number_to_currency(first_deal['price']['amount'], unit: first_deal['price']['currency'], format: '%n %u') %>
                 <% else %>
-                  <span class="price-new fw-bold fs-3"><%= number_to_currency(game['price_new'], unit: '€', format: '%n %u') %></span>
+                  N/A
                 <% end %>
-              </p>       
-            </div>
-          </div>
-          <div class="vanilla-tilt-glare"></div>
-        </div>
-      </div>
-      <% displayed_titles.add(title) %>
-    <% end %>
+              <% else %>
+                N/A
+              <% end %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+              
+          <td class="regular-price crossed-out">
+            <% if game['prices'].present? %>
+              <% first_price = game['prices'].first %>
+              <% if first_price['deals'].present? %>
+                <% first_deal = first_price['deals'].first %>
+                <% if first_deal['regular'] %>
+                  <%= number_to_currency(first_deal['regular']['amount'], unit: first_deal['regular']['currency'], format: '%n %u') %>
+                <% else %>
+                  N/A
+                <% end %>
+              <% else %>
+                  N/A
+              <% end %>
+            <% else %>
+              N/A 
+            <% end %>
+          </td>
+
+          <td class="cut">
+            <% if game['prices'].present? %>
+            <% first_price = game['prices'].first %>
+            <% if first_price['deals'].present? %>
+              <% first_deal = first_price['deals'].first %>
+              <% if first_deal['cut'] %>
+                <%= number_to_percentage(first_deal['cut'], precision: 0) %>
+              <% else %>
+                N/A
+              <% end %>
+            <% else %>
+              N/A
+            <% end %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+
+        <td class="deal">
+          <% if game['prices'].present? %>
+            <% first_price = game['prices'].first %>
+            <% if first_price['deals'].present? %>
+              <% first_deal = first_price['deals'].first %>
+              <% if first_deal['shop'] %>
+                <%= first_deal['shop']['name'] %>
+              <% else %>
+                N/A
+              <% end %>
+            <% else %>
+              N/A
+            <% end %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+             
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="no-info-message">No search results available.</p>
   <% end %>
 </div>
-<% else %>
-  <p>Risultati della ricerca:</p>
-  <p>Nessun risultato trovato.</p>
-<% end %>
-</div>
-
-  <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-      VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
-    });
-  </script>
-
-</body>
-
-</html>
