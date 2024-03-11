@@ -40,7 +40,7 @@ class Admins::UsersController < ApplicationController
       duration = params[:duration].to_i.days
       @user.update(banned: true, ban_until: Time.current + duration)
       UserMailer.account_tempban_notification(@user.email, Time.current + duration).deliver_now
-      redirect_to admins_index_path, notice: "User temporarily banned for #{params[:duration]}"
+      redirect_to admins_index_path, notice: "User temporarily banned successfully"
     end
     
     #admin can manually unban users
