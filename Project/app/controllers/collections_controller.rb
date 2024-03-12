@@ -8,6 +8,11 @@ class CollectionsController < ApplicationController
 
   def index
     @collections = current_user.collections
+    
+  end
+
+  def new
+    @collection = Collection.new
   end
 
   def create
@@ -15,15 +20,14 @@ class CollectionsController < ApplicationController
   
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to root_path, notice: 'Collection was successfully created.' }
+        format.html { redirect_to user_path, notice: 'Collection was successfully created.' }
         format.js   # Render create.js.erb
       else
-        format.html { redirect_to root_path, notice: 'There was an error in creating your collection.' }
+        format.html { redirect_to user_path, notice: 'There was an error in creating your collection.' }
         format.js   # Render create.js.erb
       end
     end
   end
-  
 
   def destroy
     @collection = Collection.find(params[:id])

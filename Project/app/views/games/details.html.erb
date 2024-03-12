@@ -1,8 +1,14 @@
-<<<<<<< HEAD
 <head>
   <title>Details</title>
   <%= stylesheet_link_tag 'details', media: 'all' %>
 </head>
+
+  <!--FLASH MESSAGES/ALERT-->
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
 
 <h1><%= @game_details['title'] %></h1>
 <div class="container">
@@ -139,6 +145,19 @@
   <% end %>  
   <br>
 
+<% if current_user && current_user.collections.any? %>
+  <h3>Add to Collection:</h3>
+  <%= form_with(url: add_to_collection_game_path, method: :post, local: false, data: { turbo: 'false' }) do |form| %>
+    <%= form.hidden_field :game_id, value: @game_details['id'] %>
+    <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
+    <%= form.submit 'Add to Collection', class: 'btn btn-primary' %>
+  <% end %>
+<% else %>
+  <p>No collections found.</p>
+<% end %>
+<br>
+
+
   <div class="container mt-4">
     <h2>Comments</h2>
     <% if @comments.present? %>
@@ -226,11 +245,13 @@
     const userCommentText = document.getElementById("user-comment-text");
     const editCommentForm = document.getElementById("edit-comment-form");
 
-    editBtn.addEventListener("click", function() {
-      userCommentText.style.display = "none";
-      editBtn.style.display = "none";
-      editCommentForm.style.display = "block";
-    });
+    if (editBtn) {
+      editBtn.addEventListener("click", function() {
+        userCommentText.style.display = "none";
+        editBtn.style.display = "none";
+        editCommentForm.style.display = "block";
+      });
+    }
   });
 </script>
 
