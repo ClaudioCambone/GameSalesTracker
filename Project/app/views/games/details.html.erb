@@ -197,7 +197,7 @@
 
 <!-- Check if the current user has already commented -->
  <% if user_signed_in? %>
-  <% if current_user.comments.exists?(gameplain: @game_plain) %>
+  <% if current_user.comments.exists?(gameplain: @game_id) %>
   <!-- Show the user's existing comment -->
   <div class="container mt-4">
     <h3>Your Comment:</h3>
@@ -211,7 +211,7 @@
   </div>
   <!-- Edit comment form -->
   <div id="edit-comment-form" style="display: none;">
-    <%= form_with(model: comment, url: game_comment_path(@game_plain, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
+    <%= form_with(model: comment, url: game_comment_path(@game_id, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
     <div class="form-group">
       <%= form.label :body, class: "form-control-label" %>
       <%= form.text_area :body, rows: 3, class: "form-control" %>
@@ -223,14 +223,14 @@
 <% else %>
 <!-- Show the comment form -->
 <div class="container mt-4">
-  <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_plain), local: true) do |form| %>
+  <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_id), local: true) do |form| %>
   <%= form.radio_button :like, true %> Like
   <%= form.radio_button :like, false %> Dislike
   <div class="field">
     <%= form.label :body %>
     <%= form.text_area :body, rows: 3 %>
   </div>
-  <%= form.hidden_field :gameplain, value: @game_plain %>
+  <%= form.hidden_field :gameplain, value: @game_id %>
   <%= form.submit "Add Comment", class: "btn btn-primary" %>
   <% end %>
 </div>

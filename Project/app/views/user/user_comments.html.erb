@@ -50,7 +50,7 @@
               <% game_info = game_info(comment.gameplain) %>
               <% if game_info.present? %>
                 <p class="mb-0">
-                  <%= link_to "Details", details_game_path(plain: comment.gameplain), class: 'btn profile-button btn-sm'%>
+                  <%= link_to "Details", details_game_path(id: comment.gameplain), class: 'btn profile-button btn-sm'%>
                 </p>
               <% end %>
             </div>
