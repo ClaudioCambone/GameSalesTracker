@@ -28,15 +28,15 @@ class GamesController < ApplicationController
   end
 
   def details
-    game_id = params[:id]
+    @game_id = params[:id]
   
     begin
-      @game_details = get_game_details(game_id)
+      @game_details = get_game_details(@game_id)
       puts @game_details.inspect
-      @game_prices = get_game_prices(game_id)  # Non specificare capacity per ottenere tutti i prezzi      @lowest_price = get_lowest_price(game_id)
+      @game_prices = get_game_prices(@game_id)  # Non specificare capacity per ottenere tutti i prezzi      @lowest_price = get_lowest_price(game_id)
   
       @game_plain = @game_details['slug']
-      @comments = Comment.where(gameplain: @game_plain)
+      @comments = Comment.where(gameplain: @game_id)
     rescue StandardError => e
       flash[:error] = "Errore nel recupero dei dettagli del gioco: #{e.message}"
       @game_details = nil
@@ -48,18 +48,24 @@ class GamesController < ApplicationController
   end  
 
   def add_to_collection
-    @game = Game.find_by(plain: params[:plain])
+    game_id = params[:game_id]
     collection_id = params[:collection_id]
-
-    if @game && collection_id
-      @game.collections << Collection.find(collection_id)
-      flash[:notice] = 'Game added to collection successfully.'
+  
+    if game_id && collection_id
+      game_collection = GameCollection.new(game_id: game_id, collection_id: collection_id)
+    
+      if game_collection.save
+        flash[:notice] = 'Game added to collection successfully.'
+      else
+        flash[:error] = 'Failed to add game to collection.'
+      end
     else
-      flash[:error] = 'Failed to add game to collection.'
+      flash[:error] = 'Invalid game or collection.'
     end
-
+  
     redirect_back fallback_location: root_path
   end
+  
 
   private
 

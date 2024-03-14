@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
       @comment = current_user.comments.new(comment_params)
   
       if @comment.save
-        redirect_to details_game_path(plain: @comment.gameplain), notice: 'Comment was successfully created.'
+        redirect_to details_game_path(id: @comment.gameplain), notice: 'Comment was successfully created.'
       else
         render 'games/details', plain: comment_params[:gameplain], alert: 'Error creating comment.'
       end

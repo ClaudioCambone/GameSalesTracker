@@ -3,6 +3,13 @@
   <%= stylesheet_link_tag 'details', media: 'all' %>
 </head>
 
+  <!--FLASH MESSAGES/ALERT-->
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
+
 <h1><%= @game_details['title'] %></h1>
 <div class="container">
   <% if @game_details.present? %>
@@ -138,6 +145,19 @@
   <% end %>  
   <br>
 
+<% if current_user && current_user.collections.any? %>
+  <h3>Add to Collection:</h3>
+  <%= form_with(url: add_to_collection_game_path, method: :post, local: false, data: { turbo: 'false' }) do |form| %>
+    <%= form.hidden_field :game_id, value: @game_details['id'] %>
+    <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
+    <%= form.submit 'Add to Collection', class: 'btn btn-primary' %>
+  <% end %>
+<% else %>
+  <p>No collections found.</p>
+<% end %>
+<br>
+
+
   <div class="container mt-4">
     <h2>Comments</h2>
     <% if @comments.present? %>
@@ -177,7 +197,7 @@
 
 <!-- Check if the current user has already commented -->
  <% if user_signed_in? %>
-  <% if current_user.comments.exists?(gameplain: @game_plain) %>
+  <% if current_user.comments.exists?(gameplain: @game_id) %>
   <!-- Show the user's existing comment -->
   <div class="container mt-4">
     <h3>Your Comment:</h3>
@@ -191,7 +211,7 @@
   </div>
   <!-- Edit comment form -->
   <div id="edit-comment-form" style="display: none;">
-    <%= form_with(model: comment, url: game_comment_path(@game_plain, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
+    <%= form_with(model: comment, url: game_comment_path(@game_id, comment), method: :patch, remote: true, id: "editCommentForm") do |form| %>
     <div class="form-group">
       <%= form.label :body, class: "form-control-label" %>
       <%= form.text_area :body, rows: 3, class: "form-control" %>
@@ -203,14 +223,14 @@
 <% else %>
 <!-- Show the comment form -->
 <div class="container mt-4">
-  <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_plain), local: true) do |form| %>
+  <%= form_with(model: [current_user, Comment.new], url: game_comments_path(@game_id), local: true) do |form| %>
   <%= form.radio_button :like, true %> Like
   <%= form.radio_button :like, false %> Dislike
   <div class="field">
     <%= form.label :body %>
     <%= form.text_area :body, rows: 3 %>
   </div>
-  <%= form.hidden_field :gameplain, value: @game_plain %>
+  <%= form.hidden_field :gameplain, value: @game_id %>
   <%= form.submit "Add Comment", class: "btn btn-primary" %>
   <% end %>
 </div>
@@ -225,11 +245,13 @@
     const userCommentText = document.getElementById("user-comment-text");
     const editCommentForm = document.getElementById("edit-comment-form");
 
-    editBtn.addEventListener("click", function() {
-      userCommentText.style.display = "none";
-      editBtn.style.display = "none";
-      editCommentForm.style.display = "block";
-    });
+    if (editBtn) {
+      editBtn.addEventListener("click", function() {
+        userCommentText.style.display = "none";
+        editBtn.style.display = "none";
+        editCommentForm.style.display = "block";
+      });
+    }
   });
 </script>
 

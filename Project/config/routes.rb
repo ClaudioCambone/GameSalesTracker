@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :create, :edit, :destroy, :update]
   end
 
-  resources :collections, only: [:index, :create, :destroy]
+  resources :collections, only: [:index, :new, :create, :destroy]
 
   resources :game_collections, only: [:create, :destroy] 
 

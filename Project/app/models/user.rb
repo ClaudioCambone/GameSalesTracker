@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
          
   # Devise modules
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2 steam github]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable , :omniauthable, omniauth_providers:  %i[facebook google_oauth2 ] #steam github
   
   validates :password, presence: true, if: -> { password.present? }
 

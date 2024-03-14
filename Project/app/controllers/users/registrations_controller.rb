@@ -25,8 +25,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       successfully_updated = @user.update_with_password(account_update_params)
     else
       # Remove password-related fields for non-password updates
-      account_update_params.delete('password')
-      account_update_params.delete('password_confirmation')
+
       account_update_params.delete('current_password')
 
       # Update the user with the modified parameters
@@ -51,6 +50,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def needs_password?
-    @user.email != params[:user][:email] || params[:user][:password].present?
+    @user.email != params[:user][:email] || params[:user][:current_password].present?
   end
 end

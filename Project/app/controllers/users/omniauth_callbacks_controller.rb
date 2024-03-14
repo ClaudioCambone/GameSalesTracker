@@ -48,27 +48,7 @@
     def failure
       redirect_to root_path
     end
-    
-    # something wont'work
-    def steam
-      if request.env['omniauth.auth'].present?
-        Rails.logger.debug "OmniAuth Data: #{request.env['omniauth.auth'].inspect}"
-        @user = User.from_omniauth(request.env['omniauth.auth'])
-        puts 'Start'
-        puts @user
-        puts 'End'
-        if @user.persisted?
-          sign_in_and_redirect @user, event: :authentication
-          set_flash_message(:notice, :success, kind: "Steam") if is_navigational_format?
-        else
-          session["devise.steam_data"] = request.env["omniauth.auth"]
-          redirect_to new_user_registration_url
-        end
-      else
-        # Handle the case where omniauth.auth is nil
-        redirect_to root_path, alert: "Authentication data not received from Steam."
-      end
-    end
+  
     
     
 
@@ -90,8 +70,9 @@
     
 
   end
+=begin
+THIS ARE METHODS FOR GITHUB AND STEAM, UNUSED 
 
-  # something wont'work
   def github
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
@@ -103,6 +84,28 @@
     end
   end
 
+
+      def steam
+      if request.env['omniauth.auth'].present?
+        Rails.logger.debug "OmniAuth Data: #{request.env['omniauth.auth'].inspect}"
+        @user = User.from_omniauth(request.env['omniauth.auth'])
+        puts 'Start'
+        puts @user
+        puts 'End'
+        if @user.persisted?
+          sign_in_and_redirect @user, event: :authentication
+          set_flash_message(:notice, :success, kind: "Steam") if is_navigational_format?
+        else
+          session["devise.steam_data"] = request.env["omniauth.auth"]
+          redirect_to new_user_registration_url
+        end
+      else
+        # Handle the case where omniauth.auth is nil
+        redirect_to root_path, alert: "Authentication data not received from Steam."
+      end
+    end
+    
+=end
   private
 
   def set_mapping
