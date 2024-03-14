@@ -196,7 +196,7 @@
   </div>
 
 <!-- Check if the current user has already commented -->
- <% if user_signed_in? %>
+<% if user_signed_in? %>
   <% if current_user.comments.exists?(gameplain: @game_id) %>
   <!-- Show the user's existing comment -->
   <div class="container mt-4">
