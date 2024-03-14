@@ -28,7 +28,7 @@
 
   <br>    
   <!-- LAST DEALS SECTION -->
-<h1 class="text-light">Stanno per terminare:</h1>
+<h1 class="text-light">Almost finished:</h1>
 <div class="container mt-4 mb-10">
   <div id="last_deals" class="carousel slide mx-auto position-relative" style="width: 90%;" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
     <div class="carousel-inner">
@@ -51,10 +51,31 @@
                         <%= deal['title'] %>
                       <% end %>
                       </h5>
-                      <!-- Rimuovere il codice relativo alla visualizzazione dei prezzi e della durata del deal -->
-                      <!-- Aggiungere qui eventuali altri dettagli del deal -->
+                      <p class="card-text text-center">
+                      <del><%= "%.2f" % deal['deal']['regular']['amount'].to_f %> €</del>
+                      <% if deal['deal']['price']['amount'] == 0 %>
+                        <span class="price-new fw-bold fs-3 text-success"><%= "%.2f" % deal['deal']['price']['amount'].to_f %> €</span>
+                        <span class="badge bg-success">Free</span>
+                      <% else %>
+                        <span class="price-new fw-bold fs-3"><%= "%.2f" % deal['deal']['price']['amount'].to_f %> €</span>
+                      <% end %>
+                      <span class="discounted-price fw-bold fs-6">-<%= deal['deal']['cut'] %>%</span>      
+                    </p>  
+                    <p class="card-text text-center">
+                      Ends in: 
+                      <% remaining_time = countdown_to_end_date(deal['expiry']) %>
+                      <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
+                      <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>   
+                      <% if total_minutes > 60 %>
+                        <span class="text-success"><%= remaining_time %></span>
+                      <% elsif total_minutes > 15 %>
+                        <span class="text-warning"><%= remaining_time %></span>
+                      <% else %>
+                        <span class="text-danger"><%= remaining_time %></span>
+                      <% end %>
+                    </p>
                       <div class="card-text text-center">
-                        <%= shop_link(deal['deal']['shop']) %>
+                        
                       </div>
                     </div>
                   </div>
@@ -86,66 +107,73 @@
     <%= form_tag(games_path, method: 'get') do %>
       <div class="row">
         <div class="col-md-2">
-          <%= label_tag 'limit', 'Numero risultati:' %>
+          <%= label_tag 'limit', 'Limit:' %>
           <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
         </div>
         <div class="col-md-2">
-          <%= label_tag 'sort', 'Ordina per:' %>
-          <%= select_tag 'sort', options_for_select([['Prezzo', 'price'], ['Sconto', 'cut']], params[:sort]), class: 'form-control' %>
-        </div>
-        <div class="col-md-2">
-          <%= label_tag 'order', 'Ordine:' %>
-          <%= select_tag 'order', options_for_select([['Crescente', 'asc'], ['Decrescente', 'desc']], params[:order]), class: 'form-control' %>
+          <%= label_tag 'sort', 'Sort:' %>
+          <%= select_tag 'sort', options_for_select([['Price (min)', 'price'], ['Prezzo (max)', '-price'], ['Discount (min)', 'cut'], ['Discount (max)', '-cut'],['Expiration (almost new)', 'expiry'],['Expiration (almost expired)', '-expiry']], params[:sort]), class: 'form-control' %>
         </div>
         <div class="col-md-4">
-          <%= label_tag 'shops[]', 'Filtra per shop:' %>
+          <%= label_tag 'shops[]', 'Shop Filter:' %>
           <%= select_tag 'shops[]', options_for_select([
             ['Tutti gli Store', nil],
-            ['AllYouPlay', 'AllYouPlay'],
-            ['Amazon', 'amazonus'],
-            ['DLGamer','dlgamer'],
-            ['Dreamgame','dreamgame'],
-            ['Epic Game Store', 'Epic'],
-            ['Fanatical', 'bundlestars'],
-            ['GameBillet', 'GameBillet'],
-            ['GamersGate', 'GamersGate'],
-            ['Gamesload','gamesload'],
-            ['GamesPlanet UK', 'gamesplanet'],
-            ['GamesPlanet US', 'gamesplanetus'],
-            ['GamesPlanet FR', 'gamesplanetfr'],
-            ['GamesPlanet DE', 'gamesplanetde'],
-            ['GreenManGaming', 'GreenManGaming'],
-            ['Humble Store', 'humblestore'],
-            ['Itch.io','itchio'],
-            ['IndieGala Store', 'indiegalastore'],
-            ['JoyBuggy', 'JoyBuggy'],
-            ['Noctre', 'Noctre'],
-            ['Steam', 'Steam'],
-            ['Ubisoft Store', 'uplay'],
-            ['Voidu','voidu'],
-            ['2game', 'game2'],
+            ['2game', 19],
+    ['AllYouPlay', 2],
+    ['Amazon', 3],
+    ['Blizzard', 4],
+    ['DLGamer', 13],
+    ['Dreamgame', 15],
+    ['EA Store', 52],
+    ['Epic Game Store', 16],
+    ['eTail.Market', 67],
+    ['Fanatical', 6],
+    ['FireFlower', 17],
+    ['GameBillet', 20],
+    ['GamersGate', 24],
+    ['Gamesload', 25],
+    ['GamesPlanet DE', 27],
+    ['GamesPlanet FR', 28],
+    ['GamesPlanet UK', 26],
+    ['GamesPlanet US', 29],
+    ['GOG', 35],
+    ['GreenManGaming', 36],
+    ['Humble Store', 37],
+    ['IndieGala Store', 42],
+    ['Itch.io', 44],
+    ['JoyBuggy', 65],
+    ['MacGameStore', 47],
+    ['Microsoft Store', 48],
+    ['Newegg', 49],
+    ['Noctre', 66],
+    ['Nuuvem', 50],
+    ['Square Enix', 60],
+    ['Steam', 61],
+    ['Ubisoft Store', 62],
+    ['Voidu', 63],
+    ['WinGameStore', 64],
           ], params[:shops]), { multiple: true, class: 'form-control custom-select select2 shop-filter' } %>
         </div>
         <div class="col-md-2">
-          <%= submit_tag 'Applica filtri', class: 'btn btn-primary mt-4' %>
+          <%= submit_tag 'Apply', class: 'btn btn-primary mt-4' %>
         </div>
       </div>
     <% end %>
     <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4"></button>
     <br>
     
-    <div class="table-responsive">
+    <div class="table-responsive" id="deal_table">
       <table class="table table-custom">
         <thead class="thead-dark">
           <tr>
-            <th class="text-light">Immagine</th>
-            <th class="text-light">Titolo</th>
-            <th class="text-light">Prezzo Attuale</th>
-            <th class="text-light">Prezzo Originale</th>
-            <th class="text-light">Sconto</th>
-            <th class="text-light">Data Inizio Sconto</th>
-            <th class="text-light">Data Fine Sconto</th>
-            <th class="text-light">Dettagli</th>
+            <th class="text-light">Cover</th>
+            <th class="text-light">Title</th>
+            <th class="text-light">Price</th>
+            <th class="text-light">Regular Price</th>
+            <th class="text-light">Cut</th>
+            <th class="text-light">Started</th>
+            <th class="text-light">Ended</th>
+            <th class="text-light">Details</th>
           </tr>
         </thead>
         <tbody>
@@ -154,10 +182,10 @@
       <td class="text-light">
         <div class="image-container">
         <% if deal['game_details'].is_a?(Hash) && deal['game_details']['assets'].is_a?(Hash) && deal['game_details']['assets']['banner300'].is_a?(String) %>
-        <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid', alt: deal['title']) %>
-      <% else %>
-        <%= image_tag('placeholder.png', class: 'card-img-top img-fluid', alt: deal['title']) %>
-      <% end %>      
+              <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid', alt: deal['title']) %>
+            <% else %>
+              <%= image_tag('placeholder.png', class: 'card-img-top img-fluid', alt: deal['title']) %>
+            <% end %> 
         </div>
       </td>
       <td class="text-light">
@@ -188,15 +216,20 @@
           N/A
         <% end %>
       </td>
-      <td class="text-light deal_shop"><%= shop_link(deal['deal']['shop']) %></td>
-    </tr>
-  <% end %>      
+      <td class="text-light deal_shop">
+      <% if deal['deal']['shop'].present? %>
+        <%= link_to "Disponibile su #{deal['deal']['shop']['name']}", deal['deal']['url'], target: '_blank' %>
+      <% else %>
+        Dettagli non disponibili
+      <% end %>
+    </td>
+      <% end %>      
 </tbody>
 
       </table>
     </div>
 
-    <div class="container card-cont">
+    <div class="container card-cont" id="deal_cards">
   <% if @deals.present? %>
     <div class="row row-cols-1 row-cols-md-3">
       <% @deals.each do |deal| %>
@@ -239,7 +272,7 @@
                   <% end %>
                 </p>
                 <div class="card-text text-center">
-                  <%= shop_link(deal['deal']['shop']) %>
+                 
                 </div>
               </div>
               <div class="vanilla-tilt-glare"></div>
@@ -261,7 +294,7 @@
         var selectElement = $('.select2');
 
         // Imposta il placeholder
-        selectElement.attr('data-placeholder', 'Seleziona uno o più store...');
+        selectElement.attr('data-placeholder', 'Select one or more store...');
 
         // Inizializza Select2
         selectElement.select2();
@@ -278,46 +311,34 @@
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
       });
 
-      // Passare da list layout a cards layout
       document.addEventListener('DOMContentLoaded', function () {
-        // Declare showTableView variable outside the toggleTableView function
-        let showTableView;
+    // Initially hide the table and show the card view
+    toggleTableView(false);
 
-        // Initially hide the table and show the card view
-        showTableView = toggleTableView(false);
+    // Set the initial button text based on the current view
+    const buttonText = 'Show Table';
+    document.getElementById('toggleViewButton').innerText = buttonText;
 
-        // Set the initial button text based on the current view
-        const buttonText = showTableView ? 'Show Cards' : 'Show Table';
-        document.getElementById('toggleViewButton').innerText = buttonText;
+    // Add click event listener to the toggle button
+    document.getElementById('toggleViewButton').addEventListener('click', function () {
+        // Toggle between table and card views
+        toggleTableView();
+    });
 
-        // Add click event listener to the toggle button
-        document.getElementById('toggleViewButton').addEventListener('click', function () {
-          // Toggle between table and card views
-          showTableView = toggleTableView();
+    // Function to toggle between table and card views
+    function toggleTableView() {
+        const tableView = document.getElementById('deal_table');
+        const cardView = document.getElementById('deal_cards');
 
-          // Update the button text based on the current view
-          const buttonText = showTableView ? 'Show Cards' : 'Show Table';
-          this.innerText = buttonText;
-        });
+        // Determine if the table is currently visible
+        const isTableVisible = tableView.style.display !== 'none';
 
-        // Function to toggle between table and card views
-        function toggleTableView(forceShowTable = null) {
-          const tableView = document.querySelector('.table-responsive');
-          const cardView = document.querySelector('.card-cont');
+        // Update the display property of both views
+        tableView.style.display = isTableVisible ? 'none' : 'block';
+        cardView.style.display = isTableVisible ? 'block' : 'none';
+    }
+});
 
-          // Determine the current state
-          const isTableVisible = tableView.style.display !== 'none';
-
-          // Determine the desired state based on the input parameter or toggle
-          const showTable = forceShowTable !== null ? forceShowTable : !isTableVisible;
-
-          // Update the display property accordingly
-          tableView.style.display = showTable ? 'block' : 'none';
-          cardView.style.display = showTable ? 'none' : 'block';
-
-          return showTable;
-        }
-      });
     </script>
 
   </body>

@@ -66,12 +66,13 @@ module GamesHelper
     end
 
     def formatted_time(time)
-      if time.present? && time.is_a?(Numeric)
-        Time.at(time).strftime("%Y-%m-%d %H:%M:%S")
+      if time.present?
+        parsed_time = Time.parse(time)
+        parsed_time.strftime("%Y-%m-%d %H:%M")
       else
         'Data non disponibile'
       end
-    end    
+    end       
 
     def formatted_expiry(expiry)
       expiry.present? ? Time.at(expiry).strftime("%Y-%m-%d %H:%M:%S") : 'Expiry non disponibile'
@@ -93,14 +94,6 @@ module GamesHelper
     
       "#{days.to_i} d #{hours} h #{minutes} m #{seconds} s"
     end    
-
-    def shop_link(deal)
-      if deal['shop'].present?
-        link_to "Disponibile su #{deal['shop']['name']}", deal['urls']['buy'], target: '_blank'
-      else
-        'Dettagli non disponibili'
-      end
-    end
 
   def game_image_tag(image_url, options = {})
     options[:class] ||= ''

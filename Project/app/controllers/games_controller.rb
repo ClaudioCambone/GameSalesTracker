@@ -69,8 +69,10 @@ class GamesController < ApplicationController
   
   def get_last_deals
     limit = 18  
+    offset= 0
     url = "https://api.isthereanydeal.com/deals/v2?key=#{@api_key}"
     url += "&country=US"
+    url += "&offset=#{offset}"
     url += "&limit=#{limit}"  
     url += "&sort=expiry"
     
