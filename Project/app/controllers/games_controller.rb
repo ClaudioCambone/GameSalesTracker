@@ -1,5 +1,5 @@
-require 'httparty'
 class GamesController < ApplicationController
+  require 'httparty'
   require 'cgi'
   include GamesHelper
   include SharedHelper
@@ -8,16 +8,23 @@ class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :search, :details_game]
 
   def index
-    @games = []
-    @deals = get_deals
-    @lastdeals = get_last_deals
+    cache_key = "games_index_#{params[:page]}_#{params[:sort]}"
+    @games = Rails.cache.fetch('games_index', expires_in: 20.minutes) do
+    end
+    @deals = Rails.cache.fetch('deals', expires_in: 20.minutes) do
+      get_deals
+    end
+    @lastdeals = Rails.cache.fetch('last_deals', expires_in: 20.minutes) do
+      get_last_deals
+    end
   end
 
   def search
     if params[:search_query].present?
       @search_query = params[:search_query]
-      @games = Rails.cache.fetch("search_results_#{@search_query}", expires_in: 1.hour) do
-      search_games(@search_query, capacity: 1)
+      cache_key = "search_results_#{@search_query}_#{params[:page]}_#{params[:sort]}"
+      @games = Rails.cache.fetch(cache_key, expires_in: 20.minutes) do
+        search_games(@search_query, capacity: 1)
       end
       @games.each do |game|
         game['prices'] = get_game_prices(game['id'], capacity: 1)
@@ -74,6 +81,7 @@ class GamesController < ApplicationController
   end
   
   def get_last_deals
+    Rails.cache.fetch('last_deals', expires_in: 20.minutes) do
     limit = 18  
     offset= 0
     url = "https://api.isthereanydeal.com/deals/v2?key=#{@api_key}"
@@ -105,9 +113,11 @@ class GamesController < ApplicationController
     
     return []
   end
+  end
   
 
   def get_deals
+    Rails.cache.fetch('deals', expires_in: 20.minutes) do
     url = "https://api.isthereanydeal.com/deals/v2?key=#{@api_key}"
   
     url += "&country=US"
@@ -139,8 +149,11 @@ class GamesController < ApplicationController
     
     return []
   end
+end
     
-  def search_games(query, capacity: nil)
+  def search_games(query, capacity: nil, page: nil, sort: nil)
+    cache_key = "search_games_#{CGI.escape(query)}_#{page}_#{sort}"
+    games = Rails.cache.fetch(cache_key, expires_in: 20.minutes) do
     url = "https://api.isthereanydeal.com/games/search/v1?key=#{@api_key}&title=#{CGI.escape(query)}"    
     url += "&capacity=#{capacity}" if capacity.present?
     response = HTTParty.get(url)
@@ -161,6 +174,8 @@ class GamesController < ApplicationController
       []
     end
   end
+  games
+  end
   
 
   def get_game_details(id)
@@ -180,6 +195,7 @@ class GamesController < ApplicationController
   end
   
   def get_game_prices(id, capacity: nil)
+    Rails.cache.fetch("game_prices_#{id}", expires_in: 20.minutes) do
     prices_url = "https://api.isthereanydeal.com/games/prices/v2?key=#{@api_key}&nondeals=true&vouchers=true"
     game_ids = [id] # Converti l'ID del gioco in un array non vuoto
 
@@ -197,6 +213,7 @@ class GamesController < ApplicationController
   rescue => e
     puts "Errore nella richiesta dei prezzi del gioco: #{e.message}"
     {}
+  end
   end
   
   
