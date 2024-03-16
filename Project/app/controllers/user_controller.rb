@@ -51,7 +51,9 @@ end
 
   def destroy
     @user = current_user
-    @user.destroy
+    Comment.where(user_id: @user.id).destroy_all # Delete associated comments
+    Collections.where(user_id: @user.id).destroy_all
+    if @user.destroy
     redirect_to root_path, notice: 'Account deleted successfully.'
   end
 

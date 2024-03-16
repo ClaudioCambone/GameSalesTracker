@@ -57,12 +57,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_184215) do
   end
 
   create_table "game_collections", force: :cascade do |t|
-    t.string "game_id"
+    t.string "plain"
     t.integer "collection_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["collection_id"], name: "index_game_collections_on_collection_id"
-    t.index ["game_id", "collection_id"], name: "index_game_collections_on_plain_and_collection_id", unique: true
+    t.index ["plain", "collection_id"], name: "index_game_collections_on_plain_and_collection_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_184215) do
     t.string "username"
     t.datetime "confirmed_at"
     t.string "confirmation_token"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.text "description"
     t.integer "roles_mask"

@@ -32,10 +32,10 @@ class User < ApplicationRecord
   end
 
   ## Collections
-  has_many :collections
+  has_many :collections,dependent: :destroy
 
   ## Comments
-  has_many :comments
+  has_many :comments,dependent: :destroy 
 
   
   ##...Avatar Attachment...##
