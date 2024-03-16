@@ -17,6 +17,8 @@
 
   <!--GAME SECTION -->
 
+
+
 <h1><%= @game_details['title'] %></h1>
 <div class="container">
   <% if @game_details.present? %>
@@ -167,6 +169,23 @@
 <br>
 
   <!--COMMENT SECTION -->
+
+<% total_comments = @comments.count %>
+<% if total_comments > 0 %>
+  <% negative_comments = @comments.where(like: false).count %>
+  <% negative_percentage = (negative_comments.to_f / total_comments) * 100 %>
+
+  <% if negative_percentage > 75 %> 
+    <p style="color: #DC143C;  font: Lucida Bright, Georgia, serif; font-size:30px">This game is not recommended from our users! <i class="fa fa-thumbs-down"></i></p>
+  <% elsif negative_percentage >= 51 %>
+    <p style="color: #1E90FF; font: Lucida Bright, Georgia, serif; font-size:30px">This game is recommended from our users! <i class="fa fa-thumbs-up"></i></p>
+  <% else %>
+    <p style="color: #1E90FF; font: Lucida Bright, Georgia, serif; font-size:30px">This game is strongly recommended from our users! <i class="fa fa-thumbs-up"></i> </p>
+  <% end %>
+<% else %>
+  <p>No comments yet.</p>
+<% end %>
+
 
 <div class="container mt-4">
   <h2>Comments</h2>
