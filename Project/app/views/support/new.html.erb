@@ -6,79 +6,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <style>
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      justify-content: center;
-      align-items: center;
-      height: 70vh;
-    }
-
-    .card-container {
-      justify-content: space-between;
-      width: 80%;
-    }
-
-    .card {
-      flex: 1;
-      margin: 10px;
-      box-sizing: border-box;
-      padding: 20px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
-
-  </style>
+  <%= stylesheet_link_tag 'support', media: 'all' %> 
 </head>
 <body>
+
 <!--FLASH MESSAGES/ALERT-->
 <% flash.each do |type, msg| %>
   <div class="alert alert-info">
     <%= msg %>
   </div>
 <% end %>
-      <div class="card" style="padding: 40px;">
-        <h1>Something wrong?</h1>
-        <h1>Contact us!</h1>
-        <br>
 
-        <%= form_with(model: @support, url: new_support_path, method: :post) do |form| %>
-
-          <!-- Your support form fields here -->
-          <div>
-              <%= form.label :username %>
-              <%= form.text_field :username %>
-          </div><br>
-
-          <div>
-          </div><br>
-
-          <div>
-            <%= form.label :email %>
-            <%= form.email_field :email %>
-          </div><br>
-
-          <div>
-            <%= form.label :message %>
-            <%= form.text_area :message %>
-          </div><br>
-
-          <div>
-            <button type="submit" value="Submit" class="button">send an e-mail</button>
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center box">
+      <div class="col-lg-6">
+        <div class="card bg-dark text-white">
+          <div class="card-body p-5">
+            <div class="mb-md-2 mt-md-4 pb-3 text-center text-md-start">
+              <h2 class="fw-bold mb-2 text-uppercase">Contact Us</h2>
+              <p class="text-white-50 mb-5">Have a question or need support? Please fill out the form below.</p>
+            </div>
           </div>
-        <% end %>
-
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card bg-dark text-white">
+          <div class="card-body p-5">
+            <%= form_with(model: @support, url: new_support_path, method: :post) do |form| %>
+              <!-- Support form fields -->
+              <div class="form-outline form-white mb-4">
+                <%= form.label :username %>
+                <%= form.text_field :username, class: "form-control form-control-lg" %>
+              </div>
+              <div class="form-outline form-white mb-4">
+                <%= form.label :email %>
+                <%= form.email_field :email, class: "form-control form-control-lg" %>
+              </div>
+              <div class="form-outline form-white mb-4">
+                <%= form.label :message %>
+                <%= form.text_area :message, class: "form-control form-control-lg" %>
+              </div>
+              <%= form.submit "Send", class: "btn btn-outline-light btn-lg px-5" %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-6 text-center">
+        <%= link_to "Go back to homepage", root_path, class: "text-white-50" %>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <%= link_to "GameSalesTracker", root_path, class: "button-link" %>
-  </section>
 </body>
 </html>

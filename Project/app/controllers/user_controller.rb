@@ -55,6 +55,7 @@ end
     Collections.where(user_id: @user.id).destroy_all
     if @user.destroy
     redirect_to root_path, notice: 'Account deleted successfully.'
+    end
   end
 
   def user_params

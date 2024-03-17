@@ -1,0 +1,19 @@
+.card {
+    margin: 10px;
+    background-color: #242424 !important;
+    border: 0px;
+  }
+
+  .box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-width: 2px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 80px;
+  }
+
+  body {
+    background-color: #242424;
+    color: #fff;
+  }

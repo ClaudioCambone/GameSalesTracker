@@ -5,7 +5,7 @@
   <%= javascript_include_tag 'activestorage' %>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-  
+ 
 </head>
 
   <!--FLASH MESSAGES/ALERT-->
@@ -24,6 +24,7 @@
   <% if @game_details.present? %>
     <div class="game-details-section">
       <h2>Game Details</h2>
+
       <div class="game-details">
       <div class="info">
       <ul>
@@ -81,6 +82,32 @@
   <% else %>
     <p>No game details available.</p>
   <% end %>
+
+<% if current_user && current_user.collections.any? %>
+  <%= form_with(url: add_to_collection_game_path, method: :post, local: false, data: { turbo: 'false' }) do |form| %>
+    <%= form.hidden_field :game_id, value: @game_details['id'] %>
+    <%= form.submit 'Add to Collection', class: 'btn btn-outline-light mb-2' %>
+    <div class="dropdown">
+      <button class="btn btn-outline-light dropdown-toggle" type="button" id="collectionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Select a collection
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
+        <% current_user.collections.each do |collection| %>
+          <% if collection.name.present? %>
+            <li>
+              <a href="#" class="dropdown-item collection-item" data-collection-id="<%= collection.id %>">
+                <%= collection.name %>
+              </a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <%= form.hidden_field :collection_id, id: "selectedCollectionId" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No collections found.</p>
+<% end %>
 </div>
 </div>
 <div class="container">
@@ -156,17 +183,7 @@
 
   <!-- END OF GAME SECTION -->
 
-<% if current_user && current_user.collections.any? %>
-  <h3>Add to Collection:</h3>
-  <%= form_with(url: add_to_collection_game_path, method: :post, local: false, data: { turbo: 'false' }) do |form| %>
-    <%= form.hidden_field :game_id, value: @game_details['id'] %>
-    <%= form.collection_select(:collection_id, current_user.collections, :id, :name, prompt: 'Select a collection') %>
-    <%= form.submit 'Add to Collection', class: 'btn btn-outline-light' %>
-  <% end %>
-<% else %>
-  <p>No collections found.</p>
-<% end %>
-<br>
+
 
   <!--COMMENT SECTION -->
 
@@ -237,7 +254,7 @@
 <!-- Check if the current user has already commented -->
 <% if user_signed_in? %>
   <% if current_user.comments.exists?(gameplain: @game_id) %>
-  <!-- USER EXISTING COMMENT. IF THE METHOD EDIT IS REMOVED, THIS CONTAINER ARE USELESS
+  <!-- USER EXISTING COMMENT. IF THE METHOD EDIT IS REMOVED, THIS CONTAINER IS USELESS
   <div class="container mt-4">
     <h3>Your Comment:</h3>
     <div id="user-comment" class="comment">
@@ -353,13 +370,6 @@ EDIT COMMENT FORM. COMMENTED IT SINCE IT USLESS AND TIME EFFORT TO INTRODUCE
     </div>
   </div>
 </div>
-
-
-
- 
-
-
-
 <% end %>
 <% end %>
 
@@ -375,6 +385,18 @@ EDIT COMMENT FORM. COMMENTED IT SINCE IT USLESS AND TIME EFFORT TO INTRODUCE
     const dislikeRadio = document.querySelector('.dislike-radio');
     const likeIcon = document.querySelector('.like-icon');
     const dislikeIcon = document.querySelector('.dislike-icon');
+
+    const collectionItems = document.querySelectorAll(".collection-item");
+    const dropdownButton = document.getElementById("collectionDropdown");
+    const selectedCollectionIdInput = document.getElementById("selectedCollectionId");
+
+    collectionItems.forEach(function(item) {
+      item.addEventListener("click", function(event) {
+        event.preventDefault();
+        dropdownButton.textContent = this.textContent;
+        selectedCollectionIdInput.value = this.dataset.collectionId;
+      });
+    });
 
     likeRadio.addEventListener('click', function() {
       likeIcon.classList.remove('far');
