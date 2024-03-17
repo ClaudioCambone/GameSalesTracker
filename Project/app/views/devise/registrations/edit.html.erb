@@ -49,17 +49,19 @@
               <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
                 <%= devise_error_messages! %>
 
-                <!-- Avatar Upload Field -->
                 <div class="form-group">
-                  <label class="col-sm-4 col-form-label">Avatar:
+                  <label class="col-sm-4 col-form-label mb-2">
                     <% if current_user.avatar.present? %><br />
-                      Current:
+                      Current Avatar:
                       <%= image_tag current_user.avatar, class: "rounded-circle", size: "100x100" %>
                     <% end %>
                   </label>
-                  <div class="col-sm-8"><%= f.file_field :avatar, class: "form-control" %></div>
                 </div>
-                <!-- Avatar Upload Field -->
+
+                  <div class="field">
+                    <%= f.label :avatar, "Change Avatar" %>
+                    <%= f.file_field :avatar, class: "form-control" %>
+                  </div>
 
                 <div class="field">
                   <%= f.label :username, "Username" %>
@@ -94,17 +96,19 @@
                 <!-- Password Fields -->
 
                 <div class="actions">
-                  <%= f.submit "Update" %>
+                  <%= f.submit "Update", class: "btn btn-outline-light" %>
                 </div>
               <% end %>
 
               <br><br>
               <h3>Cancel my account</h3>
 
-              <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+              <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-outline-danger mt-2" %></div>
 
               <br><br>
               <%= link_to "GameSalesTracker", root_path, class: "text-white-50" %>
+              <br>
+              <%= link_to "Go back", request.referer, class: "text-white-50" %>
             </div>
           </div>
         </div>

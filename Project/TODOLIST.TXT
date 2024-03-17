@@ -1,18 +1,14 @@
 Lunedì
 
 Karen —>
-Fare una media dei commenti positivi/negativi e far apparire se il gioco è apprezzato o meno (tipo steam); con da 100% a 75% voti negativi --> storngly not raccomanded
-da 74% a 51% voti negativi --> not raccomanded
-da 50% a 25% voti negativi --> raccomanded
-da 25% a 0% voti negativi --> strongly raccomanded
 
 Support page
 
 Collections page da verificare
 
-Game details page (sezione commenti e collezioni)
+Game details page (sezione commenti e collezioni )
 
-Alessandro —> 
+Alessandro —>
 provare ad ottimizzare le pagine in termini di velocita' di caricamento
 cache nella home
 sistemare date deals gia' terminati
