@@ -10,8 +10,6 @@ Game details page (sezione commenti e collezioni )
 
 Alessandro —>
 provare ad ottimizzare le pagine in termini di velocita' di caricamento
-cache nella home
-sistemare date deals gia' terminati
 
 Claudio —>
 se sei admin puoi cancellare i commenti di tutti
