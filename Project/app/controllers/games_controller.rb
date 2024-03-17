@@ -11,9 +11,7 @@ class GamesController < ApplicationController
     cache_key = "games_index_#{params[:page]}_#{params[:sort]}"
     @games = Rails.cache.fetch('games_index', expires_in: 20.minutes) do
     end
-    @deals = Rails.cache.fetch('deals', expires_in: 20.minutes) do
-      get_deals
-    end
+    @deals = get_deals
     @lastdeals = Rails.cache.fetch('last_deals', expires_in: 20.minutes) do
       get_last_deals
     end
@@ -83,7 +81,7 @@ class GamesController < ApplicationController
   def get_last_deals
     Rails.cache.fetch('last_deals', expires_in: 20.minutes) do
     limit = 18  
-    offset= 0
+    offset= 3000
     url = "https://api.isthereanydeal.com/deals/v2?key=#{@api_key}"
     url += "&country=US"
     url += "&offset=#{offset}"
@@ -117,9 +115,7 @@ class GamesController < ApplicationController
   
 
   def get_deals
-    Rails.cache.fetch('deals', expires_in: 20.minutes) do
     url = "https://api.isthereanydeal.com/deals/v2?key=#{@api_key}"
-  
     url += "&country=US"
     url += "&offset=#{params[:offset]}" if params[:offset].present?
     url += "&limit=#{params[:limit]}" if params[:limit].present?
@@ -148,7 +144,6 @@ class GamesController < ApplicationController
     end
     
     return []
-  end
 end
     
   def search_games(query, capacity: nil, page: nil, sort: nil)

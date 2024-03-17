@@ -40,8 +40,8 @@
                 <div class="card card-tilt" data-tilt data-tilt-max="13" data-tilt-speed="100" data-tilt-glare="true" data-tilt-max-glare="0.2" scale="1">
                   <div class="vanilla-tilt-child">
                     <div class="image-container">
-                      <% if deal['game_details'] && deal['game_details']['assets'] && deal['game_details']['assets']['banner300'] %>
-                        <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid') %>
+                    <% if deal['game_details'].is_a?(Hash) && deal['game_details']['assets'].is_a?(Hash) && deal['game_details']['assets']['banner300'].present? %>
+                    <%= image_tag(deal['game_details']['assets']['banner300'], class: 'card-img-top img-fluid') %>
                       <% else %>
                         <%= image_tag('placeholder.png', class: 'card-img-top img-fluid') %>
                       <% end %>
@@ -62,18 +62,21 @@
                       <span class="discounted-price fw-bold fs-6">-<%= deal['deal']['cut'] %>%</span>      
                     </p>  
                     <p class="card-text text-center">
-                      Ends in: 
-                      <% remaining_time = countdown_to_end_date(deal['expiry']) %>
-                      <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
-                      <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>   
-                      <% if total_minutes > 60 %>
-                        <span class="text-success"><%= remaining_time %></span>
-                      <% elsif total_minutes > 15 %>
-                        <span class="text-warning"><%= remaining_time %></span>
+                      Ends in:
+                      <% remaining_time = (Time.parse(deal['deal']['expiry']) - Time.now).to_i %>
+                      <% days = remaining_time / (24 * 60 * 60) %>
+                      <% hours = (remaining_time % (24 * 60 * 60)) / (60 * 60) %>
+                      <% minutes = (remaining_time % (60 * 60)) / 60 %>
+  
+                      <% if remaining_time > 60.minutes %> 
+                        <span class="text-success"><%= "#{days} d #{hours} h #{minutes} m" %></span>
+                      <% elsif remaining_time > 15.minutes %>
+                        <span class="text-warning"><%= "#{days} d #{hours} h #{minutes} m" %></span>
                       <% else %>
-                        <span class="text-danger"><%= remaining_time %></span>
+                        <span class="text-danger"><%= "#{days} d #{hours} h #{minutes} m" %></span>
                       <% end %>
                     </p>
+
                       <div class="card-text text-center">
                         
                       </div>
