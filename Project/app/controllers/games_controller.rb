@@ -56,26 +56,32 @@ class GamesController < ApplicationController
     game_id = params[:game_id]
     collection_id = params[:collection_id]
   
-    if game_id && collection_id
-      game_collection = GameCollection.find_by(game_id: game_id, collection_id: collection_id)
+    if collection_id.present?
+      if Collection.exists?(collection_id)
+        game_collection = GameCollection.find_by(game_id: game_id, collection_id: collection_id)
   
-      if game_collection.nil?
-        game_collection = GameCollection.new(game_id: game_id, collection_id: collection_id)
+        if game_collection.nil?
+          game_collection = GameCollection.new(game_id: game_id, collection_id: collection_id)
   
-        if game_collection.save
-          flash[:notice] = 'Game added to collection successfully.'
+          if game_collection.save
+            flash[:notice] = 'Game added to collection successfully.'
+          else
+            flash[:error] = 'Failed to add game to collection.'
+          end
         else
-          flash[:error] = 'Failed to add game to collection.'
+          flash[:error] = 'Game is already in the collection.'
         end
       else
-        flash[:error] = 'Game is already in the collection.'
+        flash[:error] = 'Invalid collection.'
       end
     else
-      flash[:error] = 'Invalid game or collection.'
+      flash[:error] = 'Invalid collection.'
     end
   
     redirect_back fallback_location: root_path
   end
+  
+  
   
   
 
