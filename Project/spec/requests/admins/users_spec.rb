@@ -6,7 +6,7 @@ RSpec.describe Admins::UsersController, type: :controller do
 
     @user = User.create(email: 'user@example.com', password: 'password', password_confirmation: 'password', role: 'user') 
   end
-
+  ########## TEST N. 1, TRYING TO PERMANENT BAN A USER ###########
   describe "POST #ban" do
     context "when banning a user" do
       it "updates the user's banned status to true and ban_until to nil" do
@@ -24,6 +24,10 @@ RSpec.describe Admins::UsersController, type: :controller do
       end
     end
   end
+
+
+  ########## TEST N. 2, TRYING TO TEMPORARY BAN A USER ###########
+
   describe "POST #temporary_ban" do
     context "when temporarily banning a user" do
       it "updates the user's banned status to true and sets ban_until to the specified duration" do
@@ -42,6 +46,9 @@ RSpec.describe Admins::UsersController, type: :controller do
       end
     end
   end
+
+  ########## TEST N. 3, TRYING TO MAKE A USER ADMIN ###########
+
   describe "POST #make_admin" do
     context "when making a user an admin" do
       it "updates the user's role to 'admin'" do

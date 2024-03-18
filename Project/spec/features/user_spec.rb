@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature "Authentication", type: :feature do
+  ########## TEST N. 1 TRYING TO CREATE, CONFIRM AND SIGN IN A USER ##########
   scenario "User can register an account and sign in" do
-    # Registering an account
     visit "http://localhost:3000/users/sign_up"
 
 
