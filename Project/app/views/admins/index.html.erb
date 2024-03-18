@@ -140,7 +140,7 @@
 <!-- SEARCHBAR -->
        <div class="search">
            <input type="text" id="search" name="search" placeholder="Enter username or email" class="searchTerm">
-           <button onclick=searchUsers() class="searchButton">
+           <button onclick=searchUsers() class="searchButton" id="searchButton">
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -159,7 +159,7 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr id=<%user.email%>>
           <td>
             <% if user.avatar.present? %>
               <%= image_tag user.avatar, class: "profile-picture", size: "100x100" %>
