@@ -194,31 +194,7 @@ end
   rescue => e
     puts "Errore nella richiesta di dettagli del gioco: #{e.message}"
     {}
-  end
-  
-  def get_game_prices(id, capacity: nil)
-    Rails.cache.fetch("game_prices_#{id}", expires_in: 20.minutes) do
-    prices_url = "https://api.isthereanydeal.com/games/prices/v2?key=#{@api_key}&nondeals=true&vouchers=true"
-    game_ids = [id] # Converti l'ID del gioco in un array non vuoto
-
-    # Aggiungi capacity alla richiesta solo se è stato specificato
-    prices_url += "&capacity=#{capacity}" if capacity.present?
-
-    response = RestClient.post(prices_url, game_ids.to_json, content_type: :json)
-    parsed_response = JSON.parse(response)
-    puts "Prezzi del gioco:"
-    puts parsed_response.inspect  # Aggiungi questa linea per visualizzare i prezzi del gioco nel terminale
-    parsed_response
-  rescue RestClient::ExceptionWithResponse => e
-    puts "Errore nella richiesta dei prezzi del gioco: #{e.response}"
-    {}
-  rescue => e
-    puts "Errore nella richiesta dei prezzi del gioco: #{e.message}"
-    {}
-  end
-  end
-  
-  
+  end  
 
   def get_lowest_price(game_plain)
     lowest_url = "https://api.isthereanydeal.com/v01/game/lowest/?key=#{@api_key}&plains=#{game_plain}"
