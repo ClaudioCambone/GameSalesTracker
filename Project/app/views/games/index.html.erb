@@ -175,7 +175,6 @@
             <th class="text-light">Regular Price</th>
             <th class="text-light">Cut</th>
             <th class="text-light">Started</th>
-            <th class="text-light">Ended</th>
             <th class="text-light">Details</th>
           </tr>
         </thead>
@@ -200,25 +199,6 @@
       <td class="price_original"><%= "%.2f" % (deal['deal']['regular']['amount'].to_f || 0) %> <%= deal['deal']['regular']['currency'] %></td>
       <td class="price_cut"><%= deal['deal']['cut'] %> %</td>
       <td class="deal_added"><%= formatted_time(deal['deal']['timestamp']) %></td>
-      <td class="deal_expiry">
-        <% if deal['deal']['expiry'] %>
-          <% expiry_time = Time.parse(deal['deal']['expiry']) %>
-          <% remaining_time = expiry_time - Time.now %>
-          <% days = (remaining_time / 1.day).to_i %>
-          <% hours = (remaining_time / 1.hour % 24).to_i %>
-          <% minutes = (remaining_time / 1.minute % 60).to_i %>
-          <% total_minutes = days * 24 * 60 + hours * 60 + minutes %>
-          <% if total_minutes > 60 %>
-            <span class="text-success"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
-          <% elsif total_minutes > 15 %>
-            <span class="text-warning"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
-          <% else %>
-            <span class="text-danger"><%= "#{days} days, #{hours} hours, #{minutes} minutes" %></span>
-          <% end %>
-        <% else %>
-          N/A
-        <% end %>
-      </td>
       <td class="text-light deal_shop">
       <% if deal['deal']['shop'].present? %>
         <%= link_to "Disponibile su #{deal['deal']['shop']['name']}", deal['deal']['url'], target: '_blank' %>
@@ -261,19 +241,6 @@
                   <% end %>
                   <span class="discounted-price fw-bold fs-6">-<%= deal['deal']['cut'] %> %</span>      
                 </p>              
-                <p class="card-text text-center">
-                  Ends in: 
-                  <% remaining_time = countdown_to_end_date(deal['deal']['expiry']) %>
-                  <% days, hours, minutes, seconds = remaining_time.scan(/\d+/) %>
-                  <% total_minutes = days.to_i * 24 * 60 + hours.to_i * 60 + minutes.to_i %>
-                  <% if total_minutes > 60 %>
-                    <span class="text-success"><%= remaining_time %></span>
-                  <% elsif total_minutes > 15 %>
-                    <span class="text-warning"><%= remaining_time %></span>
-                  <% else %>
-                    <span class="text-danger"><%= remaining_time %></span>
-                  <% end %>
-                </p>
                 <div class="card-text text-center">
                  
                 </div>
