@@ -55,6 +55,12 @@
                   <label class="form-label" for="typePasswordConfirmation">Confirm Password</label>
                 </div>
 
+                <% if resource.errors[:password_confirmation].any? %>
+                  <div class="alert alert-danger">
+                    <%= resource.errors[:password_confirmation].first %>
+                  </div>
+                <% end %>
+
                 <%= f.submit "Sign up", class: "btn btn-outline-light btn-lg px-5" %>
               <% end %>
             </div>
