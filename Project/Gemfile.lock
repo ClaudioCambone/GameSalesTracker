@@ -104,6 +104,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.5.1)
     domain_name (0.6.20240107)
     erubi (1.12.0)
     execjs (2.9.1)
@@ -294,6 +295,23 @@ GEM
       netrc (~> 0.8)
     rexml (3.2.6)
     role_model (0.8.2)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.1)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
+    rspec-support (3.13.1)
     ruby-openid (2.9.2)
     rubyzip (2.3.2)
     sassc (2.4.0)
@@ -328,6 +346,8 @@ GEM
     tilt (2.3.0)
     time (0.3.0)
       date
+    time-helper (2.0.1)
+    timecop (0.9.8)
     timeout (0.4.1)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
@@ -386,12 +406,15 @@ DEPENDENCIES
   puma (~> 4.3.5)
   rails (~> 7.0.4, >= 7.0.4.3)
   rest-client
+  rspec-rails
   sassc-rails
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
   time
+  time-helper
+  timecop
   turbo-rails
   tzinfo-data
   web-console

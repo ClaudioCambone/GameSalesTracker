@@ -78,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_184215) do
     t.string "username"
     t.datetime "confirmed_at"
     t.string "confirmation_token"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.text "description"
     t.integer "roles_mask"
