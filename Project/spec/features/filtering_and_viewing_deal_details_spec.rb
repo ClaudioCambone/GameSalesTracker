@@ -38,7 +38,6 @@ RSpec.describe "Filtering and Viewing Deal Details Feature", type: :feature do
         
         # Assicurati che i dettagli del deal siano presenti sulla pagina
         expect(page).to have_content(' Details')
-
     end
 
     def login_with_valid_credentials

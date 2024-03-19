@@ -88,8 +88,10 @@
 <%= form_tag(add_to_collection_game_path, method: 'post', local: false, data: { turbo: 'false' }) do %>
   <%= hidden_field_tag :game_id, @game_details['id'] %>
   <%= submit_tag 'Add to Collection', class: 'btn btn-outline-light mb-2' %>
-  <%= select_tag 'collection_id', options_for_select(current_user.collections.map { |collection| [collection.name, collection.id] }), include_blank: 'Select a collection', class: 'form-select', id: 'collection-dropdown', style: 'width: 200px;' %>
+  <% collection_options = current_user.collections.reject { |collection| collection.name.blank? } %>
+  <%= select_tag 'collection_id', options_for_select(collection_options.map { |collection| [collection.name, collection.id] }), class: 'form-select', id: 'collection-dropdown', style: 'width: 200px;' %>
 <% end %>
+
 
 
 </div>

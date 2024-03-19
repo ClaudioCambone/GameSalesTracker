@@ -25,7 +25,7 @@
     <% end %>
     <p><strong>Username:</strong> <%= current_user.username %></p>
     
-    <%= link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'profile-button' %>
+    <%= link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'profile-button', id:"Edit Profile" %>
     <br><br>
     <%= link_to 'Show My Comments', user_comments_path, class: 'profile-button' %>
   </div>
