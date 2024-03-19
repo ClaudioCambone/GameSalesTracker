@@ -29,8 +29,7 @@ RSpec.describe GamesController, type: :controller do
         it 'sets a flash notice message indicating game added to collection successfully' do
           expect(flash[:notice]).to eq('Game added to collection successfully.')
         end
-
-        # Add more tests as needed based on your application's behavior
+        
       end
 
       context 'when game is already in the collection' do

@@ -8,6 +8,8 @@
  
 </head>
 
+<body>
+
   <!--FLASH MESSAGES/ALERT-->
   <% flash.each do |type, msg| %>
     <div class="alert alert-info">
@@ -83,31 +85,13 @@
     <p>No game details available.</p>
   <% end %>
 
-<% if current_user && current_user.collections.any? %>
-  <%= form_with(url: add_to_collection_game_path, method: :post, local: false, data: { turbo: 'false' }) do |form| %>
-    <%= form.hidden_field :game_id, value: @game_details['id'] %>
-    <%= form.submit 'Add to Collection', class: 'btn btn-outline-light mb-2' %>
-    <div class="dropdown">
-      <button class="btn btn-outline-light dropdown-toggle" type="button" id="collectionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        Select a collection
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
-        <% current_user.collections.each do |collection| %>
-          <% if collection.name.present? %>
-            <li>
-              <a href="#" class="dropdown-item collection-item" data-collection-id="<%= collection.id %>">
-                <%= collection.name %>
-              </a>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-      <%= form.hidden_field :collection_id, id: "selectedCollectionId" %>
-    </div>
-  <% end %>
-<% else %>
-  <p>No collections found.</p>
+<%= form_tag(add_to_collection_game_path, method: 'post', local: false, data: { turbo: 'false' }) do %>
+  <%= hidden_field_tag :game_id, @game_details['id'] %>
+  <%= submit_tag 'Add to Collection', class: 'btn btn-outline-light mb-2' %>
+  <%= select_tag 'collection_id', options_for_select(current_user.collections.map { |collection| [collection.name, collection.id] }), include_blank: 'Select a collection', class: 'form-select', id: 'collection-dropdown', style: 'width: 200px;' %>
 <% end %>
+
+
 </div>
 </div>
 <div class="container">
@@ -427,3 +411,4 @@ EDIT COMMENT FORM. COMMENTED IT SINCE IT USLESS AND TIME EFFORT TO INTRODUCE
   });
 </script>
 
+</body>
