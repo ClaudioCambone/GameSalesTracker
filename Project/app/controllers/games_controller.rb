@@ -75,7 +75,7 @@ class GamesController < ApplicationController
         flash[:error] = 'Invalid collection.'
       end
     else
-      flash[:error] = 'Invalid collection_id.'
+      flash[:error] = 'Invalid collection.'
     end
   
     redirect_back fallback_location: root_path
