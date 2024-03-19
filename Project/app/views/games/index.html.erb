@@ -111,57 +111,57 @@
       <div class="row">
         <div class="col-md-2">
           <%= label_tag 'limit', 'Limit:' %>
-          <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control' %>
+          <%= select_tag 'limit', options_for_select([20, 30, 50,100], params[:limit].to_i), class: 'form-control', id: 'limit-select' %>
         </div>
         <div class="col-md-2">
           <%= label_tag 'sort', 'Sort:' %>
-          <%= select_tag 'sort', options_for_select([['Price (min)', 'price'], ['Prezzo (max)', '-price'], ['Discount (min)', 'cut'], ['Discount (max)', '-cut'],['Expiration (almost new)', 'expiry'],['Expiration (almost expired)', '-expiry']], params[:sort]), class: 'form-control' %>
+          <%= select_tag 'sort', options_for_select([['Price (min)', 'price'], ['Prezzo (max)', '-price'], ['Discount (min)', 'cut'], ['Discount (max)', '-cut'],['Expiration (almost new)', 'expiry'],['Expiration (almost expired)', '-expiry']], params[:sort]), class: 'form-control', id: 'sort-select' %>
         </div>
         <div class="col-md-4">
           <%= label_tag 'shops[]', 'Shop Filter:' %>
           <%= select_tag 'shops[]', options_for_select([
             ['Tutti gli Store', nil],
             ['2game', 19],
-    ['AllYouPlay', 2],
-    ['Amazon', 3],
-    ['Blizzard', 4],
-    ['DLGamer', 13],
-    ['Dreamgame', 15],
-    ['EA Store', 52],
-    ['Epic Game Store', 16],
-    ['eTail.Market', 67],
-    ['Fanatical', 6],
-    ['FireFlower', 17],
-    ['GameBillet', 20],
-    ['GamersGate', 24],
-    ['Gamesload', 25],
-    ['GamesPlanet DE', 27],
-    ['GamesPlanet FR', 28],
-    ['GamesPlanet UK', 26],
-    ['GamesPlanet US', 29],
-    ['GOG', 35],
-    ['GreenManGaming', 36],
-    ['Humble Store', 37],
-    ['IndieGala Store', 42],
-    ['Itch.io', 44],
-    ['JoyBuggy', 65],
-    ['MacGameStore', 47],
-    ['Microsoft Store', 48],
-    ['Newegg', 49],
-    ['Noctre', 66],
-    ['Nuuvem', 50],
-    ['Square Enix', 60],
-    ['Steam', 61],
-    ['Ubisoft Store', 62],
-    ['Voidu', 63],
-    ['WinGameStore', 64],
-          ], params[:shops]), { multiple: true, class: 'form-control custom-select select2 shop-filter' } %>
+            ['AllYouPlay', 2],
+            ['Amazon', 3],
+            ['Blizzard', 4],
+            ['DLGamer', 13],
+            ['Dreamgame', 15],
+            ['EA Store', 52],
+            ['Epic Game Store', 16],
+            ['eTail.Market', 67],
+            ['Fanatical', 6],
+            ['FireFlower', 17],
+            ['GameBillet', 20],
+            ['GamersGate', 24],
+            ['Gamesload', 25],
+            ['GamesPlanet DE', 27],
+            ['GamesPlanet FR', 28],
+            ['GamesPlanet UK', 26],
+            ['GamesPlanet US', 29],
+            ['GOG', 35],
+            ['GreenManGaming', 36],
+            ['Humble Store', 37],
+            ['IndieGala Store', 42],
+            ['Itch.io', 44],
+            ['JoyBuggy', 65],
+            ['MacGameStore', 47],
+            ['Microsoft Store', 48],
+            ['Newegg', 49],
+            ['Noctre', 66],
+            ['Nuuvem', 50],
+            ['Square Enix', 60],
+            ['Steam', 61],
+            ['Ubisoft Store', 62],
+            ['Voidu', 63],
+            ['WinGameStore', 64],
+          ], params[:shops]), { multiple: true, class: 'form-control custom-select select2 shop-filter', id: 'shop-filter-select' } %>
         </div>
         <div class="col-md-2">
           <%= submit_tag 'Apply', class: 'btn btn-primary mt-4' %>
         </div>
       </div>
-    <% end %>
+    <% end %>    
     <button id="toggleViewButton" class="btn btn-primary mt-4 mb-4"></button>
     <br>
     
