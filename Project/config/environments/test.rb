@@ -7,10 +7,18 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Configure 'rails notes' to inspect Cucumber files
+<<<<<<< HEAD
   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
   config.annotations.register_directories('features')
   config.annotations.register_extensions('feature') { |tag| /#\s*(#{tag}):?\s*(.*)$/ }
 
+=======
+  config.annotations.register_directories('features')
+  config.annotations.register_extensions('feature') { |tag| /#\s*(#{tag}):?\s*(.*)$/ }
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+>>>>>>> 6085563dddf46db66c25c4b77496737669cb27f0
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Turn false under Spring and add config.action_view.cache_template_loading = true.
